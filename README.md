@@ -1,0 +1,1 @@
+# plugins-cryptocurrency-price-ticker-widget
