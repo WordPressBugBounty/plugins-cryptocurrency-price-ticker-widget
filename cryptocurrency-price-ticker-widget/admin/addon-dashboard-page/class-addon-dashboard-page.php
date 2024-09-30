@@ -95,7 +95,6 @@ if (!class_exists('cool_plugins_crypto_addons')) {
          */
         public function cool_plugins_install()
         {
-
             if (current_user_can('upload_plugins')) {
                 $plugin_slug = isset($_POST['cp_slug']) ? sanitize_text_field($_POST['cp_slug']) : '';
                 if (!empty($plugin_slug)) {
@@ -139,12 +138,10 @@ if (!class_exists('cool_plugins_crypto_addons')) {
          */
         public function displayPluginAdminDashboard()
         {
-
             $tag = $this->plugin_tag;
             $this->request_pro_plugins_data($tag);
             $plugins = $this->request_wp_plugins_data($tag);
             $this->disable_free_plugins();
-            //  $this->pro_plugins=$pro_data;
 
             if (!empty($plugins) && count($plugins) > 0) {
                 // merge free & pro plugins into one array
@@ -158,12 +155,12 @@ if (!class_exists('cool_plugins_crypto_addons')) {
                     <div class="plugins-list installed-addons" data-empty-message="You have not installed any addon at the moment"><h3>Currently Installed Plugins</h3>';
 
                 foreach ($plugins as $plugin) {
-                    $plugin_name = $plugin['name'];
-                    $plugin_desc = $plugin['desc'];
+                    $plugin_name = sanitize_text_field($plugin['name']);
+                    $plugin_desc = sanitize_textarea_field($plugin['desc']);
                     $plugin_logo = $this->addon_plugins_logo($plugin['slug']);
-                    $plugin_url = $plugin['download_link'];
-                    $plugin_slug = $plugin['slug'];
-                    $plugin_version = $plugin['version'];
+                    $plugin_url = esc_url($plugin['download_link']);
+                    $plugin_slug = sanitize_text_field($plugin['slug']);
+                    $plugin_version = sanitize_text_field($plugin['version']);
 
                     if (file_exists(WP_PLUGIN_DIR . '/' . $plugin_slug)) {
                         require $this->addon_dir . '/includes/dashboard-page.php';
@@ -176,8 +173,8 @@ if (!class_exists('cool_plugins_crypto_addons')) {
                     if ($plugin['download_link'] == null) {
                         continue;
                     }
-                    $plugin_name = $plugin['name'];
-                    $plugin_desc = $plugin['desc'];
+                    $plugin_name = sanitize_text_field($plugin['name']);
+                    $plugin_desc = sanitize_textarea_field($plugin['desc']);
                     $plugin_logo = $this->addon_plugins_logo($plugin['slug']);
                     $plugin_url = $plugin['download_link'];
                     $plugin_slug = $plugin['slug'];
@@ -194,13 +191,13 @@ if (!class_exists('cool_plugins_crypto_addons')) {
                      */
                     echo "<div class='plugins-list pro-addons' data-empty-message='No more Pro plugins available at the moment'><h3>Pro Plugins</h3>";
                     foreach ($this->pro_plugins as $plugin) {
-                        $plugin_name = $plugin['name'];
-                        $plugin_desc = $plugin['desc'];
+                        $plugin_name = sanitize_text_field($plugin['name']);
+                        $plugin_desc = sanitize_textarea_field($plugin['desc']);
                         $plugin_logo = $this->addon_plugins_logo($plugin['slug']);
                         $plugin_pro_url = $plugin['buyLink'];
                         $plugin_url = null;
                         $plugin_version = null;
-                        $plugin_slug = $plugin['slug'];
+                        $plugin_slug = sanitize_text_field($plugin['slug']);
 
                         if (!file_exists(WP_PLUGIN_DIR . '/' . $plugin_slug)) {
                             require $this->addon_dir . '/includes/dashboard-page.php';
@@ -250,9 +247,7 @@ if (!class_exists('cool_plugins_crypto_addons')) {
             $plugin_info = (array) json_decode($response['body']);
 
             foreach ($plugin_info as $plugin) {
-
                 if ($plugin->tag == $tag) {
-
                     $this->pro_plugins[$plugin->slug] = array(
                         'name' => $plugin->name,
                         'logo' => $plugin->image_url,
@@ -265,10 +260,9 @@ if (!class_exists('cool_plugins_crypto_addons')) {
                         'buyLink' => $plugin->buy_url,
                     );
                     if (property_exists($plugin, 'free_version') && $plugin->free_version != null) {
-                        $this->disable_plugins[$plugin->free_version] = array('pro' => $plugin->slug);
+                        $this->disable_plugins[$plugin->free_version] = array('pro' => sanitize_text_field($plugin->slug));
                     }
                 }
-
             }
 
             if (!empty($this->pro_plugins) && is_array($this->pro_plugins) && count($this->pro_plugins)) {
@@ -278,7 +272,6 @@ if (!class_exists('cool_plugins_crypto_addons')) {
             } else if (get_option($option_name, false) != false) {
                 return get_option($option_name);
             }
-
         }
 
         /**
@@ -286,7 +279,6 @@ if (!class_exists('cool_plugins_crypto_addons')) {
          */
         public function request_wp_plugins_data($tag = null)
         {
-
             if (get_transient($this->main_menu_slug . '_api_cache' . $this->plugin_tag) != false) {
                 return get_option($this->main_menu_slug . '-' . $this->plugin_tag, false);
             }
@@ -299,7 +291,7 @@ if (!class_exists('cool_plugins_crypto_addons')) {
             if (is_wp_error($response)) {
                 return;
             }
-            $plugin_info = json_decode($response['body'],true);
+            $plugin_info = json_decode($response['body'], true);
             $all_plugins = array();
            // var_dump($plugin->slug);
             foreach ($plugin_info as $plugin) {
@@ -343,10 +335,9 @@ if (!class_exists('cool_plugins_crypto_addons')) {
                 'crypto-ico-list-widget-pro' => 'crypto-ico-list-widget-pro.png',
                 'cryptocurrency-widgets-for-elementor' => 'cryptocurrency-widgets-for-elementor.png',
                 'cryptocurrency-search-addon' => 'cryptocurrency-search-addon.png',
-                'pay-with-metamask-for-woocommerce-pro'=>'pay-with-metamask-for-woocommerce-pro.png',
-                'blockchain-explorer-pro'=>'blockchain-explorer-pro.png',
+                'pay-with-metamask-for-woocommerce-pro' => 'pay-with-metamask-for-woocommerce-pro.png',
+                'blockchain-explorer-pro' => 'blockchain-explorer-pro.png',
                 'cryptocurrency-price-ticker-widget' => 'cryptocurrency-price-ticker-widget.png',
-
             );
             if (isset($logos_arr[$slug])) {
                 return $logo_url = plugin_dir_url($this->addon_file) . 'assets/images/' . $logos_arr[$slug];
@@ -360,7 +351,7 @@ if (!class_exists('cool_plugins_crypto_addons')) {
             if (isset($this->pro_plugins)) {
                 foreach ($this->pro_plugins as $plugin) {
                     if (isset($plugin['incompatible']) && $plugin['incompatible'] != null) {
-                        $this->disable_plugins[$plugin['incompatible']] = array('pro' => $plugin['slug']);
+                        $this->disable_plugins[$plugin['incompatible']] = array('pro' => sanitize_text_field($plugin['slug']));
                     }
                 }
             }
@@ -374,6 +365,6 @@ if (!class_exists('cool_plugins_crypto_addons')) {
     function cool_plugins_crypto_addon_settings_page($tag, $settings_page_slug, $dashboard_heading, $main_menu_title, $icon)
     {
         $event_page = cool_plugins_crypto_addons::init();
-        $event_page->show_plugins($tag, $settings_page_slug, $dashboard_heading, $main_menu_title, $icon);
+        $event_page->show_plugins(sanitize_text_field($tag), sanitize_text_field($settings_page_slug), sanitize_text_field($dashboard_heading), sanitize_text_field($main_menu_title), sanitize_text_field($icon));
     }
 }

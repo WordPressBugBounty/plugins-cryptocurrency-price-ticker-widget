@@ -68,21 +68,21 @@ global $post;
     public function update($new_instance, $old_instance)
     {
         $instance = $old_instance;
-        $instance['ccpw_shortcode'] = strip_tags($new_instance['ccpw_shortcode']);
-        $instance['title'] = strip_tags($new_instance['title']);
+        $instance['ccpw_shortcode'] = !empty($new_instance['ccpw_shortcode']) ? strip_tags($new_instance['ccpw_shortcode']) : ''; // Ensure value is not empty
+        $instance['title'] = !empty($new_instance['title']) ? strip_tags($new_instance['title']) : ''; // Ensure value is not empty
         return $instance;
     }
 
     // Create the widget output.
     public function widget($args, $instance)
     {
-        $ccpw_shortcode = $instance['ccpw_shortcode'];
+        $ccpw_shortcode = !empty($instance['ccpw_shortcode']) ? $instance['ccpw_shortcode'] : ''; // Ensure value is not empty
         $title = apply_filters('widget_title', $instance['title']);
 
         echo wp_kses_post($args['before_widget'] . $args['before_title'] . $title . $args['after_title']);
 
-        if (isset($ccpw_shortcode) && !empty($ccpw_shortcode)) {
-            echo do_shortcode('[ccpw id="' . $ccpw_shortcode . '"]');
+        if (!empty($ccpw_shortcode)) {
+            echo do_shortcode('[ccpw id="' . esc_attr($ccpw_shortcode) . '"]'); // Use esc_attr for security
         }
 
         echo wp_kses_post($args['after_widget']);

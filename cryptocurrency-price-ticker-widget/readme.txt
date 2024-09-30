@@ -4,9 +4,9 @@ Tags: cryptocurrency,coinmarketcap, cryptocurrency price ticker, Crypto Widgets,
 Requires at least:6.0
 Tested up to: 6.6
 Requires PHP:7.2
-Stable tag: 2.8.1
+Stable tag: 2.8.2
 License: GPL3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+License URI: http://www.gnu.org/licenses/gpl-3.0.html 
 Donate link: https://coolplugins.net/donate-and-support-cool-plugins/
 
 Display cryptocurrency price ticker widget, coins live price list, table, labels & coin marketcap via shortcodes.
@@ -166,8 +166,6 @@ While you cannot create an exact replica, still our [Coins Marketcap plugin](htt
 
 For plugin support, you can [submit a support request here 💬](https://wordpress.org/support/plugin/cryptocurrency-price-ticker-widget/). If you have any additional questions, you can contact the [Cool Plugins support](https://coolplugins.net/support/?utm_source=cryptocurrency-widgets&utm_medium=readme&utm_campaign=support&utm_content=faqs) team.
 
-
-
 #### What is the Crypto Price Widgets plugin?**
 The Crypto Price Widgets plugin allows you to display cryptocurrency tickers, price lists, tables, multi-currency tabs, and price labels on your WordPress website using shortcodes.
 
@@ -219,6 +217,9 @@ The Crypto Price Widgets plugin allows you to display cryptocurrency tickers, pr
 #### Can I choose my local currency other than USD?**
  Yes, the plugin supports 30+ fiat currencies, allowing you to easily display a crypto price widget in your local currency.
 
+#### How can I report security bugs?
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/cryptocurrency-price-ticker-widget)
+
 == Screenshots ==
 
 1. Cryptocurrency price ticker widget. 
@@ -234,7 +235,11 @@ The Crypto Price Widgets plugin allows you to display cryptocurrency tickers, pr
 11. Coins Marketcap plugin - Top Gainer/Top Losers.
 
 == Changelog == 
-**Version 2.8.1| 01 Aug 2024**
+**Version 2.8.2| 30 September 2024**
+* Fixed: Resolve minor bugs and security.
+* Improved: Optimization code quality for better performance and maintainability.
+
+**Version 2.8.1| 30 July 2024**
 * Fixed: Fixed minor vulnerabilities.
 * Improved: Added escaping and sanitization functions throughout the code.
 * Fixed: Fixed 24 hours changes icon issue in ticker widget .

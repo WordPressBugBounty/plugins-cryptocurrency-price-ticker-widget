@@ -274,7 +274,7 @@ if (!class_exists('CPTW_Posttype')) {
             // - Update the post's metadata.
             if (isset($_POST['ticker_position']) && in_array($_POST['ticker_position'], array('header', 'footer'))) {
                 update_option('ccpw-p-id', $post_id);
-                update_option('ccpw-shortcode', '[ccpw id=' . $post_id . ']');
+                update_option('ccpw-shortcode', '[ccpw id=' . intval($post_id) . ']'); // Use intval to sanitize post_id
             }
 
             delete_transient('ccpw-coins'); // Site Transient

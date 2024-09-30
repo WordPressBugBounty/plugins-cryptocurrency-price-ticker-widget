@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is responsible for all database realted functionality.
+ * This file is responsible for all database related functionality.
  */
 class ccpw_database
 {
@@ -50,10 +50,10 @@ class ccpw_database
     public function ccpw_insert($coins_data)
     {
         if (is_array($coins_data) && count($coins_data) > 1) {
-
             return $this->wp_insert_rows($coins_data, $this->table_name, true, 'coin_id');
         }
     }
+    
     /**
      * Get default column values
      *
@@ -91,6 +91,7 @@ class ccpw_database
         $count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $this->table_name WHERE coin_id = %s", $coin_id));
         return $count == 1;
     }
+    
     /**
      * Retrieve coins from the database.
      *

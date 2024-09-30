@@ -5,7 +5,7 @@
  * Plugin URI: https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin-uri
  * Author: Cool Plugins
  * Author URI: https://coolplugins.net/?utm_source=cryptocurrency-widgets&utm_medium=author_uri
- * Version: 2.8.1
+ * Version: 2.8.2
  * License: GPL3
  * Text Domain: ccpw
  * Domain Path: languages
@@ -22,7 +22,7 @@ if (defined('CCPWF_VERSION')) {
 }
 
 // Define constants for later use
-define('CCPWF_VERSION', '2.8.1');
+define('CCPWF_VERSION', '2.8.2');
 define('CCPWF_FILE', __FILE__);
 define('CCPWF_DIR', plugin_dir_path(CCPWF_FILE));
 define('CCPWF_URL', plugin_dir_url(CCPWF_FILE));
@@ -118,7 +118,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
             $ajax_url = admin_url('admin-ajax.php');
             if (is_plugin_active('coin-market-cap/coin-market-cap.php') || is_plugin_active('cryptocurrency-exchanges-list-pro/cryptocurrency-exchanges-list-pro.php')) { // Adjust the plugin path as necessary
 
-                $page = isset($_GET['page']) ? $_GET['page'] : '';
+                $page = isset($_GET['page']) ? sanitize_text_field($_GET['page']) : ''; // Sanitize input
                 if ($page === 'openexchange-api-settings') {
                     //adding purge option
                     $cool_options = new_cmb2_box(array(
@@ -155,7 +155,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
                 $data = $api_obj->ccpw_get_coin_marketcap_data();
             } elseif ($current_select == 'coin_paprika') {
                 $data = $api_obj->ccpw_get_coin_paprika_data();
-            }elseif($current_select == 'coin_capapi'){
+            } elseif ($current_select == 'coin_capapi') {
                 $data = $api_obj->ccpw_get_coin_cap_data();
             }
 
@@ -217,8 +217,8 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
         {
 
             // Check for nonce security
-            if (!wp_verify_nonce($_POST['nonce'], 'ccpw-nonce')) {
-                die('You don\'t have permission to delete the cache.');
+            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'ccpw-nonce')) {
+                wp_send_json_error('You don\'t have permission to delete the cache.'); // Use wp_send_json_error for better response
             }
             // Delete cache if user has permission to delete it.
             if (current_user_can('manage_options')) {

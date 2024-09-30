@@ -15,7 +15,6 @@ if (!class_exists('CPTW_Shortcode')) {
             // Ajax call for datatable server processing
             add_action('wp_ajax_ccpw_get_coins_list', array($this, 'ccpw_get_ajax_data'));
             add_action('wp_ajax_nopriv_ccpw_get_coins_list', array($this, 'ccpw_get_ajax_data'));
-
         }
 
         /**
@@ -43,9 +42,9 @@ if (!class_exists('CPTW_Shortcode')) {
             // Fetching necessary options from WordPress database
             $api_option = get_option("openexchange-api-settings");
             $current_select = $this->ccpw_current_select_api();
-            $coingecko_api_key = isset($api_option['coingecko_api']) ? $api_option['coingecko_api'] : "";
-            $coinmarket_api_key = isset($api_option['coinmarketcap_api']) ? $api_option['coinmarketcap_api'] : "";
-            $coincap_api_key = isset($api_option['coincap_api']) ? $api_option['coincap_api'] : "";
+            $coingecko_api_key = isset($api_option['coingecko_api']) ? sanitize_text_field($api_option['coingecko_api']) : "";
+            $coinmarket_api_key = isset($api_option['coinmarketcap_api']) ? sanitize_text_field($api_option['coinmarketcap_api']) : "";
+            $coincap_api_key = isset($api_option['coincap_api']) ? sanitize_text_field($api_option['coincap_api']) : "";
 
             // Checking if selected API is CoinGecko and if user authentication is required
             if ($current_select == 'coin_gecko' && empty($coingecko_api_key) && !$this->ccpw_check_user()) {
@@ -59,7 +58,7 @@ if (!class_exists('CPTW_Shortcode')) {
             }
 
             // Extracting post ID from shortcode attributes
-            $post_id = $shortcode_attributes['id'];
+            $post_id = intval($shortcode_attributes['id']); // Ensure post ID is an integer
 
             // Enqueuing necessary styles
             wp_enqueue_style('ccpw-styles', CCPWF_URL . 'assets/css/ccpw-styles.min.css', array(), CCPWF_VERSION, 'all');
@@ -135,7 +134,7 @@ if (!class_exists('CPTW_Shortcode')) {
             $styles = '';
             $dynamic_styles_list = '';
             $dynamic_styles_multicurrency = '';
-            $ticker_top = !empty($header_ticker_position) ? 'top:' . $header_ticker_position . 'px !important;' : 'top:0px !important;';
+            $ticker_top = !empty($header_ticker_position) ? 'top:' . intval($header_ticker_position) . 'px !important;' : 'top:0px !important;';
 
             $usd_conversions = array();
 
@@ -170,7 +169,7 @@ if (!class_exists('CPTW_Shortcode')) {
                     foreach ($all_coin_data as $currency) {
                         // Gather data from database
                         if ($currency != false) {
-                            $coin_id = $currency['coin_id'];
+                            $coin_id = sanitize_text_field($currency['coin_id']);
                             $selected_coins[$coin_id] = $currency;
 
                             // Generate HTML according to the coin selection
@@ -205,11 +204,11 @@ if (!class_exists('CPTW_Shortcode')) {
 
                     // Generating HTML for ticker widget
                     $output .= '<div style="display:none" class="ccpw-container ccpw-ticker-cont ' . esc_attr($container_cls) . '">';
-                    $output .= '<div  class="tickercontainer" style="height: auto; overflow: hidden;">';
-                    $output .= '<ul   data-tickerspeed="' . esc_attr($t_speed) . '" id="' . esc_attr($id) . '">';
+                    $output .= '<div class="tickercontainer" style="height: auto; overflow: hidden;">';
+                    $output .= '<ul data-tickerspeed="' . esc_attr($t_speed) . '" id="' . esc_attr($id) . '">';
                     $output .= $crypto_html;
                     if ($show_credit) {
-                        $output .= '<li ="ccpw-ticker-credit">' . $credit_html . '</li>';
+                        $output .= '<li class="ccpw-ticker-credit">' . $credit_html . '</li>';
                     }
                     $output .= '</ul></div></div>';
                     break;
@@ -223,9 +222,8 @@ if (!class_exists('CPTW_Shortcode')) {
                         $output .= $credit_html;
                     }
                     break;
-                case 'list-widget';
+                case 'list-widget':
                     $id = 'ccpw-list-widget-' . esc_attr($post_id);
-
                     $cls = 'ccpw-widget';
                     $output .= '<div id="' . esc_attr($id) . '" class="' . esc_attr($cls) . '"><table class="ccpw_table" style="border:none!important;"><thead>
                     <th>' . esc_html__('Name', 'ccpw') . '</th>
@@ -241,9 +239,8 @@ if (!class_exists('CPTW_Shortcode')) {
                         $output .= $credit_html;
                     }
                     break;
-                case 'multi-currency-tab';
+                case 'multi-currency-tab':
                     $id = 'ccpw-multicurrency-widget-' . esc_attr($post_id);
-
                     $usd_conversions = (array) $api_obj->ccpw_usd_conversions('all');
 
                     $output .= '<div class="currency_tabs" id="' . esc_attr($id) . '">
@@ -261,7 +258,7 @@ if (!class_exists('CPTW_Shortcode')) {
                         $output .= $credit_html;
                     }
                     break;
-                case 'table-widget';
+                case 'table-widget':
                     $cls = 'ccpw-coinslist_wrapper';
                     $preloader_url = CCPWF_URL . 'assets/chart-loading.svg';
                     $ccpw_prev_coins = __('Previous', 'ccpw');
@@ -270,7 +267,7 @@ if (!class_exists('CPTW_Shortcode')) {
                     $ccpw_no_data = __('No Coin Found', 'ccpw');
                     $getRecords = '';
                     $id = 'ccpw-coinslist_wrapper';
-                    $datatable_pagination = get_post_meta($post_id, 'pagination_for_table', true);
+                    $datatable_pagination = (int) get_post_meta($post_id, 'pagination_for_table', true);
                     $old_settings = get_post_meta($post_id, 'display_currencies_for_table', true);
                     $r_type = 'top';
                     $c_id_arr = array();
@@ -331,11 +328,9 @@ if (!class_exists('CPTW_Shortcode')) {
                     <th data-classes="desktop ccpw_coin_change24h" data-index="change_percentage_24h">' . __('Changes 24h', 'ccpw') . '</th>
                     <th data-classes="desktop ccpw_coin_market_cap" data-index="market_cap">' . __('Market CAP', 'ccpw') . '</th>';
                     if ($api === "coin_gecko") {
-
                         $output .= '<th data-classes="ccew_coin_total_volume" data-index="total_volume">' . esc_html__('Volume', 'ccpw') . '</th>';
                     }
                     if ($api === "coin_gecko" || $api === "coin_marketcap") {
-
                         $output .= '<th data-classes="ccpw_coin_supply" data-index="supply">' . __('Supply', 'ccpw') . '</th>';
                     }
                     
@@ -502,88 +497,87 @@ if (!class_exists('CPTW_Shortcode')) {
             return $coin_html;
         }
 
-
-    /**
-     * Function to handle AJAX request for datatable
-     */
-    public function ccpw_get_ajax_data()
-    {
-        // Verify nonce
-        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'ccpwf-tbl-widget')) {
-            $response = array("draw" => 1, "recordsTotal" => 1, "recordsFiltered" => 1, "data" => [], 'error' => 'nonce_failed');
-            echo json_encode($response);
-            die();
-        }
-
-        // Initialize variables
-        $rtype = isset($_POST['rtype']) ? sanitize_text_field($_POST['rtype']) : 0;
-        $start_point = isset($_POST['start']) ? (int) sanitize_text_field($_POST['start']) : 0;
-        $data_length = isset($_POST['length']) ? (int) sanitize_text_field($_POST['length']) : 10;
-        $current_page = isset($_POST['draw']) && (int) $_POST['draw'] ? (int) sanitize_text_field($_POST['draw']) : 1;
-        $requiredCurrencies = isset($_POST['requiredCurrencies']) ? (int) sanitize_text_field($_POST['requiredCurrencies']) : 10;
-        $fiat_currency = isset($_POST['currency']) ? sanitize_text_field($_POST['currency']) : 'USD';
-        $fiat_currency_rate = isset($_POST['currencyRate']) ? (float) sanitize_text_field($_POST['currencyRate']) : 1;
-        $coin_no = $start_point + 1;
-        $coins_list = array();
-        $order_col_name = 'market_cap';
-        $order_type = 'DESC';
-        $DB = new ccpw_database();
-        $Total_DBRecords = '1000';
-        $coins_request_count = $data_length + $start_point;
-        $selected_api = get_option('openexchange-api-settings');
-        $api = (!isset($selected_api['ccpw_select_api']) && empty($selected_api['ccpw_select_api'])) ? "coin_gecko" : sanitize_text_field($selected_api['ccpw_select_api']);
-        $coinslist = isset($_POST['coinslist']) ? array_map('sanitize_text_field', $_POST['coinslist']) : array();
-        $coindata = $rtype == 'top' ? $DB->get_coins(array('number' => $data_length, 'offset' => $start_point, 'orderby' => $order_col_name, 'order' => $order_type)) : $DB->get_coins(array('coin_id' => $coinslist, 'offset' => $start_point, 'number' => $data_length, 'orderby' => $order_col_name, 'order' => $order_type));
-
-        // Process coin data
-        $coin_ids = array();
-        if ($coindata) {
-            foreach ($coindata as $coin) {
-                $coin_ids[] = $coin->coin_id;
+        /**
+         * Function to handle AJAX request for datatable
+         */
+        public function ccpw_get_ajax_data()
+        {
+            // Verify nonce
+            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'ccpwf-tbl-widget')) {
+                $response = array("draw" => 1, "recordsTotal" => 1, "recordsFiltered" => 1, "data" => [], 'error' => 'nonce_failed');
+                echo json_encode($response);
+                wp_die();
             }
-        }
 
-        // Initialize response array
-        $response = array();
-        $coins = array();
-        $bitcoin_price = get_transient('ccpw_btc_price');
-        $coins_list = array();
+            // Initialize variables
+            $rtype = isset($_POST['rtype']) ? sanitize_text_field($_POST['rtype']) : 0;
+            $start_point = isset($_POST['start']) ? (int) sanitize_text_field($_POST['start']) : 0;
+            $data_length = isset($_POST['length']) ? (int) sanitize_text_field($_POST['length']) : 10;
+            $current_page = isset($_POST['draw']) && (int) $_POST['draw'] ? (int) sanitize_text_field($_POST['draw']) : 1;
+            $requiredCurrencies = isset($_POST['requiredCurrencies']) ? (int) sanitize_text_field($_POST['requiredCurrencies']) : 10;
+            $fiat_currency = isset($_POST['currency']) ? sanitize_text_field($_POST['currency']) : 'USD';
+            $fiat_currency_rate = isset($_POST['currencyRate']) ? (float) sanitize_text_field($_POST['currencyRate']) : 1;
+            $coin_no = $start_point + 1;
+            $coins_list = array();
+            $order_col_name = 'market_cap';
+            $order_type = 'DESC';
+            $DB = new ccpw_database();
+            $Total_DBRecords = '1000';
+            $coins_request_count = $data_length + $start_point;
+            $selected_api = get_option('openexchange-api-settings');
+            $api = (!isset($selected_api['ccpw_select_api']) && empty($selected_api['ccpw_select_api'])) ? "coin_gecko" : sanitize_text_field($selected_api['ccpw_select_api']);
+            $coinslist = isset($_POST['coinslist']) ? array_map('sanitize_text_field', $_POST['coinslist']) : array();
+            $coindata = $rtype == 'top' ? $DB->get_coins(array('number' => $data_length, 'offset' => $start_point, 'orderby' => $order_col_name, 'order' => $order_type)) : $DB->get_coins(array('coin_id' => $coinslist, 'offset' => $start_point, 'number' => $data_length, 'orderby' => $order_col_name, 'order' => $order_type));
 
-        // Process coin data
-        if ($coindata) {
-            foreach ($coindata as $coin) {
-                $coin = (array) $coin;
-                $coins['rank'] = esc_html($coin_no);
-                $coins['id'] = esc_html($coin['coin_id']);
-                if ($api == "coin_paprika") {
-                    $coins['id'] = esc_html($this->ccpw_coin_array($coin['coin_id']));
+            // Process coin data
+            $coin_ids = array();
+            if ($coindata) {
+                foreach ($coindata as $coin) {
+                    $coin_ids[] = sanitize_text_field($coin->coin_id);
                 }
-
-                $coins['logo'] = $this->ccpw_get_coin_logo($coin['coin_id'], esc_html($coin['name']), esc_url($coin['logo']),  $size = 32) == false ? '<img alt="' . esc_attr($coin['name']) . '" src="' . esc_url(CCPWF_COINS_LOGO . $coin['logo']) . '">' : $this->ccpw_get_coin_logo($coin['coin_id'], esc_html($coin['name']), esc_url($coin['logo']));
-                $coins['symbol'] = esc_html(strtoupper($coin['symbol']));
-                $coins['name'] = esc_html(strtoupper($coin['name']));
-                $coins['price'] = esc_html($fiat_currency == 'USD' ? $coin['price'] : $coin['price'] * $fiat_currency_rate);
-                $coins['market_cap'] = esc_html($fiat_currency == 'USD' ? $coin['market_cap'] : $coin['market_cap'] * $fiat_currency_rate);
-                $coins['total_volume'] = esc_html($fiat_currency == 'USD' ? $coin['total_volume'] : $coin['total_volume'] * $fiat_currency_rate);
-                $coins['change_percentage_24h'] = esc_html(number_format($coin['percent_change_24h'], 2, '.', ''));
-                $coins['supply'] = esc_html($coin['circulating_supply']);
-                $coin_no++;
-                $coins_list[] = $coins;
             }
-        }
 
-        // Prepare response
-        $response = array(
-            'draw' => esc_html($current_page),
-            'recordsTotal' => esc_html($Total_DBRecords),
-            'recordsFiltered' => esc_html($requiredCurrencies),
-            'data' => $coins_list,
-        );
-        
-        // Send response
-        echo json_encode($response);
-        wp_die();
-    }
+            // Initialize response array
+            $response = array();
+            $coins = array();
+            $bitcoin_price = get_transient('ccpw_btc_price');
+            $coins_list = array();
+
+            // Process coin data
+            if ($coindata) {
+                foreach ($coindata as $coin) {
+                    $coin = (array) $coin;
+                    $coins['rank'] = esc_html($coin_no);
+                    $coins['id'] = esc_html($coin['coin_id']);
+                    if ($api == "coin_paprika") {
+                        $coins['id'] = esc_html($this->ccpw_coin_array($coin['coin_id']));
+                    }
+
+                    $coins['logo'] = $this->ccpw_get_coin_logo($coin['coin_id'], esc_html($coin['name']), esc_url($coin['logo']),  $size = 32) == false ? '<img alt="' . esc_attr($coin['name']) . '" src="' . esc_url(CCPWF_COINS_LOGO . $coin['logo']) . '">' : $this->ccpw_get_coin_logo($coin['coin_id'], esc_html($coin['name']), esc_url($coin['logo']));
+                    $coins['symbol'] = esc_html(strtoupper($coin['symbol']));
+                    $coins['name'] = esc_html(strtoupper($coin['name']));
+                    $coins['price'] = esc_html($fiat_currency == 'USD' ? $coin['price'] : $coin['price'] * $fiat_currency_rate);
+                    $coins['market_cap'] = esc_html($fiat_currency == 'USD' ? $coin['market_cap'] : $coin['market_cap'] * $fiat_currency_rate);
+                    $coins['total_volume'] = esc_html($fiat_currency == 'USD' ? $coin['total_volume'] : $coin['total_volume'] * $fiat_currency_rate);
+                    $coins['change_percentage_24h'] = esc_html(number_format($coin['percent_change_24h'], 2, '.', ''));
+                    $coins['supply'] = esc_html($coin['circulating_supply']);
+                    $coin_no++;
+                    $coins_list[] = $coins;
+                }
+            }
+
+            // Prepare response
+            $response = array(
+                'draw' => esc_html($current_page),
+                'recordsTotal' => esc_html($Total_DBRecords),
+                'recordsFiltered' => esc_html($requiredCurrencies),
+                'data' => $coins_list,
+            );
+            
+            // Send response
+            echo json_encode($response);
+            wp_die();
+        }
 
         /**
          * Generates dynamic styles for widgets based on type, post ID, background color, and font color.
@@ -653,7 +647,6 @@ if (!class_exists('CPTW_Shortcode')) {
 
             return $dynamic_styles;
         }
-
 
         /**
          * Enqueue necessary assets according to the widget type.

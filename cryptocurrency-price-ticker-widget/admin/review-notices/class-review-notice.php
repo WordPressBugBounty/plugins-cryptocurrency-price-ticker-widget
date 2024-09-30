@@ -30,8 +30,10 @@ if (!class_exists('CCPW_Review_Notice')) {
         // Callback function to dismiss review notice
         public function dismiss_review_notice()
         {
+            // Check for nonce and validate it
             if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'ccpw-nonce')) {
-                wp_die('Permission denied.');
+                wp_send_json_error('Permission denied.'); // Use wp_send_json_error for better response handling
+                wp_die();
             }
             update_option(self::SPARE_ME, 'yes');
             wp_send_json_success();
