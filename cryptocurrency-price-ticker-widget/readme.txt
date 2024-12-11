@@ -2,9 +2,9 @@
 Contributors: narinder-singh, satindersingh, coolplugins
 Tags: cryptocurrency,coinmarketcap, cryptocurrency price ticker, Crypto Widgets, Crypto Price Updates
 Requires at least:6.0
-Tested up to: 6.7
+Tested up to: 6.7.1
 Requires PHP:7.2
-Stable tag: 2.8.2
+Stable tag: 2.8.3
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html 
 Donate link: https://coolplugins.net/donate-and-support-cool-plugins/
@@ -235,27 +235,31 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. Coins Marketcap plugin - Top Gainer/Top Losers.
 
 == Changelog == 
-**Version 2.8.2| 30 September 2024**
+= Version 2.8.3| 9 December  2024 =
+* Fixed: Fixed load text domain issue.
+* Fixed: Fixed coins logo issue.
+
+= Version 2.8.2| 30 September 2024 =
 * Fixed: Resolve minor bugs and security.
 * Improved: Optimization code quality for better performance and maintainability.
 
-**Version 2.8.1| 30 July 2024**
+= Version 2.8.1| 30 July 2024 =
 * Fixed: Fixed minor vulnerabilities.
 * Improved: Added escaping and sanitization functions throughout the code.
 * Fixed: Fixed 24 hours changes icon issue in ticker widget .
 
-**Version 2.8.0| 24 July 2024**
+= Version 2.8.0| 24 July 2024 =
 * Added: CoinCap API integration.
 * Fixed: Coinpaprika API issue.
 
-**Version 2.7.2| 12 June 2024**
+= Version 2.7.2| 12 June 2024 =
 * Fixed: Broken and Default Logo issue.
 
-**Version 2.7.1| 23 May 2024**
+= Version 2.7.1| 23 May 2024 =
 * Fixed: Coins data missing bug.
 * Improved:Saved large API response in chunks to avoid server overload.
 
-**Version 2.7.0| 25 April 2024**
+= Version 2.7.0| 25 April 2024 =
 
 * Added: Support for CoinMarketCap API.
 * Fixed: Addressed circulating supply issue with Coinpaprika API.
@@ -263,28 +267,28 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 * Renamed: Settings menu to "Get Started".
 
 
-**Version 2.6.9| 28 Feb 2024**
+= Version 2.6.9| 28 Feb 2024 =
 
 * Fixed: Minor security fix.
 
-**Version 2.6.8| 23 Feb 2024**
+= Version 2.6.8| 23 Feb 2024 =
 
 * Fixed: Minor Bug fixes
 
-**Version 2.6.7| 22 Feb 2024**
+= Version 2.6.7| 22 Feb 2024 =
 
 * Added: Color settings for advanced table.
 * Updated: All code structure.
 * Updated: All file structure.
 * Improved: Overall code.
 
-**Version 2.6.6| 19 Jan 2024**
+= Version 2.6.6| 19 Jan 2024 =
 
 * Fixed: Minor security vulnerabilities.
 * Fixed: Coinpaprika logo display issue.
 * Improved: Overall security measures.
 
-**Version 2.6.5| 30 Nov 2023**
+= Version 2.6.5| 30 Nov 2023 =
 
  * Added: Coingecko free api key option.
  * Updated: Option to set cache time.
@@ -292,28 +296,28 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
  * Fixed: Old data issue.
  * Minor Changes: Textual changes.
 
-**Version 2.6.4 | 18 Aug 2023**
+= Version 2.6.4 | 18 Aug 2023 =
 
  * Improved: Overall plugin readme content.
  * Added: Premium features visibility while creating a widget shortcode.
  * Fixed: Plugin demo links.
  * Added: Get started page.
 
-**Version 2.6.3 | 26 Jun 2023**
+= Version 2.6.3 | 26 Jun 2023 =
 
  * Fixed: Minor Security fix.
  * Improved: Review notice code improvement.
  * Improved: Minor code tweaks.
 
-**Version 2.6.2 | 31 Mar 2023**
+= Version 2.6.2 | 31 Mar 2023 =
 
  * Minor Changes: Textual changes.
 
-**Version 2.6.1 | 23 Feb 2023**
+= Version 2.6.1 | 23 Feb 2023 =
 
  * Removed: Extra code.
 
-**Version 2.6 | 05 Jan 2023**
+= Version 2.6 | 05 Jan 2023 =
 
  * Added: Coin Paprika API
  * Added: Setting Menu In Dashboard.
@@ -322,73 +326,73 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
  * Fixed: Review Notice issue.
  * Updated: Plugins Dashboard API.
 
-**Version 2.5.4 | 19 Sep 2022**
+= Version 2.5.4 | 19 Sep 2022 =
 
  * Added: New coins logos
  * Improved: Class-based API & cron functions
  * Updated: Review notice
 
-**Version 2.5.3 | 27 May 2022**
+= Version 2.5.3 | 27 May 2022 =
 
  * Fixed: Multi-currency tab price issue
  * Fixed: Dashboard pro plugin missing data issue
 
-**Version 2.5.1 | 07 Apr 2022**
+= Version 2.5.1 | 07 Apr 2022 =
 
  * Updated: CMB2 library
  * Improved: Sanitized functions
 
-**Version 2.5 | 06 Apr 2022**
+= Version 2.5 | 06 Apr 2022 =
 
  * Fixed: Major security issue
  * Improved: Improved all code
 
-**Version 2.3.2 | 02 Jan 2022**
+= Version 2.3.2 | 02 Jan 2022 =
 
  * Added: Openexchangerates API Settings
  * Fixed: Ticker issue with Block Theme
  * Improved: Price conversion functionality
  * Removed: Cryptocurrency widget for Elementor
 
-**Version 2.3.1 | 17 Jan 2022**
+= Version 2.3.1 | 17 Jan 2022 =
 
  * Fixed: Coinsmarketcap single page link issue
  * Improved: Minor code improvements
 
-**Version 2.3 | 14 May 2021**
+= Version 2.3 | 14 May 2021 =
 
  * Added: Integrated Advance Elementor Widgets
  * Improved: minor JS/CSS improvements
 
-**Version 2.2.3 | 17 Feb 2021**
+= Version 2.2.3 | 17 Feb 2021 =
 
  * Added: Added new coins SVG logos
 
-**Version 2.2.2 | 29 Jan 2021**
+= Version 2.2.2 | 29 Jan 2021 =
 
  * Fixed: Ticker blur issues with Google Chrome latest version
 
-**Version 2.2.1 | 15 Dec 2020**
+= Version 2.2.1 | 15 Dec 2020 =
 
  * Fixed: Compatibility issue with WordPress 5.6
  * Improved: minor code improvements
 
-**Version 2.2 | 28 Oct 2020**
+= Version 2.2 | 28 Oct 2020 =
 
  * Added: Newly integrated 'Dashboard Page' for easy access.
  * Optimize: PHP code for WordPress version 5.5.1.
  * Fixed: Minor JS issues.
 
-**Version 2.1.2 | 10 JULY 2020**
+= Version 2.1.2 | 10 JULY 2020 =
 
  * Fixed: Coins multiple coin(s) issue.
  * Fixed: Compatibility issue with Coins MarketCap plugin.
 
-**Version 2.1.1 | 04 MARCH 2020**
+= Version 2.1.1 | 04 MARCH 2020 =
 
  * Fixed: Coins order issue in list widget.
 
-**Version 2.1 | 27 FEB 2020**
+= Version 2.1 | 27 FEB 2020 =
 
  * Added: Integrated Choose coins list settings. Show Top 10/Top 100 or custom coins list and widgets.
  * Added: Integrated Custom List settings in Advance Widget.
@@ -400,35 +404,35 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
  * Improved: Security issues.
  * Updated: POT file.
 
-**Version 2.0.7 | 19 DEC 2019**
+= Version 2.0.7 | 19 DEC 2019 =
 
  * Added: Sanitized all values.
  * Added: Added esc_attr() in all attributes.
 
-**Version 2.0.6 | 26 Nov 2019**
+= Version 2.0.6 | 26 Nov 2019 =
 
  * Added: Not interested button in Review popup.
  * Improved: User feedback form.
 
-**Version 2.0.5 | 24 Sept 2019**
+= Version 2.0.5 | 24 Sept 2019 =
 
  * Fixed: Conflict with Yoast SEO plugin.
  * Improved: Loaded conditions based scripts.
 
-**Version 2.0.4 | 22 July 2019**
+= Version 2.0.4 | 22 July 2019 =
 
  * Added: Feedback form on plugin deactivation.
  * Fixes: Minor CSS fixes.
 
-**Version 2.0.2 | 25 MAY 2019**
+= Version 2.0.2 | 25 MAY 2019 =
 
  * Fixed: Minor Database issue.
 
-**Version 2.0.1 | 23 JAN 2019**
+= Version 2.0.1 | 23 JAN 2019 =
 
  * Updated: API endpoints with filters.
 
-**Version 2.0 | 18 JAN 2019**
+= Version 2.0 | 18 JAN 2019 =
 
  * Added: Integrated Coin Gecko API. Added 3700+ coins.
  * Added: Integrated Widget Live Preview feature.
@@ -437,11 +441,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
  * Improved: MultiCurrency widget price position.
  * Improved: Minor Style Improvements.
 
-**Version 1.9.2 | 13 NOV 2018**
+= Version 1.9.2 | 13 NOV 2018 =
 
  * Notice: Due to a major plugin update, if you are getting database errors or missing data errors, please re-activate your plugin.
 
-**Version 1.9 | 13 NOV 2018**
+= Version 1.9 | 13 NOV 2018 =
 
  * Added: Integrated Brand new Advance table widget.
  * Added: Integrated new Coin Exchange Price APIs.
@@ -452,22 +456,22 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
  * Improved: Improvement overall code Optimization.
  * Improved: JS and CSS styles.
 
-**Version 1.8.3 | 26 September 2018**
+= Version 1.8.3 | 26 September 2018 =
 
  * Added: Integrated new Lightweight ticker script.
  * Removed: CPU consumption webticker script.
  * Fixed: MultiCurrency tab price formatting bug.
  * Fixed: Header ticker position bug.
 
-**Version 1.8.2 | 09 July 2018**
+= Version 1.8.2 | 09 July 2018 =
 
  * Fixed: In the last update, there was a bug of the rating popup. If you are unable to remove the rating popup, please update your plugin version and click on the Already Done button. If you are still unable to disable it, please contact us.
 
-**Version 1.8.1 | 06 July 2018**
+= Version 1.8.1 | 06 July 2018 =
 
  * Fixed: Rating popup bug.
 
-**Version 1.8 | 05 July 2018**
+= Version 1.8 | 05 July 2018 =
 
  * Added: Integrated fiat currencies settings. Using these settings, users can create a price widget in any fiat currency like (GBP/EUR) etc.
  * Added: Introduced Price label layout. Using this layout, users can easily display cryptocurrency price with your blog post or anywhere on the page.
@@ -478,17 +482,17 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
  * Improvement: Interface improvements.
  * Updated: Updated new screenshots and description.
 
-**Version 1.7 | 03 May 2018**
+= Version 1.7 | 03 May 2018 =
 
  * Added: Integrated top 50 coins.
  * Fixed: Fixed Major Bug in API's.
  * Improvement: Improvements in API's Calls.
 
-**Version 1.6.1 | 27 April 2018**
+= Version 1.6.1 | 27 April 2018 =
 
  * Fixed: Fixed Compatibility issues with Visual Composer.
 
-**Version 1.6 | 24 April 2018**
+= Version 1.6 | 24 April 2018 =
 
  * Added: Integrated Brand new multi-currency tab demo. Users can easily represent coin prices in multiple currencies.
  * Added: Introduced Crypto Currency shortcode widget. Using it, users can easily add a shortcode in the widget section.
@@ -496,7 +500,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
  * Fixed: Fixed jerk problem.
  * Improvements: Improved ticker styles and added the ability to set multiple background colors.
 
-**Version 1.5 | 12 March 2018**
+= Version 1.5 | 12 March 2018 =
 
  * Added: Integrated SVG logos for all cryptocurrencies.
  * Updated: Updated shortcode setting panel generator (CMB2 2.3.0).
@@ -505,11 +509,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
  * Improvements: Code Improvements.
  * Updated: Updated plugin description and readme text.
 
-**Version 1.4.1 | 21 Feb 2018**
+= Version 1.4.1 | 21 Feb 2018 =
 
  * Urgent Update: Coin Market Cap Updated currencies logo API's Endpoint. So that's why coins logo is not working. To fix this problem, please update your installed plugin version.
 
-**Version 1.4 | 20 Feb 2018**
+= Version 1.4 | 20 Feb 2018 =
 
  * Added: Integrated 10 more coins (Stellar, EOS, Ethereum Classic, Lisk, Tron, VeChain, Qtum, Bitcoin Gold, Tether, OmiseGO).
  * Added: Added Ticker position settings in the plugin settings panel.
@@ -520,7 +524,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
  * Bug Fixing: Fixed minor bugs.
  * Improvements: Minor settings improvements.
 
-**Version 1.3.1 | 23 Jan 2018**
+= Version 1.3.1 | 23 Jan 2018 =
 
  * Bug Fixing: Fixed header Ticker top spacing problem.
  * Added: Added FAQ and installation guidelines.
@@ -528,24 +532,24 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
  * Improvements: Minor Code improvements.
  * Improvements: Minor CSS improvements.
 
-**Version 1.3 | 13 Jan 2018**
+= Version 1.3 | 13 Jan 2018 =
 
  * Bug Fixing: Fixed Ticker preloading problem.
  * Added: Added all shortcodes section.
  * Added: Added feedback section.
  * Improvements: Ticker js improvements.
 
-**Version 1.2 | 12 Jan 2018**
+= Version 1.2 | 12 Jan 2018 =
 
  * Bug Fixing: Fixed Monero and dash missing bug.
  * Improvements: Minor changes in code.
 
-**Version 1.1 | 03 Jan 2018**
+= Version 1.1 | 03 Jan 2018 =
 
  * Bug Fixing: While users are displaying only a single coin price, they are getting this error message. "You have not selected any currencies to display" error message.
  * Improvements: Minor code improvements.
 
-**Version 1.0**
+= Version 1.0 =
 
 * Initial Release.
 

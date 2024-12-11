@@ -5,7 +5,7 @@
  * Plugin URI: https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin-uri
  * Author: Cool Plugins
  * Author URI: https://coolplugins.net/?utm_source=cryptocurrency-widgets&utm_medium=author_uri
- * Version: 2.8.2
+ * Version: 2.8.3
  * License: GPL3
  * Text Domain: ccpw
  * Domain Path: languages
@@ -22,7 +22,7 @@ if (defined('CCPWF_VERSION')) {
 }
 
 // Define constants for later use
-define('CCPWF_VERSION', '2.8.2');
+define('CCPWF_VERSION', '2.8.3');
 define('CCPWF_FILE', __FILE__);
 define('CCPWF_DIR', plugin_dir_path(CCPWF_FILE));
 define('CCPWF_URL', plugin_dir_url(CCPWF_FILE));
@@ -82,7 +82,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
             // add_action('admin_init', array($this, 'ccpw_reg_settings'));
 
             // Load text domain for translation
-            add_action('plugins_loaded', array($this, 'ccpw_plugins_loaded'));
+            add_action('init', array($this, 'ccpw_text_domain_loaded'));
 
             // Check if coin market cap plugin is activated
             add_action('admin_init', array($this, 'ccpw_check_cmc_activated'));
@@ -102,7 +102,19 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
 
             }
 
+            add_action('plugin_loaded', array($this, 'ccpw_load_files'));
+
         }
+
+        public function ccpw_load_files()
+        {
+            // Require the main plugin file
+            if (!function_exists('is_plugin_active')) {
+                // Require only if needed
+                require ABSPATH . 'wp-admin/includes/plugin.php';
+            }
+        }
+
         /**
          * Initialize cron : MUST USE ON PLUGIN ACTIVATION
          */
@@ -232,13 +244,8 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
         /**
          * Code you want to run when all other plugins loaded.
          */
-        public function ccpw_plugins_loaded()
+        public function ccpw_text_domain_loaded()
         {
-            // Require the main plugin file
-            if (!function_exists('is_plugin_active')) {
-                // Require only if needed
-                require ABSPATH . 'wp-admin/includes/plugin.php';
-            }
             load_plugin_textdomain('ccpw', false, basename(dirname(__FILE__)) . '/languages/');
         }
 
