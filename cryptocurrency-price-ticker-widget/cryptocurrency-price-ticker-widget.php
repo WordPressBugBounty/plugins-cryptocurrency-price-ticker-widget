@@ -5,7 +5,7 @@
  * Plugin URI: https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin-uri
  * Author: Cool Plugins
  * Author URI: https://coolplugins.net/?utm_source=cryptocurrency-widgets&utm_medium=author_uri
- * Version: 2.8.3
+ * Version: 2.8.4
  * License: GPL3
  * Text Domain: ccpw
  * Domain Path: languages
@@ -22,7 +22,7 @@ if (defined('CCPWF_VERSION')) {
 }
 
 // Define constants for later use
-define('CCPWF_VERSION', '2.8.3');
+define('CCPWF_VERSION', '2.8.4');
 define('CCPWF_FILE', __FILE__);
 define('CCPWF_DIR', plugin_dir_path(CCPWF_FILE));
 define('CCPWF_URL', plugin_dir_url(CCPWF_FILE));
@@ -118,16 +118,31 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
         /**
          * Initialize cron : MUST USE ON PLUGIN ACTIVATION
          */
-        public function ccpw_cron_job_init()
-        {
+        public function ccpw_cron_job_init() {
+
             if (!wp_next_scheduled('ccpw_coins_autosave')) {
+
                 wp_schedule_event(time(), '5min', 'ccpw_coins_autosave');
             }
+
+            $options        = get_option('openexchange-api-settings', []);
+
+            if ( isset( $options['ccpw_extra_info'] ) && ( ! empty( $options['ccpw_extra_info'] ) || $options['ccpw_extra_info'] === 'on' ) ) {
+ 
+                if (!wp_next_scheduled('ccpw_extra_data_update')) {
+
+                    wp_schedule_event(time(), 'every_30_days', 'ccpw_extra_data_update');
+
+                }
+            }
+       
         }
-        public function get_purge_cache_on_cmc()
-        {
+
+        public function get_purge_cache_on_cmc() {
+
             $ccpw_nonce = wp_create_nonce('ccpw-nonce');
             $ajax_url = admin_url('admin-ajax.php');
+
             if (is_plugin_active('coin-market-cap/coin-market-cap.php') || is_plugin_active('cryptocurrency-exchanges-list-pro/cryptocurrency-exchanges-list-pro.php')) { // Adjust the plugin path as necessary
 
                 $page = isset($_GET['page']) ? sanitize_text_field($_GET['page']) : ''; // Sanitize input
@@ -182,34 +197,42 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
         {
 
             require_once CCPWF_DIR . 'includes/api/class-api-handler.php';
+            require_once CCPWF_DIR . 'includes/cron/class-cron.php';
+
             if (is_admin()) {
+
                 require_once CCPWF_DIR . 'admin/addon-dashboard-page/class-addon-dashboard-page.php';
                 cool_plugins_crypto_addon_settings_page('crypto', 'cool-crypto-plugins', 'Cryptocurrency Plugins Dashboard', 'Crypto Plugins', 'dashicons-chart-area');
 
                 // Load post type generator
                 require_once CCPWF_DIR . 'admin/register-post-type/class-post-type.php';
                 //  require_once CCPWF_DIR . 'includes/ccpw-functions.php';
-
+   
                 $post_array = array('ccpw', 'cool-crypto-plugins', 'openexchange-api-settings', 'ccpw_get_started');
+
                 if (isset($_POST['submit-cmb']) || in_array($this->ccpw_get_post_type_page(), $post_array)) {
+                   
                     require_once CCPWF_DIR . 'admin/cmb2/init.php';
                     require_once CCPWF_DIR . 'admin/cmb2/cmb2-conditionals.php';
+
                     if (!class_exists('PW_CMB2_Field_Select2')) {
                         require_once CCPWF_DIR . 'admin/cmb2/cmb-field-select2/cmb-field-select2.php';
                     }
-                }
 
+                }
                 // Loading required functions
                 require_once CCPWF_DIR . 'admin/review-notices/class-review-notice.php';
+                
+                if(!class_exists('CPFM_Feedback_Notice')){
+                    require_once CCPWF_DIR . 'admin/feedback/cpfm-feedback-notice.php';
+                }
+                
                 require_once CCPWF_DIR . 'admin/feedback/class-admin-feedback-form.php';
                 require_once CCPWF_DIR . 'admin/openexchange-api/class-openexchange-api-settings.php';
 
             }
             require CCPWF_DIR . 'includes/class-database.php';
             require CCPWF_DIR . 'includes/class-widget.php';
-
-            require_once CCPWF_DIR . 'includes/cron/class-cron.php';
-
             require_once CCPWF_DIR . 'includes/class-shortcode.php';
 
         }
@@ -247,6 +270,8 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
         public function ccpw_text_domain_loaded()
         {
             load_plugin_textdomain('ccpw', false, basename(dirname(__FILE__)) . '/languages/');
+            
+            
         }
 
         /**
@@ -267,9 +292,19 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
             update_option('ccpw-alreadyRated', 'no');
             update_option('ccpw-fresh-installation', 'new user');
             update_option('CCPW_FREE_VERSION', CCPWF_VERSION);
+            update_option( 'ccpw-install-check', 'no' );
             $this->ccpw_data_insert();
 
+            if (!get_option( 'crypto_widgets_initial_save_version' ) ) {
+                add_option( 'crypto_widgets_initial_save_version', CCPWF_VERSION );
+            }
+
+            if(!get_option( 'ccpw-install-date' ) ) {
+                add_option( 'ccpw-install-date', gmdate('Y-m-d h:i:s') );
+            }
+
         }
+
         public function ccpw_do_activation_redirect()
         {
             if (get_option('ccpw_do_activation_redirect', false)) {
@@ -289,9 +324,17 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
             if (wp_next_scheduled('ccpw_coins_autosave')) {
                 wp_clear_scheduled_hook('ccpw_coins_autosave');
             }
+            
+            if (wp_next_scheduled('ccpw_extra_data_update')) {
+                wp_clear_scheduled_hook('ccpw_extra_data_update');
+            }
+
             $db = new ccpw_database();
             $db->drop_table();
             delete_transient('ccpw-saved-coindata');
+
+       
+           
         }
 
         /*
@@ -402,6 +445,14 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
                 wp_enqueue_script('ccpw-settings-custom-scripts', CCPWF_URL . 'assets/js/setting-custom-scripts.min.js', array('jquery'), CCPWF_VERSION, true);
 
             }
+
+            $screen = get_current_screen();               
+            if (strpos($screen->id, 'openexchange-api-settings') !== false) {
+
+                wp_enqueue_script('ccpw-settings-data-share', CCPWF_URL . 'assets/js/admin-share-data.js', array('jquery'), CCPWF_VERSION, true);
+
+            }
+          
         }
     }
 

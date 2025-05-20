@@ -61,7 +61,7 @@
 .tickercontainer span.ccpw_icon{
 	display:inline-table;
 	width:22px;
-	height:100%;
+	/* height:100%; */
 	vertical-align:middle;
 }
 .tickercontainer span.ccpw_icon img {

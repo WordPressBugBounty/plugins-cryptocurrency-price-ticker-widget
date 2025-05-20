@@ -238,9 +238,16 @@ if (!class_exists('CCPW_api_data')) {
 
                 foreach ($coins['data'] as $coin) {
                     // Skip coins with emoji in name, symbol, or coin_id
-                    if ($this->contains_emoji($coin['name']) || $this->contains_emoji($coin['symbol']) || $this->contains_emoji($coin['id'])) {
-                        continue;
+                    if (is_array($coin)) {
+                        if (self::contains_emoji($coin['name']) || self::contains_emoji($coin['symbol']) || self::contains_emoji($coin['id'])) {
+                            continue;
+                        }
+                    } else {
+                        if ( self::contains_emoji($coin->name) || self::contains_emoji($coin->symbol) ||  self::contains_emoji($coin->id)) {
+                            continue;
+                             }
                     }
+              
 
                     $response['coin_id'] = $coin['id'];
                     $response['rank'] = $coin['rank'];

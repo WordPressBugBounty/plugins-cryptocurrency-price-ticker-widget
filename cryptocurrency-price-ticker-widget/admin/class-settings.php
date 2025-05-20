@@ -4,15 +4,62 @@ if (!class_exists('CCPW_CMB2_Settings')) {
     {
         use CCPW_Helper_Functions;
 
-        public function __construct()
-        {
+        public function __construct() {
+
             add_action('cmb2_admin_init', array($this, 'cmb2_ccpw_metaboxes'));
-            //add_action('admin_head', array($this, 'ccpw_custom_javascript_for_cmb2'), 100);
+          
+            add_action('cpfm_register_notice', function () {
+
+                if (!class_exists('CPFM_Feedback_Notice') || !current_user_can('manage_options')) {
+                    return;
+                }
+                
+                CPFM_Feedback_Notice::cpfm_register_notice('crypto', [
+
+                    'title' => __('Cryptocurrency Plugins by Cool Plugins', 'ccpw'),
+                    'message' => __('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'cool-plugins-feedback'),
+                    'pages' => ['cool-crypto-plugins', 'ccpw_get_started','openexchange-api-settings'],
+                    'always_show_on' => ['cool-crypto-plugins','ccpw_get_started','openexchange-api-settings'], // This enables auto-show
+                    'plugin_name'=>'ccpw'
+                ]);
+            });
+
+            
+            add_action('cpfm_after_opt_in_ccpw', function($category) {
+
+                if ($category === 'crypto') {
+
+                    CCPW_cronjob::ccpw_send_data();
+                    
+                    $options = get_option('openexchange-api-settings', []);
+                    $options['ccpw_extra_info'] = true;
+                    update_option('openexchange-api-settings', $options);
+                }
+            });
+           
+        }
+
+        /**
+         * Define the metabox and field configurations.
+         */
+
+        public function extra_setting() {
+
+            $cool_options_setting = new_cmb2_box(
+                array(
+                    'id' => 'ccpw_settings_page',
+                    'title' => esc_html__('API Settings', 'celp1'),
+                    'object_types' => array('options-page'),
+                    'option_key' => 'openexchange-api-settings',
+                    'menu_title' => false,
+                    'parent_slug' => 'cool-crypto-plugins',
+                    'capability' => 'manage_options',
+                    'position' => 44,
+                )
+            );
 
         }
-/**
- * Define the metabox and field configurations.
- */
+
         public function cmb2_ccpw_metaboxes()
         {
             // Start with an underscore to hide fields from custom fields list
@@ -516,6 +563,7 @@ if (!class_exists('CCPW_CMB2_Settings')) {
 						</div>
 						</div>',
             ));
+            $this->extra_setting();
         }
 
         public function select_fiat_currency()
@@ -593,6 +641,9 @@ if (!class_exists('CCPW_CMB2_Settings')) {
 
             }
         }
+
+
+
     }
     new CCPW_CMB2_Settings();
 }

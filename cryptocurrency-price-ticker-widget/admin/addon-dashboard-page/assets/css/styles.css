@@ -120,7 +120,9 @@ h4.plugin-title {
     margin-top: 10px;
     justify-content: center;
 }
-
+.cool-body-right img {
+    width: 200px;
+}
 #cool-plugins-container .plugin-stats * {
     border-radius: 0;
     height: 24px;

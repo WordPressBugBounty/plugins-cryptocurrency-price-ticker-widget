@@ -32,9 +32,74 @@ if (!class_exists('Openexchange_api_settings')) {
             add_action('admin_notices', array($this, 'openexchange_api_key_notice'));
             add_action('admin_menu', array($this, 'openexchange_add_submenu'), 100);
             add_action('cmb2_admin_init', array($this, 'openexchange_settings_callback'));
+            add_action('ccpw_get_extra_info', array($this, 'ccpw_get_extra_info'));
             add_action('admin_enqueue_scripts', array($this, 'openexchange_custom_javascript_for_cmb2'));
+            add_action('cmb2_save_options-page_fields', array($this, 'ccpw_handle_unchecked_checkbox'), 10, 3);
         }
 
+        function ccpw_handle_unchecked_checkbox($object_id, $updated, $cmb) {
+
+            if ($object_id === 'openexchange-api-settings') {
+
+                $choice = get_option('cpfm_opt_in_choice_crypto');
+                $options = get_option($object_id, array());
+
+                if (!empty($choice)) {
+                    
+                    if (!isset($_POST['ccpw_extra_info'])) {
+
+                        $options['ccpw_extra_info'] = false;
+                       
+                        // Clear scheduled hook if it exists
+                        wp_clear_scheduled_hook('ccpw_extra_data_update');
+                        
+                        // Only check for CMC if the class exists and the option isn't set
+                        if ( method_exists('CMC_cronjob', 'cmc_send_data')  && !isset($_POST['cmc_extra_info'])) {
+                            
+
+                            $options['cmc_extra_info'] = false;
+                            wp_clear_scheduled_hook('cmc_extra_data_update');
+                        }
+                        if ( method_exists('CCEW_cronjob', 'ccew_send_data') &&  !isset($_POST['ccew_extra_info'])) {
+
+                            $options['ccew_extra_info'] = false;
+                            wp_clear_scheduled_hook('ccew_extra_data_update');
+                        }
+                        
+                        update_option($object_id, $options);
+
+                    } else {
+
+                        // Only schedule the cron job if it's not already scheduled
+                        if (!wp_next_scheduled('ccpw_extra_data_update')) {
+
+                            CCPW_cronjob::ccpw_send_data(); // Trigger immediate data send
+                            wp_schedule_event(time(), 'every_30_days', 'ccpw_extra_data_update');
+                        }
+
+                        if ( method_exists('CMC_cronjob', 'cmc_send_data') && !isset($_POST['cmc_extra_info'])) {
+
+                            CMC_cronjob::cmc_send_data(); // Trigger immediate data send
+                            wp_schedule_event(time(), 'every_30_days', 'cmc_extra_data_update');
+                            $options['cmc_extra_info'] = true;
+                            
+                        }
+
+                        if (  method_exists('CCEW_cronjob', 'ccew_send_data') && !isset($_POST['ccew_extra_info'])) {
+
+                            $options['ccew_extra_info'] = true;
+                            CCEW_cronjob::ccew_send_data(); // Trigger immediate data send
+                            wp_schedule_event(time(), 'every_30_days', 'ccew_extra_data_update');
+                        }
+
+                        // Optionally set the flag to true for clarity
+                        $options['ccpw_extra_info'] = true;
+                        update_option($object_id, $options);
+                    }
+
+                }
+            }
+        }
         /**
          * Enqueue custom JavaScript for CMB2
          */
@@ -196,13 +261,7 @@ if (!class_exists('Openexchange_api_settings')) {
             $selected_api = get_option("openexchange-api-settings");
             $api_type = (isset($selected_api['ccpw_select_api'])) ? $selected_api['ccpw_select_api'] : "coin_gecko";
             $active_api = ($api_type == "coin_gecko") ? "https://www.coingecko.com/en/developers/dashboard?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=coolplugins&utm_content=view_crypto_widget" : "https://pro.coinmarketcap.com/account";
-            $cool_options->add_field(array(
-                'name' => 'CoinGecko API Discount',
-                'id' => 'ccpw_discount_banner',
-                'type' => 'title',
-                'desc' => '<div class="cmb-th"></div><div class="cmb-td"><table><tr><td>Enjoy an additional <b>20% discount</b> on API Premium plan with the exclusive coupon code: <b style="color: blue;"><a href="https://support.coingecko.com/hc/en-us/articles/21880397454233-User-Guide-How-to-use-Demo-plan-API-key?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=coolplugins&utm_content=view_crypto_widget" target="blank">COOLPLUGINS20</a></b></td><td></td></tr></table></div>',
-            ));
-
+            
             if ($api_type == "coin_gecko" || $api_type == "coin_marketcap") {
              
                 $cool_options->add_field(array(
@@ -211,6 +270,22 @@ if (!class_exists('Openexchange_api_settings')) {
                     'type' => 'title',
                     'desc' => '<div class="cmb-th"></div><div class="cmb-td"><table><tr><td><a href="' . $active_api . ' " target="blank">Click here to view API usage details</a></td><td></td></tr></table></div>',
                 ));
+            }
+
+            $cpfm_opt_in    = get_option('cpfm_opt_in_choice_crypto');
+            $notice_check   = isset($cpfm_opt_in) ? $cpfm_opt_in : '';
+
+            if($notice_check)   {
+
+                $cool_options->add_field(
+                    array(
+                        'name' => __('Make Cryptocurrency Widgets Even Better', 'ccpw1'),
+                        'id' => 'ccpw_extra_info_title',
+                        'type' => 'title',
+                    
+                    )
+                );
+                do_action('ccpw_get_extra_info', $cool_options);
             }
             
             $cool_options->add_field(
@@ -222,7 +297,46 @@ if (!class_exists('Openexchange_api_settings')) {
                 )
             );
 
+            
+
         }
+
+        public function ccpw_get_extra_info($cool_options_setting) {
+
+            $choice     = get_option('cpfm_opt_in_choice_crypto');
+        
+            $api_option = get_option("openexchange-api-settings");
+           
+            if (!empty($api_option) && isset($api_option['ccpw_extra_info'])) {
+
+                $choice = $api_option['ccpw_extra_info'];
+
+            }
+
+            $choice = (!empty($choice) && $choice === 'yes') ? 'on' : '';
+
+            $terms_html = '
+                Help us make this plugin more compatible with your site by sharing non-sensitive site data. 
+                <a href="#" class="ccpw-see-terms">[See terms]</a>
+                <div id="termsBox" style="display: none;padding-left: 20px; margin-top: 10px; font-size: 12px; color: #999;">
+                 <p>' . esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'ccpw') . '</p>
+                    <ul style="list-style-type:auto;">
+                        <li>'. esc_html__('Your website home URL and WordPress admin email.', 'ccpw') . '</li>
+                        <li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'ccpw') . '</li>
+                    </ul>
+                </div>';
+
+            $cool_options_setting->add_field(array(
+                'name'      => __('Usage Data Sharing ', 'ccpw1'),
+                'id'        => 'ccpw_extra_info',
+                'type'      => 'checkbox',
+                'default'   => $choice,
+                'desc'      => $terms_html,
+              
+            ));
+       
+        }
+        
 
         /**
          * Admin notice for OpenExchangeRates.org API key
@@ -281,7 +395,6 @@ if (!class_exists('Openexchange_api_settings')) {
                 <?php
             }
         }
-
 
     }
 

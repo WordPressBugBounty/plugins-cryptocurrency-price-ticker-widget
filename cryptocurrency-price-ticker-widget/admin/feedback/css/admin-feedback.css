@@ -6,10 +6,11 @@
 #cool-plugins-deactivate-feedback-dialog-wrapper.hide-feedback-popup{
     opacity: 0;
 }
-.cool-plugins-deactivation-response{
+.cool-plugins-deactivation-response {
     position: fixed;
-    left: 35%;
-    top: 22%;
+    left: 22%;
+    top: 21%;
+    width: 55%;
     z-index: 9999;
     color:white;
 }

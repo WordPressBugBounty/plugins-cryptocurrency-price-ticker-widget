@@ -26,7 +26,7 @@ if (!class_exists('CCPW_Review_Notice')) {
                 add_action('wp_ajax_' . self::AJAX_REQUEST, array($this, 'dismiss_review_notice'));
             }
         }
-
+                     
         // Callback function to dismiss review notice
         public function dismiss_review_notice()
         {
@@ -38,6 +38,7 @@ if (!class_exists('CCPW_Review_Notice')) {
             update_option(self::SPARE_ME, 'yes');
             wp_send_json_success();
         }
+
 
         // Callback function to display review notice
         public function display_review_notice()
@@ -75,7 +76,7 @@ if (!class_exists('CCPW_Review_Notice')) {
             <div data-ajax-url="<?php echo esc_attr(admin_url('admin-ajax.php')); ?>"
                 data-ajax-callback="<?php echo esc_attr(self::AJAX_REQUEST); ?>"
                 data-nonce="<?php echo esc_attr(wp_create_nonce('ccpw-nonce')); ?>"
-                class="<?php echo self::SLUG; ?>-feedback-notice-wrapper notice notice-info">
+                class="<?php echo esc_attr(self::SLUG); ?>-feedback-notice-wrapper notice notice-info">
                 <div class="logo-container">
                     <a href="<?php echo esc_url(self::REVIEW_LINK); ?>" target="_blank">
                         <img src="<?php echo esc_url(self::LOGO); ?>" alt="<?php echo esc_attr(self::PLUGIN); ?>" style="max-width:80px;">
@@ -84,14 +85,13 @@ if (!class_exists('CCPW_Review_Notice')) {
                 <div class="message-container">
                     <?php
 
-            echo "Thanks for using the <b>" . self::PLUGIN . "</b> WordPress plugin! We hope you liked it. ";
-            echo "Please take a moment to rate it - your feedback encourages us to create more <a href='https://coolplugins.net/?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=review&utm_content=review-notice' target='_blank'><strong>Cool Plugins</strong></a>!<br/>";
-
+           echo esc_html__( 'Thanks for using the', 'ccpw' ) . ' <b>' . esc_html( self::PLUGIN ) . '</b> ' . esc_html__( 'WordPress plugin! We hope you liked it.', 'ccpw' );
+echo ' ' . esc_html__( 'Please take a moment to rate it - your feedback encourages us to create more', 'ccpw' ) . ' <a href="' . esc_url( 'https://coolplugins.net/?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=review&utm_content=review-notice' ) . '" target="_blank" rel="noopener noreferrer"><strong>' . esc_html__( 'Cool Plugins', 'ccpw' ) . '</strong></a>!<br/>';
             ?>
                     <div class="call-to-action">
                         <a href="<?php echo esc_url(self::REVIEW_LINK); ?>" class="button button-primary" target="_blank" title="Rate Now! ★★★★★">Rate Now! ★★★★★</a>
-                        <a href="#" class="<?php echo self::SLUG; ?>-dismiss-notice" title="Dismiss this notice.">I already rated it</a>
-                        <a href="#" class="<?php echo self::SLUG; ?>-dismiss-notice" title="Dismiss this notice.">Not interested</a>
+                        <a href="#" class="<?php echo esc_attr(self::SLUG); ?>-dismiss-notice" title="Dismiss this notice.">I already rated it</a>
+                        <a href="#" class="<?php echo esc_attr(self::SLUG); ?>-dismiss-notice" title="Dismiss this notice.">Not interested</a>
                     </div>
                 </div>
             </div>
@@ -149,10 +149,10 @@ if (!class_exists('CCPW_Review_Notice')) {
             // JavaScript for dismissing the notice
             $script = '<script>
                 jQuery(document).ready(function ($) {
-                    $(".' . self::SLUG . '-dismiss-notice").on("click", function (event) {
+                    $(".' . esc_attr(self::SLUG) . '-dismiss-notice").on("click", function (event) {
                         event.preventDefault();
                         var $this = $(this);
-                        var wrapper = $this.closest(".' . self::SLUG . '-feedback-notice-wrapper");
+                        var wrapper = $this.closest(".' . esc_attr(self::SLUG) . '-feedback-notice-wrapper");
                         var ajaxURL = wrapper.data("ajax-url");
                         var ajaxCallback = wrapper.data("ajax-callback");
                         var ajaxNonce = wrapper.data("nonce");
