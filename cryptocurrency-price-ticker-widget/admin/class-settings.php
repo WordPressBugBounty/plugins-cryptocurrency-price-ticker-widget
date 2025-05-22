@@ -9,22 +9,29 @@ if (!class_exists('CCPW_CMB2_Settings')) {
             add_action('cmb2_admin_init', array($this, 'cmb2_ccpw_metaboxes'));
           
             add_action('cpfm_register_notice', function () {
-
+            
                 if (!class_exists('CPFM_Feedback_Notice') || !current_user_can('manage_options')) {
                     return;
                 }
-                
-                CPFM_Feedback_Notice::cpfm_register_notice('crypto', [
+
+                $notice = [
 
                     'title' => __('Cryptocurrency Plugins by Cool Plugins', 'ccpw'),
                     'message' => __('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'cool-plugins-feedback'),
                     'pages' => ['cool-crypto-plugins', 'ccpw_get_started','openexchange-api-settings'],
                     'always_show_on' => ['cool-crypto-plugins','ccpw_get_started','openexchange-api-settings'], // This enables auto-show
                     'plugin_name'=>'ccpw'
-                ]);
-            });
+                ];
 
-            
+                CPFM_Feedback_Notice::cpfm_register_notice('crypto', $notice);
+
+                    if (!isset($GLOBALS['cool_plugins_feedback'])) {
+                        $GLOBALS['cool_plugins_feedback'] = [];
+                    }
+                
+                    $GLOBALS['cool_plugins_feedback']['crypto'][] = $notice;
+           
+            });
             add_action('cpfm_after_opt_in_ccpw', function($category) {
 
                 if ($category === 'crypto') {

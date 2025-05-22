@@ -4,7 +4,7 @@ Tags: cryptocurrency,coinmarketcap, cryptocurrency price ticker, Crypto Widgets,
 Requires at least:6.0
 Tested up to: 6.8.1
 Requires PHP:7.2
-Stable tag: 2.8.4
+Stable tag: 2.8.5
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html 
 Donate link: https://coolplugins.net/donate-and-support-cool-plugins/
@@ -230,8 +230,15 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 6. Crypto coins real-time price update widget (Pro Only).
 7. Historical price charts & trading view charts (Pro Only).
 8. Cryptocurrency Widgets Pro - Price cards & more layouts.
+9. Coins Marketcap plugin coin single page.
+10. Cryptocurrency Exchanges List Pro WordPress plugin.
+11. Coins Marketcap plugin - Top Gainer/Top Losers.
 
 == Changelog == 
+= Version 2.8.5| 22nd May  2025 =
+* Improvements: Enhanced user opt-in options for better customization.
+* Added: New API settings for both Free and Pro users.
+
 = Version 2.8.4| 20th May  2025 =
 * Improvements: Minor code improvements.
 * Added: User opt-in option in plugin.

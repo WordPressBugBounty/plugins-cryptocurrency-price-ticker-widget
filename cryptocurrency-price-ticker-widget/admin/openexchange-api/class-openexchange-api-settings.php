@@ -118,6 +118,15 @@ if (!class_exists('Openexchange_api_settings')) {
                     
                     // Handle changes in the API selection
                     $('.cmb2-id-ccpw-select-api #ccpw_select_api').change(function() {
+                         var apiSelector = $('#ccpw_select_api');
+                         var selectedValueapi = apiSelector.val();
+
+                        if (selectedValueapi === 'coin_gecko') {
+                            $('.cmb2-id-api-end-point').show();
+                        } else {
+                            $('.cmb2-id-api-end-point').closest('.cmb-row').hide();
+                        }
+
                         $('.cmb2-id-coinmarketcap-api').hide();
                         $('.cmb2-id-coingecko-api').hide();
                         $('.cmb2-id-coincap-api').hide();
@@ -219,6 +228,19 @@ if (!class_exists('Openexchange_api_settings')) {
                     ),
                 )
             );
+
+            $cool_options->add_field(array(
+                'name' => __('Select Coingecko API Type', 'cmb2'),
+                'desc' => '',
+                'id' => 'api_end_point',
+                'type' => 'select',
+                'options' => array(
+                    'free' => 'FREE',
+                    'pro' => 'PRO',
+                ),
+                'default' => 'free',
+
+            ));
 
             $cool_options->add_field(array(
                 'name' => __('Enter CoinGecko API Key', 'ccpw1'),

@@ -5,7 +5,7 @@
  * Plugin URI: https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin-uri
  * Author: Cool Plugins
  * Author URI: https://coolplugins.net/?utm_source=cryptocurrency-widgets&utm_medium=author_uri
- * Version: 2.8.4
+ * Version: 2.8.5
  * License: GPL3
  * Text Domain: ccpw
  * Domain Path: languages
@@ -22,7 +22,7 @@ if (defined('CCPWF_VERSION')) {
 }
 
 // Define constants for later use
-define('CCPWF_VERSION', '2.8.4');
+define('CCPWF_VERSION', '2.8.5');
 define('CCPWF_FILE', __FILE__);
 define('CCPWF_DIR', plugin_dir_path(CCPWF_FILE));
 define('CCPWF_URL', plugin_dir_url(CCPWF_FILE));

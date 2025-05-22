@@ -31,6 +31,37 @@ trait CCPW_Helper_Functions
 
     }
 
+    // Function to select Api Key Endpoint Free & Pro // 
+
+    protected function ccpw_get_api_end_point()
+    {
+        // Get coingecko api end point
+
+        $api_option = get_option("openexchange-api-settings");
+        $endpoint = (isset($api_option['api_end_point'])) ? $api_option['api_end_point'] : "free";
+        if ($endpoint == "pro") {
+            return "https://pro-api.coingecko.com/api/v3/";
+        } else {
+            return 'https://api.coingecko.com/api/v3/';
+        }
+
+    }
+
+
+    protected function ccpw_get_api_key_end_point()
+    {
+        // Get coingecko api end point
+
+        $api_option = get_option("openexchange-api-settings");
+        $endpoint = (isset($api_option['api_end_point'])) ? $api_option['api_end_point'] : "free";
+        if ($endpoint == "pro") {
+            return "x_cg_pro_api_key";
+        } else {
+            return "x_cg_demo_api_key";
+        }
+
+    }
+
     /**
      * Check if the user has entered a Coingecko API key
      *

@@ -10,7 +10,6 @@ if (!class_exists('CCPW_api_data')) {
         /**
          * API endpoints for different services
          */
-        const COINGECKO_API_ENDPOINT = 'https://api.coingecko.com/api/v3/';
         const COINPAPRIKA_API_ENDPOINT = 'https://api.coinpaprika.com/v1/tickers';
         const COINMARKETCAP_API_ENDPOINT = 'https://pro-api.coinmarketcap.com/';
         const COINCAP_API_ENDPOINT = 'https://api.coincap.io/v2/';
@@ -20,11 +19,11 @@ if (!class_exists('CCPW_api_data')) {
         {
             // self::CMC_API_ENDPOINT = 'https://apiv3.coinexchangeprice.com/v3/';
         }
-
         /**
          * Fetches data from the CoinGecko API and saves it in the database.
          * MUST NOT CALL THIS FUNCTION DIRECTLY.
          */
+
         public function ccpw_get_coin_gecko_data()
         {
             $update_api_name = 'ccpw-active-api';
@@ -50,7 +49,7 @@ if (!class_exists('CCPW_api_data')) {
             }
 
             // API URL for CoinGecko
-            $api_url = self::COINGECKO_API_ENDPOINT . 'coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&x_cg_demo_api_key=' . $coingecko_api_key;
+            $api_url =  $this->ccpw_get_api_end_point() . 'coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&'. $this->ccpw_get_api_key_end_point() .'=' . $coingecko_api_key;
 
             // Fetch data from CoinGecko API
             $request = wp_remote_get($api_url, array('timeout' => 120, 'sslverify' => false));
