@@ -140,8 +140,8 @@ if (!class_exists('CPTW_Posttype')) {
 			<input style="width:100%" onClick="this.select();" type="text" class="regular-small" name="my_meta_box_text" id="my_meta_box_text" value="<?php echo esc_attr(htmlentities($dynamic_attr)); ?>" readonly/>
 			<hr>
 			<div style="display:flex;justify-content:space-between;">
-				<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=demo&utm_content=copy-shortcode">View Pro Demos</a>
-				<a class="button button-primary" target="_blank" href="https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=get-pro&utm_content=copy-shortcode">Buy Pro</a>
+				<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=copy_shortcode">View Pro Demos</a>
+				<a class="button button-primary" target="_blank" href="https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=copy_shortcode">Buy Pro</a>
 			</div>
 			<?php
 }
@@ -172,15 +172,15 @@ if (!class_exists('CPTW_Posttype')) {
 
             '<ul>
 			<li><b>Q1. A website like coinmarketcap.com?</b><br/>
-			Explore our <a href="https://cryptocurrencyplugins.com/coinmarketcap-clone-website/?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=cmc-clone&utm_content=widget-sidebar" target="_blank">coinmarketcap clone website creation service</a> and create a website similar to that.
+			Explore our <a href="https://cryptocurrencyplugins.com/coinmarketcap-clone-website/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=cmc_clone_widget_sidebar" target="_blank">coinmarketcap clone website creation service</a> and create a website similar to that.
 			<hr></li>
 
 			<li><b>Q2. Accept cryptocurrency payments?</b><br/>
-			Install our <a href="https://paywithcryptocurrency.net/?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=metamask&utm_content=widget-sidebar" target="_blank">WooCommerce plugin for MetaMask</a> & start accepting crypto payments in your store.
+			Install our <a href="https://paywithcryptocurrency.net/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=cpmw_widget_sidebar" target="_blank">WooCommerce plugin for MetaMask</a> & start accepting crypto payments in your store.
 			<hr></li>
 
 			<li><b>Q3. More cryptocurrency widgets?</b><br/>
-			Check our <a href="https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=get-pro&utm_content=widget-sidebar" target="_blank">Cryptocurrency Widgets Pro</a> plugin and add premium crypto widgets inside your website.
+			Check our <a href="https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=widget_sidebar" target="_blank">Cryptocurrency Widgets Pro</a> plugin and add premium crypto widgets inside your website.
 			<hr></li>
 
 			<li><b>Q4. Enjoying our free plugin?</b><br/>

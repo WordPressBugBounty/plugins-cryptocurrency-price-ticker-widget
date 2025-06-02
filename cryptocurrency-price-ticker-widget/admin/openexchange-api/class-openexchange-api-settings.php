@@ -60,6 +60,14 @@ if (!class_exists('Openexchange_api_settings')) {
                             $options['cmc_extra_info'] = false;
                             wp_clear_scheduled_hook('cmc_extra_data_update');
                         }
+
+                        if (method_exists('CELP_cron', 'celp_send_data') && !isset($_POST['celp_extra_info'])) {
+                        
+
+                            $options['celp_extra_info'] = false;
+                            wp_clear_scheduled_hook('celp_extra_data_update');
+                        }
+
                         if ( method_exists('CCEW_cronjob', 'ccew_send_data') &&  !isset($_POST['ccew_extra_info'])) {
 
                             $options['ccew_extra_info'] = false;
@@ -79,17 +87,32 @@ if (!class_exists('Openexchange_api_settings')) {
 
                         if ( method_exists('CMC_cronjob', 'cmc_send_data') && !isset($_POST['cmc_extra_info'])) {
 
-                            CMC_cronjob::cmc_send_data(); // Trigger immediate data send
-                            wp_schedule_event(time(), 'every_30_days', 'cmc_extra_data_update');
-                            $options['cmc_extra_info'] = true;
+                            if (!wp_next_scheduled('cmc_extra_data_update')) {
+
+                                CMC_cronjob::cmc_send_data(); // Trigger immediate data send
+                                wp_schedule_event(time(), 'every_30_days', 'cmc_extra_data_update');
+                                $options['cmc_extra_info'] = true;
+                            }
                             
+                        }
+
+                        if (method_exists('CELP_cron', 'celp_send_data') && !isset($_POST['celp_extra_info'])) {
+                        if (!wp_next_scheduled('celp_extra_data_update')) {
+                              $options['celp_extra_info'] = true;
+                              CELP_cron::celp_send_data(); // Trigger immediate data send
+                              wp_schedule_event(time(), 'every_30_days', 'celp_extra_data_update');
+
+                          }
                         }
 
                         if (  method_exists('CCEW_cronjob', 'ccew_send_data') && !isset($_POST['ccew_extra_info'])) {
 
-                            $options['ccew_extra_info'] = true;
-                            CCEW_cronjob::ccew_send_data(); // Trigger immediate data send
-                            wp_schedule_event(time(), 'every_30_days', 'ccew_extra_data_update');
+                            if (!wp_next_scheduled('ccew_extra_data_update')) {
+                                
+                                $options['ccew_extra_info'] = true;
+                                CCEW_cronjob::ccew_send_data(); // Trigger immediate data send
+                                wp_schedule_event(time(), 'every_30_days', 'ccew_extra_data_update');
+                            }
                         }
 
                         // Optionally set the flag to true for clarity
@@ -339,7 +362,7 @@ if (!class_exists('Openexchange_api_settings')) {
 
             $terms_html = '
                 Help us make this plugin more compatible with your site by sharing non-sensitive site data. 
-                <a href="#" class="ccpw-see-terms">[See terms]</a>
+                <a href="#" class="cpfm-see-terms">[See terms]</a>
                 <div id="termsBox" style="display: none;padding-left: 20px; margin-top: 10px; font-size: 12px; color: #999;">
                  <p>' . esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'ccpw') . '</p>
                     <ul style="list-style-type:auto;">

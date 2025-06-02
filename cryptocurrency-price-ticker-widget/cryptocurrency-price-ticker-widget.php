@@ -4,8 +4,8 @@
  * Description: Cryptocurrency price widgets for WordPress website. Display crypto ticker widget, coins live price list, table, labels & coin marketcap via shortcodes.
  * Plugin URI: https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin-uri
  * Author: Cool Plugins
- * Author URI: https://coolplugins.net/?utm_source=cryptocurrency-widgets&utm_medium=author_uri
- * Version: 2.8.5
+ * Author URI: https://coolplugins.net/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=dashboard
+ * Version: 2.8.6
  * License: GPL3
  * Text Domain: ccpw
  * Domain Path: languages
@@ -22,14 +22,15 @@ if (defined('CCPWF_VERSION')) {
 }
 
 // Define constants for later use
-define('CCPWF_VERSION', '2.8.5');
+define('CCPWF_VERSION', '2.8.6');
 define('CCPWF_FILE', __FILE__);
 define('CCPWF_DIR', plugin_dir_path(CCPWF_FILE));
 define('CCPWF_URL', plugin_dir_url(CCPWF_FILE));
 define('CCPWF_COINS_LOGO', "https://assets.coingecko.com/coins/images/");
-define('CCPWF_PRO_URL', 'https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=get-pro');
-define('CCPWF_DEMO_URL', 'https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/');
+define('CCPWF_PRO_URL', 'https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&');
+define('CCPWF_DEMO_URL', 'https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=copy_shortcode');
 define('CCPWF_DEMO_UTM', '?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=demo');
+define('CCPWF_FEEDBACK_API',"https://feedback.coolplugins.net/");
 
 if (!class_exists('Crypto_Currency_Price_Widget')) {
     /**
@@ -424,7 +425,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
         public function ccpw_add_widgets_action_links($links)
         {
             $links[] = '<a style="font-weight:bold" href="' . esc_url(get_admin_url(null, 'post-new.php?post_type=ccpw')) . '">Add Widgets</a>';
-            $links[] = '<a  style="font-weight:bold" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/" target="_blank">Check Demos</a>';
+            $links[] = '<a  style="font-weight:bold" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=dashboard" target="_blank">Check Demos</a>';
             return $links;
 
         }
@@ -446,12 +447,12 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
 
             }
 
-            $screen = get_current_screen();               
-            if (strpos($screen->id, 'openexchange-api-settings') !== false) {
-
-                wp_enqueue_script('ccpw-settings-data-share', CCPWF_URL . 'assets/js/admin-share-data.js', array('jquery'), CCPWF_VERSION, true);
-
+            if(!wp_script_is( 'cpfm-data-share-setting.js' )){
+              $screen = get_current_screen();     
+              if (strpos($screen->id, 'openexchange-api-settings') !== false) {
+                wp_enqueue_script('cpfm-settings-data-share', CCPWF_URL . 'assets/js/cpfm-data-share-setting.js', array('jquery'), CCPWF_VERSION, true);
             }
+        }
           
         }
     }

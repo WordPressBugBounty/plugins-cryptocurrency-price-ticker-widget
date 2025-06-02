@@ -32,7 +32,7 @@ if (!class_exists('CCPW_cronjob')) {
            
        static public function ccpw_send_data() {
                    
-            $feedback_url = 'https://feedback.coolplugins.net/wp-json/coolplugins-feedback/v1/site';
+            $feedback_url = CCPWF_FEEDBACK_API.'wp-json/coolplugins-feedback/v1/site';
             require_once CCPWF_DIR . 'admin/feedback/class-admin-feedback-form.php';
 
             if (!defined('CCPWF_DIR')  || !class_exists('\CCPW\feedback\cp_feedback') ) {
