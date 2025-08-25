@@ -2,9 +2,9 @@
 Contributors: narinder-singh, satindersingh, coolplugins
 Tags: cryptocurrency,coinmarketcap, cryptocurrency price ticker, Crypto Widgets, Crypto Price Updates
 Requires at least:6.0
-Tested up to: 6.8.1
+Tested up to: 6.8.2
 Requires PHP:7.2
-Stable tag: 2.8.6
+Stable tag: 2.8.7
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html 
 Donate link: https://coolplugins.net/donate-and-support-cool-plugins/
@@ -13,225 +13,177 @@ Display cryptocurrency price ticker widget, coins live price list, table, labels
 
 == Description ==
 
-### 📊 Crypto Price Widgets For WordPress Website
+### Crypto Price Widgets For WordPress Website
 
-**[Cryptocurrency Widgets](https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=crypto_widgets "WordPress plugin to add crypto price widgets inside your website.")** ⇗ WordPress plugin allows you to easily display a **crypto ticker widget**, coins price lists, tables, multi-currency tabs & price labels anywhere inside your website using shortcodes.
-
-With this plugin, you can display **coin marketcap**, real-time prices and 24-hour changes for bitcoin, ethereum, and other popular cryptocurrencies anywhere on your crypto blog or website.
-
-#### 📺 [Screenshots](#screenshots "View plugin screenshots") | 💻 [View Demos](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=top_view_demo "View plugin demos")
+**[Cryptocurrency Widgets](https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=crypto_widgets)** is a powerful WordPress plugin that allows you to easily display live crypto prices, market data, price tickers, and coin lists on your website.
 
 https://youtu.be/rqemHFw9KW8
 
-### 👀 View [Cryptocurrency Widgets Demos](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=view_demos "All demos of plugin.") ⇗ & Features
+The key feature of this plugin is the ability to show real-time updates. This plugin utilizes third-party crypto APIs to fetch the latest market prices of virtual coins by quickly retrieving data from leading crypto exchanges.
 
-* **FREE version demos & features...**
- 1. **[Crypto Price Ticker](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-ticker-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_ticker "View crypto price ticker widget demo.") ⇗ [FREE]** -
-Add a moving crypto price ticker widget inside header or footer of your WordPress website.
- 2. **[Coins Price List](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-list-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_list "View cryptocurrencies price list widget demo.") ⇗ [FREE]** -
-Display a list of popular crypto coins live prices and 24H % changes anywhere inside your website via shortcode.
- 3. **[Advanced Price Table](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-table-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_table "View cryptocurrencies prices advanced table widget demo.") ⇗ [FREE]** -
-An advanced price table of 250 top crypto coins with their marketcap, % changes, volume & circulating supply.
- 4. **[Multi-currency Tabs](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/multicurrency-tabs-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=multicurrency_tabs "View multi-currency tabs widget demo.") ⇗ [FREE]** -
-Show crypto coins price in different fiat currencies in a multi-currency tabs widget - USD / EUR / GBP / INR etc.
- 5. **[Coins Price Labels](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-label-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_label "View coins price labels widget demo.") ⇗ [FREE]** -
-Easily showcase cryptocurrency price labels in your website's sidebar or within content using shortcodes.
- 6. **API Source** - This plugin displays prices of the top 250 cryptocurrencies sourced from CoinGecko, CoinMarketCap, CoinCap or Coinpaprika free API. You can select any API source from plugin settings.
+**[View Demos](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=view_demos)**
 
-* **PRO version demos & features...**
-Pro version provides all the features and demos offered by the free version, along with additional ones listed below:
- 1. **[Price Card Widget](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-card-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_card "View crypto price card widget demo.") ⇗ [PRO]** -
-This widget adds crypto coins beautiful price cards with real-time price updates on your crypto website or blog.
- 2. **[Accordion Block Widget](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-accordion-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_accordion "View crypto accordion block widget demo.") ⇗ [PRO]** -
-Show crypto coins price in an accordion layout that will show crypto coins chart when you will click on an accordion tab.
- 3. **[Historical Price Chart](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-chart-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_chart "View crypto coin historical price chart demo.") ⇗ [PRO]** -
-Display any cryptocurrency 1 year price history chart inside your website with a simple shortcode.
- 4. **[Price Slider Widget](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-slider-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_slider "View crypto price slider widget demo.") ⇗ [PRO]** -
-A cool slider layout of crypto coins prices you can add at top or bottom of your content.
- 5. **[Crypto Calculator](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-calculator-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=crypto_calculator "View cryptocurrency calculator widget demo.") ⇗ [PRO]** -
-Add a cryptocurrency calculator widget inside your website where your website visitors can convert any crypto coin price in 30+ fiat currencies or other cryptocurrency.
- 6. **[Price Block Widget](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-block-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_block "View crypto price block widget demo.") ⇗ [PRO]** -
-Add cool cryptocurrency price blocks inside your crypto blog content and let your readers know about real-time prices when they read your crypto blog content.
- 7. **[Crypto News Widget](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-news-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=crypto_news "View crypto news feed widget demo.") ⇗ [PRO]** -
-This widget captures real-time crypto news feeds from top cryptocurrency blogs and websites, displaying them directly on your website.
- 8. **[CoinGecko Widgets](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/coingecko-widgets/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=coingecko_widgets "View CoinGecko widgets demo.") ⇗ [PRO]** -
-Use shortcode to add CoinGecko website's crypto widgets into your WordPress site.
- 9. **[Binance Widget](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/binance-widget/?utm_source=ccw_pluginutm_medium=readme&utm_campaign=demo&utm_content=binance_widget "View Binance widget demo.") ⇗ [PRO]** -
-Display real-time live prices of popular crypto coins listed on Binance exchange directly on your website using the Binance API.
- 10. **[30+ Fiat Currencies Support](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/fiat-currencies-support/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=fiat_currencies "Display crypto price in EUR, GBP, INR & more") ⇗ [PRO]** -
-You can easily display the price of a cryptocurrency in more than 30 different fiat currencies:- **USD, GBP, EUR, INR, JPY, CNY, ILS, KRW, RUB, DKK, PLN, AUD, BRL, MXN, SEK, CAD, HKD, MYR, SGD, CHF, HUF, NOK, THB, CLP, IDR, NZD, TRY, PHP, TWD, CZK, PKR, ZAR**. Plugin uses the **Openexchangerates API** to convert the crypto coin's price from US dollars to the currency you want to see it in.
+### Key Features
+* **Live Price Ticker:** Display real-time cryptocurrency prices in a scrolling ticker. Place it in your website’s header, footer, or anywhere on your site.
 
-> ***Are you using Elementor?*** Try [Cryptocurrency Widgets for Elementor](https://wordpress.org/plugins/cryptocurrency-widgets-for-elementor/ "Cryptocurrency price widgets plugin for Elementor.") plugin and display crypto price widgets on your Elementor pages.
+* **Real-Time Binance Data:** Utilize Binance’s live data API for accurate updates on supported cryptocurrencies, ensuring current market info.
 
-### 🔥 Why should I upgrade to Crypto Widgets Pro?
+* **24-Hour Percentage Changes:** Show cryptocurrency price changes over the last 24 hours, allowing users to see quick market trends.
 
-* ***Number of Coins:*** In the free version, you can only display prices of the top 250 crypto coins, while in the Pro version, you can display price widgets of any crypto coin from the top 2500.
-* ***Real Time Price Updates:*** In the free version, crypto coin prices are updated every 5 to 10 minutes from the API. However, with the Pro version, you can enjoy real-time price updates for any coin listed on Binance, thanks to integration with the Binance API.
-* ***Advanced Layouts & Styles:*** Pro version provides numerous advanced layouts and style options that are not available in the free version. These include price blocks, accordion styles, price cards, slider layouts, and many others, check them in demos above.
-* ***Chart, Calculator & more:*** Pro version also includes additional widgets besides simple price widgets, such as historical price chart, crypto calculator, Binance widget & CoinGecko widget.
-* ***Premium Support:*** Pro users will get their questions answered by [Cool Plugins premium support team](https://coolplugins.net/support/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=support&utm_content=premium_support "WordPress plugin support.") with in 24 hours.
+* **Advanced Price Table:** An advanced price table of 250 top crypto coins with their marketcap, % changes, volume & circulating supply.
 
-### 🔥 Check Our [Best Cryptocurrency Plugins](https://cryptocurrencyplugins.com/best-crypto-plugins-for-wordpress/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=best_crypto_plugins "Best cryptocurrency plugins for WordPress") ⇗
+* **Advanced Tables and Multi-Currency Tabs:** Create detailed tables of 250 crypto coins with their marketcap, % changes, volume & circulating supply, so users can quickly switch between different currencies or exchanges.
 
-#### 1. Coins Marketcap & Prices Plugin
+* **Multi-Fiat Currency Support:** Convert and display cryptocurrency prices in different fiat currencies, like USD, EUR, and GBP etc.
 
-* Create a website like coinmarketcap.com or coingecko.com using our **[coins marketcap plugin](https://cryptocurrencyplugins.com/wordpress-plugin/coins-marketcap/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=cmc_view_plugin) ⇗**.
-* It creates [a table of 2500+ crypto coins](https://cryptocurrencyplugins.com/demo/coins-marketcap/2500-crypto-coins-table/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=cmc_view_demo), displaying their prices, market caps, volumes, changes, charts, and more.
-* It also automatically generates dedicated '[coin single page](https://cryptocurrencyplugins.com/coin/BTC/bitcoin/?utm_source=ccw_plugins&utm_medium=readme&utm_campaign=demo&utm_content=cmc_single_page)' for each cryptocurrency, containing all the price, chart, and market data.
-* Easily add custom content about any coin on a single coin page to increase the content visibility of your website inside Google.
+* **API Source:** This plugin displays prices of the top 250 cryptocurrencies sourced from CoinGecko, CoinMarketCap, CoinCap or Coinpaprika free API. You can select any API source from the plugin settings.
 
-> Get a [complete website like coinmarketcap.com](https://cryptocurrencyplugins.com/coinmarketcap-clone-website/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=cmc_clone_site) that includes our all crypto plugins. Our developer will set it up for you.
+* **Compatibility with WordPress Themes:** This plugin is compatible with all WordPress themes.
 
-#### 2. Crypto Exchanges List Plugin
+* **Fully Responsive:** Ensures your site looks visually appealing across all devices.
 
-* Display [200+ crypto exchanges list](https://cryptocurrencyplugins.com/demo/cryptocurrency-exchanges-list-pro/best-crypto-exchanges-list?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=celp_view_demo) along with their trading & markets data inside your website using **[crypto exhcanges list plugin](https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-exchanges-list-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=celp_view_plugin) ⇗**.
-* It also auto generates every [crypto exchange single page](https://cryptocurrencyplugins.com/crypto-exchange/binance/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=celp_single_page), containing 24H trading volume, number of coins support, trading pairs, social links & much more.
+### Free Version Demos
 
-#### 3. Pay With MetaMask - Cryptocurrency payment gateway
+* **[Crypto Price Ticker](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-ticker-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_ticker)**
+* **[Coins Price List](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-list-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_list)**
+* **[Multi-currency Tabs](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/multicurrency-tabs-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=multicurrency_tabs)**
 
-* If you run a WooCommerce store and want to accept crypto payments at checkout, you should use our **[WooCommerce crypto payments plugin](https://paywithcryptocurrency.net/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=cpmw_view_plugin) ⇗**.
-* Customers can pay via crypto inside your store using web3 wallets, MetaMask, WalletConnect & more.
-* You can [test crypto payment integration in WooCommerce](https://paywithcryptocurrency.net/wordpress-plugin/test-cryptocurrency-payment/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=cpmw_view_demo) by purchasing a dummy product on our demo site using [faucet tokens](https://paywithcryptocurrency.net/plugin-features/test-networks-and-tokens/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=cpmw_faucet).
+### Upgrade To Pro
+Upgrading to the Pro version unlocks the advanced features and functionalities:
 
-### ✍ Credits
+* **Number of Coins:** In the free version, you can only display prices of the top 250 crypto coins, while in the Pro version, you can display price widgets of any crypto coin from the top 2500.
 
-**Cryptocurrency Widgets** plugin uses a variety of crypto price data APIs. You can find the list of these APIs below.
+* **Real Time Price Updates:** In the free version, crypto coin prices are updated every 5 to 10 minutes from the API. However, with the Pro version, you can enjoy real-time price updates for any coin listed on Binance, thanks to integration with the Binance API.
 
-* **CoinGecko API:-** [https://www.coingecko.com/api/](https://www.coingecko.com/api/)
- - [View CoinGecko API Terms](https://www.coingecko.com/en/api_terms)
- - [View CoinGecko Privacy Policy](https://www.coingecko.com/en/privacy)
+* **Advanced Layouts & Styles:** Pro version provides numerous advanced layouts and style options that are not available in the free version. These include price blocks, accordion styles, price cards, slider layouts, and many others, check them in demos above.
 
-* **CoinMarketCap API:-** [https://coinmarketcap.com/api](https://coinmarketcap.com/api)
- - [View CoinMarketCap Terms](https://coinmarketcap.com/terms/)
- - [View CoinMarketCap Privacy Policy](https://coinmarketcap.com/privacy/)
+* **Chart, Calculator & more:** Pro version also includes additional widgets besides simple price widgets, such as historical price chart, crypto calculator, Binance widget & CoinGecko widget.
 
-* **Coinpeprika API:-** [https://api.coinpaprika.com/](https://api.coinpaprika.com/)
- - [View Coinpeprika Terms](https://coinpaprika.com/terms-of-use/)
- - [View Coinpeprika Privacy Policy](https://coinpaprika.com/privacy-policy/)
+* **Premium Support:** Pro users will get their questions answered by [Cool Plugins premium support team](https://coolplugins.net/support/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=support&utm_content=premium_support) with in 24 hours.
 
-* **CoinCap API:-** [https://coincap.io/](https://coincap.io/)
- - [View CoinCap Terms](https://assets.coincap.io/documents/terms_of_service.pdf)
- - [View CoinCap Privacy Policy](https://shapeshift.com/privacy)
+**[Get Pro!](https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=pro_version)**
 
-* **Openexchangerates API:-** [https://openexchangerates.org/](https://openexchangerates.org/)
- - [View Openexchangerates Terms](https://openexchangerates.org/terms)
- - [View Openexchangerates Privacy Policy](https://openexchangerates.org/privacy)
+### Pro Version Demos
+
+* **[Price Card Widget](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-card-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=price_card)**
+* **[Crypto Calculator](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-calculator-widget/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=crypto_calculator)**
+* **[CoinGecko Widgets](https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/coingecko-widgets/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=coingecko_widgets)**
+
+> ***Are you using Elementor?*** Try **[Cryptocurrency Widgets for Elementor](https://wordpress.org/plugins/cryptocurrency-widgets-for-elementor/ "Cryptocurrency price widgets plugin for Elementor.")** plugin and display crypto price widgets on your Elementor pages.
+
+### Check Our Other Cryptocurrency Plugins
+
+* **[Coins MarketCap Plugin](https://cryptocurrencyplugins.com/wordpress-plugin/coins-marketcap/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=cmc_view_plugin):** Effortlessly integrate real-time market data for over 2,500 coins, including prices, market caps, and trading volumes. The plugin supports multiple fiat currencies and is Yoast SEO friendly, ensuring each coin has unique meta tags for better search engine visibility.
+Get a [complete website like coinmarketcap.com](https://cryptocurrencyplugins.com/coinmarketcap-clone-website/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=cmc_clone_site) that includes our all crypto plugins. Our developer will set it up for you.
+
+* **[Cryptocurrency Exchanges List Pro](https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-exchanges-list-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=celp_view_plugin):** Display real-time data from over 250 cryptocurrency exchanges on your website. Create automatic exchange pages showing trading pairs and volumes. Easily enable or disable exchanges as needed.
+
+* **[Pay With MetaMask](https://cryptocurrencyplugins.com/wordpress-plugin/pay-with-metamask-for-woocommerce-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=cpmw_view_plugin):** If you run a WooCommerce store and want to accept cryptocurrency payments at checkout, our WooCommerce Crypto Payments plugin makes it simple. Customers can pay directly with crypto using Web3 wallets such as MetaMask, WalletConnect, and more. You can [test crypto payment integration in WooCommerce](https://paywithcryptocurrency.net/wordpress-plugin/test-cryptocurrency-payment/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=cpmw_view_demo) by purchasing a dummy product on our demo site using [faucet tokens](https://paywithcryptocurrency.net/plugin-features/test-networks-and-tokens/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=cpmw_faucet).
 
 ### Disclaimer
-
 Our Cryptocurrency Widgets plugin offers price widgets for crypto coins through a third-party API. Please note that it does not provide crypto investment advice, buy/sell or guarantee price accuracy due to third-party API usage. Additionally, some links on this page may be affiliate links, meaning we may earn a commission if you make a purchase through these links, at no extra cost to you.
 
 == Installation ==
 
-#### Install & Activate Plugin
+* **Install & Activate Plugin**
+ * Open WordPress admin panel, now navigate to Plugins >> Add New and Search Cryptocurrency Widgets.
+ * You will find a Cryptocurrency Widgets plugin by Cool Plugins.
+ * Click on the Install button in front of this and then activate the plugin.
 
-Open WordPress admin panel and go to **`Plugins >> Add New`** and Search **`Cryptocurrency Widgets`** here, You will find a Cryptocurrency Widgets plugin **`by Cool Plugins`**. Click on the Install button in front of this and then activate the plugin.
-
-#### How To Create Crypto Price Widget?
-
-* After plugin installation & activation, you will find a **`Crypto Plugins`** tab in the sidebar of your WP admin dashboard.
-* Click on **`Crypto Plugins >> Crypto Widgets >> ↳ Add New Widget`**
-* Here, you'll find various settings to create a crypto price widget. Simply choose what you want to create and select the coins you wish to display. You can make a crypto price ticker, list, table, labels, and multi-currency tabs widget.
-* After publishing that widget you will receive a `[shortcode]` that you can add on any page to display a crypto price widget.
-
-#### Important Points
-
-* Remember to add the **`Openexchangerates API`** in plugin settings to convert crypto coin prices from USD to other fiat currencies.
-* Plugin also lets you choose between **`CoinGecko, CoinMarketCap, CoinCap or Coinpeprika API`**. You can set a cache time of 5, 10, or 15 minutes, after which the plugin will update and fetch the latest crypto coin prices from the API.
-* We have a detailed installation guide and [documentation for the Cryptocurrency Widgets Pro](https://cryptocurrencyplugins.com/docs/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=docs&utm_content=installation "Cryptocurrency Widgets Pro Docs") plugin.
+* **How To Create a Crypto Price Widget?**
+ * After plugin installation & activation, you will find a Crypto Plugins tab in the sidebar of your WP admin dashboard.
+ * Click on Crypto Plugins >> Crypto Widgets >> ↳ Add New Widget. Here, you'll find various settings to create a crypto price widget. Simply choose what you want to create and select the coins you wish to display. You can make a crypto price ticker, list, table, labels, and multi-currency tabs widget.
+ * After publishing that widget, you will receive a [shortcode] that you can add to any page to display a crypto price widget.
 
 == Frequently Asked Questions ==
 
-#### How many crypto coins does it support?
-
+= How many crypto coins does it support? =
 This plugin offers price information for the top 250 cryptocurrencies, utilizing either CoinGecko, CoinMarketCap, CoinCap or Coinpaprika API. However, the Pro version extends this functionality to provide real-time prices for over 2500 cryptocurrencies.
 
-#### Can I display real-time price updates every second?
-
+= Can I display real-time price updates every second? =
 No, the plugin fetches prices every 5 minutes from the API. However, in the PRO version, you can display real-time, every-second price updates for the coins available on the Binance exchange by using its API.
 
-#### Which API do you use to fetch cryptocurrency prices?
-
+= Which API do you use to fetch cryptocurrency prices? =
 We use the CoinGecko, CoinMarketCap, CoinCap & Coinpeprika free API to fetch crypto coin prices. The plugin allows you to set a data cache time for 5, 10, or 15 minutes, so you can retrieve the latest prices by hitting these APIs after the specified interval. You can select one API at a time to get the data from.
 
-#### Can I choose my local currency other than USD($)?
-
+= Can I choose my local currency other than USD($)? =
 Yes, the plugin supports 30+ fiat currencies, allowing you to easily display a crypto price widget in your local currency. Just add the Openexchangerates free API in the plugin settings. It supports currencies like USD, GBP, EUR, INR, JPY, and many others.
 
-#### Can I create a website like coinmarketcap.com?
+= Can I create a website like coinmarketcap.com? =
+While you cannot create an exact replica, still our [Coins Marketcap](https://cryptocurrencyplugins.com/wordpress-plugin/coins-marketcap/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=cmc_faqs) plugin offers many features to create a website similar to CoinMarketCap.com, using the CoinGecko, CoinMarketCap API.
 
-While you cannot create an exact replica, still our [Coins Marketcap plugin](https://cryptocurrencyplugins.com/wordpress-plugin/coins-marketcap/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=cmc_faqs "Coins Marketcap WordPress plugin.") offers many features to create a website similar to CoinMarketCap.com, using the CoinGecko, CoinMarketCap API.
+= Where can I ask extra questions or get plugin support? =
+For plugin support, you can [submit a support request here](https://wordpress.org/support/plugin/cryptocurrency-price-ticker-widget/) 💬. If you have any additional questions, you can contact the Cool Plugins [support team](https://coolplugins.net/support/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=support&utm_content=faqs).
 
-#### Where can I ask extra questions or get plugin support?
-
-For plugin support, you can [submit a support request here 💬](https://wordpress.org/support/plugin/cryptocurrency-price-ticker-widget/). If you have any additional questions, you can contact the [Cool Plugins support](https://coolplugins.net/support/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=support&utm_content=faqs) team.
-
-#### What is the Crypto Price Widgets plugin?**
+= What is the Crypto Price Widgets plugin? =
 The Crypto Price Widgets plugin allows you to display cryptocurrency tickers, price lists, tables, multi-currency tabs, and price labels on your WordPress website using shortcodes.
 
-####  What features are available in the free version of the plugin?**
- The free version includes:
-- Crypto Price Ticker
-- Coins Price List
-- Advanced Price Table
-- Multi-currency Tabs
-- Coins Price Labels
+= What features are available in the free version of the plugin? =
+The free version includes:
+Crypto Price Ticker
+Coins Price List
+Advanced Price Table
+Multi-currency Tabs
+Coins Price Labels
 
-#### What features are available in the Pro version of the plugin?**
- The Pro version includes all free features plus:
-- Price Card Widget
-- Accordion Block Widget
-- Historical Price Chart
-- Price Slider Widget
-- Crypto Calculator
-- Price Block Widget
-- Crypto News Widget
-- CoinGecko Widgets
-- Binance Widget
-- Support for 30+ fiat currencies
+= What features are available in the Pro version of the plugin? =
+The Pro version includes all free features plus:
+Price Card Widget
+Accordion Block Widget
+Historical Price Chart
+Price Slider Widget
+Crypto Calculator
+Price Block Widget
+Crypto News Widget
+CoinGecko Widgets
+Binance Widget
+Support for 30+ fiat currencies
 
-####  How can I display cryptocurrency prices using this plugin?**
- You can display cryptocurrency prices using shortcodes provided by the plugin. These shortcodes can be added to any post, page, or widget area on your WordPress site.
+= How can I display cryptocurrency prices using this plugin? =
+You can display cryptocurrency prices using shortcodes provided by the plugin. These shortcodes can be added to any post, page, or widget area on your WordPress site.
 
-####  What sources does the plugin use for cryptocurrency prices?**
- The plugin uses free APIs from CoinGecko, CoinMarketCap, or Coinpaprika to display prices of the top 250 cryptocurrencies.
+= What sources does the plugin use for cryptocurrency prices? =
+The plugin uses free APIs from CoinGecko, CoinMarketCap, or Coinpaprika to display prices of the top 250 cryptocurrencies.
 
-####  Can I display prices of cryptocurrencies in different fiat currencies?**
- Yes, the plugin supports displaying cryptocurrency prices in various fiat currencies such as USD, EUR, GBP, INR, and many others.
+= Can I display prices of cryptocurrencies in different fiat currencies? =
+Yes, the plugin supports displaying cryptocurrency prices in various fiat currencies such as USD, EUR, GBP, INR, and many others.
 
-#### How often are the prices updated in the free version?**
- In the free version, cryptocurrency prices are updated every 5 to 10 minutes.
+= How often are the prices updated in the free version? =
+In the free version, cryptocurrency prices are updated every 5 to 10 minutes.
 
-####  What additional benefits do I get with the Pro version?**
- The Pro version offers real-time price updates, advanced layouts and styles, additional widgets like historical price charts and calculators, and premium support with responses within 24 hours.
+= What additional benefits do I get with the Pro version? =
+The Pro version offers real-time price updates, advanced layouts and styles, additional widgets like historical price charts and calculators, and premium support with responses within 24 hours.
 
-####  How can I upgrade to the Pro version?**
- You can upgrade to the Pro version by purchasing it from the plugin's official website or the WordPress plugin repository.
+= How can I upgrade to the Pro version? =
+You can upgrade to the Pro version by purchasing it from the plugin's official website or the WordPress plugin repository.
 
-####  Is there support available if I face issues with the plugin?**
- Yes, premium support is available for Pro users. They can get their questions answered by the Cool Plugins support team within 24 hours.
+= Is there support available if I face issues with the plugin? =
+Yes, premium support is available for Pro users. They can get their questions answered by the Cool Plugins support team within 24 hours.
 
-####  Can I use this plugin with Elementor?**
- Yes, there is a separate "Cryptocurrency Widgets for Elementor" plugin that allows you to display crypto price widgets on your Elementor pages.
+= Can I use this plugin with Elementor? =
+Yes, there is a separate "Cryptocurrency Widgets for Elementor" plugin that allows you to display crypto price widgets on your Elementor pages.
 
-#### Can I choose my local currency other than USD?**
- Yes, the plugin supports 30+ fiat currencies, allowing you to easily display a crypto price widget in your local currency.
+= Can I choose my local currency other than USD? =
+Yes, the plugin supports 30+ fiat currencies, allowing you to easily display a crypto price widget in your local currency.
 
-#### How can I report security bugs?
-You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/wordpress/plugin/cryptocurrency-price-ticker-widget/vdp)
+= How can I report security bugs? =
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. Report a [security vulnerability](https://patchstack.com/database/wordpress/plugin/cryptocurrency-price-ticker-widget/vdp).
 
 == Screenshots ==
-
-1. Cryptocurrency price ticker widget. 
+1. Cryptocurrency price ticker widget.
 2. Cryptocurrency price list widget for your website.
 3. Multi-currency tabs - show crypto prices in different fiat currencies.
-4. Add crypto coins price labels widget in your website.
+4. Add the crypto coins price labels widget to your website.
 5. Cryptocurrency widgets plugin settings.
 6. Crypto coins real-time price update widget (Pro Only).
 7. Historical price charts & trading view charts (Pro Only).
 8. Cryptocurrency Widgets Pro - Price cards & more layouts.
 
 == Changelog == 
+= Version 2.8.7| 25th August 2025 =
+* Fixed: Security issues.
+* Improvements: Minor Code improvements.
+
 = Version 2.8.6| 02nd june  2025 =
 * Updated: Updated UTM source links.
 * Improvements: Minor Code improvements.

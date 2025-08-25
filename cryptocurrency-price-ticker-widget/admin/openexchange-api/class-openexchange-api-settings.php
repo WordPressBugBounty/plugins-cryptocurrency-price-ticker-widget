@@ -362,9 +362,11 @@ if (!class_exists('Openexchange_api_settings')) {
 
             $terms_html = '
                 Help us make this plugin more compatible with your site by sharing non-sensitive site data. 
-                <a href="#" class="cpfm-see-terms">[See terms]</a>
-                <div id="termsBox" style="display: none;padding-left: 20px; margin-top: 10px; font-size: 12px; color: #999;">
-                 <p>' . esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'ccpw') . '</p>
+                    <a href="#" class="cpfm-see-terms">[See terms]</a>
+                       <div id="termsBox" style="display: none;padding-left: 20px; margin-top: 10px; font-size: 12px; color: #999;">
+                        <p>Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect: <a href="https://my.coolplugins.net/terms/usage-tracking/" target="_blank" rel="noopener noreferrer">
+                          Click here
+                          </a></p>
                     <ul style="list-style-type:auto;">
                         <li>'. esc_html__('Your website home URL and WordPress admin email.', 'ccpw') . '</li>
                         <li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'ccpw') . '</li>

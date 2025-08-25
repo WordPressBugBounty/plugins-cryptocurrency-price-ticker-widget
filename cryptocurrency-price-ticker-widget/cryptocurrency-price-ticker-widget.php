@@ -4,8 +4,8 @@
  * Description: Cryptocurrency price widgets for WordPress website. Display crypto ticker widget, coins live price list, table, labels & coin marketcap via shortcodes.
  * Plugin URI: https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin-uri
  * Author: Cool Plugins
- * Author URI: https://coolplugins.net/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=dashboard
- * Version: 2.8.6
+ * Author URI: https://coolplugins.net/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugins_list
+ * Version: 2.8.7
  * License: GPL3
  * Text Domain: ccpw
  * Domain Path: languages
@@ -22,7 +22,7 @@ if (defined('CCPWF_VERSION')) {
 }
 
 // Define constants for later use
-define('CCPWF_VERSION', '2.8.6');
+define('CCPWF_VERSION', '2.8.7');
 define('CCPWF_FILE', __FILE__);
 define('CCPWF_DIR', plugin_dir_path(CCPWF_FILE));
 define('CCPWF_URL', plugin_dir_url(CCPWF_FILE));
@@ -425,7 +425,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
         public function ccpw_add_widgets_action_links($links)
         {
             $links[] = '<a style="font-weight:bold" href="' . esc_url(get_admin_url(null, 'post-new.php?post_type=ccpw')) . '">Add Widgets</a>';
-            $links[] = '<a  style="font-weight:bold" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=dashboard" target="_blank">Check Demos</a>';
+            $links[] = '<a  style="font-weight:bold" href="https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=get_pro&utm_content=plugins_list#pricing" target="_blank">Get Pro</a>';
             return $links;
 
         }

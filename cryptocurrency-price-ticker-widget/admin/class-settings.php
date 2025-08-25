@@ -614,7 +614,13 @@ if (!class_exists('CCPW_CMB2_Settings')) {
             $output = '';
             if (isset($_REQUEST['post']) && !is_array($_REQUEST['post'])) {
 
-                $id = sanitize_text_field($_REQUEST['post']);
+                
+                $id = absint($_REQUEST['post']);
+
+                // Validate that it's a valid post ID and correct post type
+                if (!$id || get_post_type($id) !== 'ccpw') {
+                    return '<h4><strong class="micon-info-circled"></strong> ' . __('Invalid post ID. Please save the widget first.', 'ccpwx') . '</h4>';
+                }
 
                 $type = get_post_meta($id, 'type', true);
                 $output  = do_shortcode('[ccpw id=' . esc_attr($id) . ']');

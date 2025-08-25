@@ -9,8 +9,7 @@ if ( ! isset( $this->main_menu_slug ) ) :
 	return false;
  endif;
 
- $cool_support_email = 'https://coolplugins.net/support/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard';
- $hire_devloper      = 'https://coolplugins.net/#hire-developers';
+ $cool_support_email = 'https://cryptocurrencyplugins.com/support/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard';
 ?>
 
  <div class="cool-body-right">

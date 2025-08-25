@@ -257,6 +257,10 @@ if (!class_exists('CPTW_Posttype')) {
             if (!current_user_can('edit_post', $post_id)) {
                 return;
             }
+            // Verify nonce for CSRF protection
+            if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id)) {
+                return;
+            }
             // Return if it's a post revision
             if (false !== wp_is_post_revision($post_id)) {
                 return;
@@ -272,9 +276,12 @@ if (!class_exists('CPTW_Posttype')) {
                 return;
             }
             // - Update the post's metadata.
-            if (isset($_POST['ticker_position']) && in_array($_POST['ticker_position'], array('header', 'footer'))) {
-                update_option('ccpw-p-id', $post_id);
-                update_option('ccpw-shortcode', '[ccpw id=' . intval($post_id) . ']'); // Use intval to sanitize post_id
+            if (isset($_POST['ticker_position'])) {
+                $ticker_position = sanitize_text_field($_POST['ticker_position']);
+                if (in_array($ticker_position, array('header', 'footer'), true)) {
+                    update_option('ccpw-p-id', $post_id);
+                    update_option('ccpw-shortcode', '[ccpw id=' . intval($post_id) . ']'); // Use intval to sanitize post_id
+                }
             }
 
             delete_transient('ccpw-coins'); // Site Transient

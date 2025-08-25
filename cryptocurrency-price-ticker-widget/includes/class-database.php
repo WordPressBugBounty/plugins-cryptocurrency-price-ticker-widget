@@ -123,22 +123,45 @@ class ccpw_database
         $args['number'] = max(1, $args['number']); // Ensure number is at least 1
 
         $where = '';
+        $where_values = array(); // Initialize array for prepared statement values
 
         // Add conditions based on arguments
         if (!empty($args['id'])) {
             // Specific IDs
-            $order_ids = is_array($args['id']) ? implode(',', array_map('absint', $args['id'])) : absint($args['id']);
-            $where .= "WHERE `id` IN ({$order_ids}) ";
+            $where .= "WHERE ";
+            if (is_array($args['id'])) {
+                $order_ids = array_map('absint', $args['id']);
+                $order_ids = array_filter($order_ids); // Remove zero/invalid values
+                $order_ids = array_slice($order_ids, 0, 100); // Limit array size
+                
+                if (!empty($order_ids)) {
+                    $placeholders = implode(',', array_fill(0, count($order_ids), '%d'));
+                    $where .= "`id` IN ($placeholders) ";
+                    $where_values = array_merge($where_values, $order_ids);
+                }
+            } else {
+                $where .= "`id` = %d ";
+                $where_values[] = absint($args['id']);
+            }
         }
 
         if (!empty($args['coin_id'])) {
             // Coin IDs
             $where .= empty($where) ? ' WHERE' : ' AND';
             if (is_array($args['coin_id'])) {
-                $coin_ids_escaped = array_map('esc_sql', $args['coin_id']);
-                $where .= " `coin_id` IN ('" . implode("','", $coin_ids_escaped) . "') ";
+                // Sanitize array values and create placeholders
+                $coin_ids = array_map('sanitize_text_field', $args['coin_id']);
+                $coin_ids = array_filter($coin_ids); // Remove empty values
+                $coin_ids = array_slice($coin_ids, 0, 250); // Limit array size for performance
+                
+                if (!empty($coin_ids)) {
+                    $placeholders = implode(',', array_fill(0, count($coin_ids), '%s'));
+                    $where .= " `coin_id` IN ($placeholders) ";
+                    $where_values = array_merge($where_values, $coin_ids);
+                }
             } else {
-                $where .= " `coin_id` = '" . esc_sql($args['coin_id']) . "' ";
+                $where .= " `coin_id` = %s ";
+                $where_values[] = sanitize_text_field($args['coin_id']);
             }
         }
 
@@ -158,16 +181,30 @@ class ccpw_database
         if (false === $results) {
             if (true === $count) {
                 // Count query
-                $results = absint($wpdb->get_var($wpdb->prepare("SELECT COUNT({$this->primary_key}) FROM {$this->table_name} {$where};")));
+                if (isset($where_values) && !empty($where_values)) {
+                    $results = absint($wpdb->get_var($wpdb->prepare("SELECT COUNT({$this->primary_key}) FROM {$this->table_name} {$where};", $where_values)));
+                } else {
+                    $results = absint($wpdb->get_var("SELECT COUNT({$this->primary_key}) FROM {$this->table_name} {$where};"));
+                }
             } else {
                 // Data query
-                $results = $wpdb->get_results(
-                    $wpdb->prepare(
-                        "SELECT * FROM {$this->table_name} {$where} ORDER BY {$args['orderby']} {$args['order']} LIMIT %d, %d;",
-                        absint($args['offset']),
-                        absint($args['number'])
-                    )
-                );
+                if (isset($where_values) && !empty($where_values)) {
+                    $query_values = array_merge($where_values, [absint($args['offset']), absint($args['number'])]);
+                    $results = $wpdb->get_results(
+                        $wpdb->prepare(
+                            "SELECT * FROM {$this->table_name} {$where} ORDER BY {$args['orderby']} {$args['order']} LIMIT %d, %d;",
+                            $query_values
+                        )
+                    );
+                } else {
+                    $results = $wpdb->get_results(
+                        $wpdb->prepare(
+                            "SELECT * FROM {$this->table_name} {$where} ORDER BY {$args['orderby']} {$args['order']} LIMIT %d, %d;",
+                            absint($args['offset']),
+                            absint($args['number'])
+                        )
+                    );
+                }
             }
             // Cache the results
             wp_cache_set($cache_key, $results, 'coins', 3600);
@@ -208,24 +245,45 @@ class ccpw_database
         }
 
         $where = '';
+        $where_values = array(); // Initialize array for prepared statement values
 
         // Add conditions based on arguments
         if (!empty($args['id'])) {
             // Specific IDs
-            $order_ids = is_array($args['id']) ? implode(',', $args['id']) : intval($args['id']);
-            $where .= " WHERE `id` IN( {$order_ids} ) ";
+            $where .= " WHERE ";
+            if (is_array($args['id'])) {
+                $order_ids = array_map('absint', $args['id']);
+                $order_ids = array_filter($order_ids); // Remove zero/invalid values
+                $order_ids = array_slice($order_ids, 0, 100); // Limit array size
+                
+                if (!empty($order_ids)) {
+                    $placeholders = implode(',', array_fill(0, count($order_ids), '%d'));
+                    $where .= "`id` IN ($placeholders) ";
+                    $where_values = array_merge($where_values, $order_ids);
+                }
+            } else {
+                $where .= "`id` = %d ";
+                $where_values[] = absint($args['id']);
+            }
         }
 
         if (!empty($args['coin_id'])) {
             // Coin IDs
             $where .= empty($where) ? ' WHERE' : ' AND';
             if (is_array($args['coin_id'])) {
-                $coin_ids = array_map('esc_sql', $args['coin_id']);
-                $coin_ids = implode("','", $coin_ids);
-                $where .= " `coin_id` IN('{$coin_ids}') ";
+                // Sanitize array values and create placeholders
+                $coin_ids = array_map('sanitize_text_field', $args['coin_id']);
+                $coin_ids = array_filter($coin_ids); // Remove empty values
+                $coin_ids = array_slice($coin_ids, 0, 250); // Limit array size for performance
+                
+                if (!empty($coin_ids)) {
+                    $placeholders = implode(',', array_fill(0, count($coin_ids), '%s'));
+                    $where .= " `coin_id` IN ($placeholders) ";
+                    $where_values = array_merge($where_values, $coin_ids);
+                }
             } else {
-                $coin_id = esc_sql($args['coin_id']);
-                $where .= " `coin_id` = '{$coin_id}' ";
+                $where .= " `coin_id` = %s ";
+                $where_values[] = sanitize_text_field($args['coin_id']);
             }
         }
 
@@ -245,16 +303,30 @@ class ccpw_database
         if (false === $results) {
             if (true === $count) {
                 // Count query
-                $results = absint($wpdb->get_var($wpdb->prepare("SELECT COUNT({$this->primary_key}) FROM {$this->table_name} {$where};")));
+                if (!empty($where_values)) {
+                    $results = absint($wpdb->get_var($wpdb->prepare("SELECT COUNT({$this->primary_key}) FROM {$this->table_name} {$where};", $where_values)));
+                } else {
+                    $results = absint($wpdb->get_var("SELECT COUNT({$this->primary_key}) FROM {$this->table_name} {$where};"));
+                }
             } else {
                 // Data query
-                $results = $wpdb->get_results(
-                    $wpdb->prepare(
-                        "SELECT name, price, symbol, coin_id FROM {$this->table_name} {$where} ORDER BY {$args['orderby']} {$args['order']} LIMIT %d, %d;",
-                        absint($args['offset']),
-                        absint($args['number'])
-                    )
-                );
+                if (!empty($where_values)) {
+                    $query_values = array_merge($where_values, [absint($args['offset']), absint($args['number'])]);
+                    $results = $wpdb->get_results(
+                        $wpdb->prepare(
+                            "SELECT name, price, symbol, coin_id FROM {$this->table_name} {$where} ORDER BY {$args['orderby']} {$args['order']} LIMIT %d, %d;",
+                            $query_values
+                        )
+                    );
+                } else {
+                    $results = $wpdb->get_results(
+                        $wpdb->prepare(
+                            "SELECT name, price, symbol, coin_id FROM {$this->table_name} {$where} ORDER BY {$args['orderby']} {$args['order']} LIMIT %d, %d;",
+                            absint($args['offset']),
+                            absint($args['number'])
+                        )
+                    );
+                }
             }
             // Cache the results
             wp_cache_set($cache_key, $results, 'coins', 3600);

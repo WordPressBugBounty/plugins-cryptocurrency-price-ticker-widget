@@ -509,14 +509,36 @@ if (!class_exists('CPTW_Shortcode')) {
                 wp_die();
             }
 
-            // Initialize variables
-            $rtype = isset($_POST['rtype']) ? sanitize_text_field($_POST['rtype']) : 0;
-            $start_point = isset($_POST['start']) ? (int) sanitize_text_field($_POST['start']) : 0;
-            $data_length = isset($_POST['length']) ? (int) sanitize_text_field($_POST['length']) : 10;
-            $current_page = isset($_POST['draw']) && (int) $_POST['draw'] ? (int) sanitize_text_field($_POST['draw']) : 1;
-            $requiredCurrencies = isset($_POST['requiredCurrencies']) ? (int) sanitize_text_field($_POST['requiredCurrencies']) : 10;
-            $fiat_currency = isset($_POST['currency']) ? sanitize_text_field($_POST['currency']) : 'USD';
+            // Initialize variables with proper validation
+            // Validate request type against whitelist
+            $allowed_rtypes = array('top', 'custom', '0');
+            $rtype = isset($_POST['rtype']) ? sanitize_text_field($_POST['rtype']) : '0';
+            $rtype = in_array($rtype, $allowed_rtypes, true) ? $rtype : '0';
+            
+            // Validate and sanitize start_point (pagination offset)
+            $start_point = isset($_POST['start']) ? absint($_POST['start']) : 0;
+            $start_point = min($start_point, 10000); // Limit to prevent excessive database offset
+            
+            // Validate and sanitize data_length (pagination limit)
+            $data_length = isset($_POST['length']) ? absint($_POST['length']) : 10;
+            $data_length = max(1, min($data_length, 100)); // Range: 1-100 records per page (matches free version coin limit)
+            
+            // Validate current_page (draw parameter for DataTables)
+            $current_page = isset($_POST['draw']) && absint($_POST['draw']) ? absint($_POST['draw']) : 1;
+            $current_page = max(1, min($current_page, 1000)); // Reasonable page limit
+            
+            // Validate required currencies count
+            $requiredCurrencies = isset($_POST['requiredCurrencies']) ? absint($_POST['requiredCurrencies']) : 10;
+            $requiredCurrencies = max(1, min($requiredCurrencies, 250)); // Range: 1-250 currencies
+            
+            // Validate fiat currency against whitelist
+            $allowed_currencies = array('USD', 'GBP', 'EUR', 'INR', 'JPY', 'CNY', 'ILS', 'KRW', 'RUB', 'DKK', 'PLN', 'AUD', 'BRL', 'MXN', 'SEK', 'CAD', 'HKD', 'MYR', 'SGD', 'CHF', 'HUF', 'NOK', 'THB', 'CLP', 'IDR', 'NZD', 'TRY', 'PHP', 'TWD', 'CZK', 'PKR', 'ZAR');
+            $fiat_currency = isset($_POST['currency']) ? strtoupper(sanitize_text_field($_POST['currency'])) : 'USD';
+            $fiat_currency = in_array($fiat_currency, $allowed_currencies, true) ? $fiat_currency : 'USD';
+            
+            // Validate currency rate to prevent manipulation
             $fiat_currency_rate = isset($_POST['currencyRate']) ? (float) sanitize_text_field($_POST['currencyRate']) : 1;
+            $fiat_currency_rate = max(0.0001, min($fiat_currency_rate, 10000)); // Range: 0.0001 to 10,000
             $coin_no = $start_point + 1;
             $coins_list = array();
             $order_col_name = 'market_cap';
@@ -526,7 +548,10 @@ if (!class_exists('CPTW_Shortcode')) {
             $coins_request_count = $data_length + $start_point;
             $selected_api = get_option('openexchange-api-settings');
             $api = (!isset($selected_api['ccpw_select_api']) && empty($selected_api['ccpw_select_api'])) ? "coin_gecko" : sanitize_text_field($selected_api['ccpw_select_api']);
+            
+            // Validate and limit coinslist array
             $coinslist = isset($_POST['coinslist']) ? array_map('sanitize_text_field', $_POST['coinslist']) : array();
+            $coinslist = array_slice($coinslist, 0, 250); // Limit to maximum 250 coins
             $coindata = $rtype == 'top' ? $DB->get_coins(array('number' => $data_length, 'offset' => $start_point, 'orderby' => $order_col_name, 'order' => $order_type)) : $DB->get_coins(array('coin_id' => $coinslist, 'offset' => $start_point, 'number' => $data_length, 'orderby' => $order_col_name, 'order' => $order_type));
 
             // Process coin data

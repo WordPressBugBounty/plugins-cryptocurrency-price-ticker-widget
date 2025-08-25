@@ -281,18 +281,33 @@ trait CCPW_Helper_Functions
                     $DB = new ccpw_database();
                     $coin_icon = $DB->get_coin_logo($original_id);
                     
-                    $decode = maybe_unserialize($coin_icon['extradata']);
-                    $coin_png = 'https://s2.coinmarketcap.com/static/img/coins/64x64/' . $decode['cmc_id'] . '.png';
-                    $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . $coin_png . '" width="' . $size . '">';
+                    // Safely deserialize and validate structure (supports both JSON and serialized data)
+                    $decode = $this->ccpw_safe_decode($coin_icon['extradata'], array('cmc_id', 'rank'));
+                    if ($decode && isset($decode['cmc_id'])) {
+                        $cmc_id = absint($decode['cmc_id']); // Ensure it's a positive integer
+                        $coin_png = 'https://s2.coinmarketcap.com/static/img/coins/64x64/' . $cmc_id . '.png';
+                        $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . $coin_png . '" width="' . $size . '">';
+                    } else {
+                        // Fallback to default if data is invalid
+                        $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . CCPWF_URL . 'assets/images/default-logo.png" width="' . $size . '">';
+                    }
                 }elseif($api == 'coin_paprika'){
                     $coin_png = "https://static.coinpaprika.com/coin/$original_id/logo.png";
                     $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . $coin_png . '" width="' . $size . '">';
                 }elseif($api == 'coin_capapi'){
                     $DB = new ccpw_database();
                     $coin_icon = $DB->get_coin_logo($original_id);
-                    $decode = maybe_unserialize($coin_icon['extradata']);
-                    $coin_png = 'https://assets.coincap.io/assets/icons/' . $decode['sym'] . '@2x.png';
-                    $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . $coin_png . '" width="' . $size . '">';
+                    
+                    // Safely deserialize and validate structure (supports both JSON and serialized data)
+                    $decode = $this->ccpw_safe_decode($coin_icon['extradata'], array('cc_id', 'rank', 'sym'));
+                    if ($decode && isset($decode['sym'])) {
+                        $symbol = sanitize_text_field($decode['sym']); // Sanitize symbol
+                        $coin_png = 'https://assets.coincap.io/assets/icons/' . $symbol . '@2x.png';
+                        $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . $coin_png . '" width="' . $size . '">';
+                    } else {
+                        // Fallback to default if data is invalid
+                        $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . CCPWF_URL . 'assets/images/default-logo.png" width="' . $size . '">';
+                    }
                 }
                 // $coin_png = "https://static.coinpaprika.com/coin/$original_id/logo.png";
                 // $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . $coin_png . '" width="' . $size . '">';
@@ -463,11 +478,33 @@ trait CCPW_Helper_Functions
         } elseif ($current_screen && $current_screen->post_type) {
             return $current_screen->post_type;
         } elseif (isset($_REQUEST['page'])) {
-            return sanitize_key($_REQUEST['page']);
+            // Whitelist of allowed admin pages for this plugin
+            $allowed_pages = array(
+                'cool-crypto-plugins',
+                'openexchange-api-settings', 
+                'ccpw_get_started',
+                'ccpw_options'
+            );
+            
+            $page = sanitize_key($_REQUEST['page']);
+            if (in_array($page, $allowed_pages, true)) {
+                return $page;
+            }
+            return null;
         } elseif (isset($_REQUEST['post_type'])) {
-            return sanitize_key($_REQUEST['post_type']);
+            // Whitelist of allowed post types for this plugin
+            $allowed_post_types = array('ccpw', 'post', 'page');
+            
+            $post_type = sanitize_key($_REQUEST['post_type']);
+            if (in_array($post_type, $allowed_post_types, true)) {
+                return $post_type;
+            }
+            return null;
         } elseif (isset($_REQUEST['post'])) {
-            return get_post_type(sanitize_text_field($_REQUEST['post']));
+            $post_id = absint($_REQUEST['post']);
+            if ($post_id) {
+                return get_post_type($post_id);
+            }
         }
         return null;
     }
@@ -645,6 +682,61 @@ trait CCPW_Helper_Functions
 
         // Return coin data if found, otherwise return the provided coin ID
         return isset($coin_list[$coin_id]) ? $coin_list[$coin_id] : $coin_id;
+    }
+
+    /**
+     * Safely decode data with validation (supports both JSON and serialized data)
+     *
+     * @param string $data JSON or serialized data to decode
+     * @param array $expected_keys Expected array keys for validation
+     * @return array|false Decoded array if valid, false otherwise
+     */
+    protected function ccpw_safe_decode($data, $expected_keys = array())
+    {
+        // Return false if data is empty
+        if (empty($data)) {
+            return false;
+        }
+
+        $decoded = false;
+
+        // Try JSON decode first (preferred method)
+        if (is_string($data) && (substr($data, 0, 1) === '{' || substr($data, 0, 1) === '[')) {
+            $decoded = json_decode($data, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                // JSON decode successful
+            } else {
+                $decoded = false;
+            }
+        }
+
+        // Fallback to serialized data for backward compatibility
+        if ($decoded === false) {
+            $decoded = maybe_unserialize($data);
+        }
+
+        // Validate that result is an array
+        if (!is_array($decoded)) {
+            return false;
+        }
+
+        // Validate expected structure
+        if (!empty($expected_keys)) {
+            foreach ($expected_keys as $key) {
+                if (!array_key_exists($key, $decoded)) {
+                    return false;
+                }
+            }
+        }
+
+        // Only allow simple data types (no objects)
+        foreach ($decoded as $value) {
+            if (is_object($value) || is_resource($value)) {
+                return false;
+            }
+        }
+
+        return $decoded;
     }
 
 }

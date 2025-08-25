@@ -12,7 +12,7 @@ if (!class_exists('CCPW_api_data')) {
          */
         const COINPAPRIKA_API_ENDPOINT = 'https://api.coinpaprika.com/v1/tickers';
         const COINMARKETCAP_API_ENDPOINT = 'https://pro-api.coinmarketcap.com/';
-        const COINCAP_API_ENDPOINT = 'https://api.coincap.io/v2/';
+        const COINCAP_API_ENDPOINT = 'https://api.coincap.io/v3/';
         const OPENEXCHANGERATE_API_ENDPOINT = 'https://openexchangerates.org/api/latest.json?app_id=';
 
         public function __construct()
