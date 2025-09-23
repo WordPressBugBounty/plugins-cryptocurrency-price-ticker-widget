@@ -6,7 +6,6 @@ if (!class_exists('CCPW_Review_Notice')) {
         // Constants for various plugin attributes
         const PLUGIN = 'Cryptocurrency Widgets';
         const SLUG = 'ccpw';
-        const LOGO = CCPWF_URL . 'assets/crypto-widget.png';
         const SPARE_ME = 'ccpw_spare_me';
         const ACTIVATE_TIME = 'ccpw_activation_time';
         const REVIEW_LINK = 'https://wordpress.org/support/plugin/cryptocurrency-price-ticker-widget/reviews/#new-post';
@@ -27,13 +26,18 @@ if (!class_exists('CCPW_Review_Notice')) {
             }
         }
                      
+
         // Callback function to dismiss review notice
         public function dismiss_review_notice()
         {
             // Check for nonce and validate it
             if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'ccpw-nonce')) {
-                wp_send_json_error('Permission denied.'); // Use wp_send_json_error for better response handling
-                wp_die();
+                wp_send_json_error('You don\'t have permission to hide notice.');
+                return;
+            }
+            if (!current_user_can('manage_options')) {
+                wp_send_json_error('You don\'t have permission to dismiss admin notices.');
+                return;
             }
             update_option(self::SPARE_ME, 'yes');
             wp_send_json_success();
@@ -59,116 +63,65 @@ if (!class_exists('CCPW_Review_Notice')) {
                 return;
             }
 
+            // Convert numeric timestamp to formatted string if needed
+            if (is_numeric($installation_date)) {
+                $installation_date = gmdate('Y-m-d h:i:s', (int) $installation_date);
+            }
+
             $install_date = new DateTime($installation_date);
             $current_date = new DateTime();
             $diff_days = $install_date->diff($current_date)->days;
 
             if ($diff_days >= 3) {
-                echo $this->create_notice_content();
+                wp_enqueue_script('ccpwf-review-notices-script', CCPWF_URL . 'admin/review-notices/js/ccpwf-review-notices.js', array('jquery'), null, true);
+                wp_enqueue_style('ccpwf-review-notices-styles', CCPWF_URL . 'admin/review-notices/css/ccpwf-review-notices.css');   
+                echo wp_kses_post($this->create_notice_content());
             }
         }
 
         // Function to create HTML content for review notice
         public function create_notice_content()
         {
-            ob_start();
-            ?>
-            <div data-ajax-url="<?php echo esc_attr(admin_url('admin-ajax.php')); ?>"
-                data-ajax-callback="<?php echo esc_attr(self::AJAX_REQUEST); ?>"
-                data-nonce="<?php echo esc_attr(wp_create_nonce('ccpw-nonce')); ?>"
-                class="<?php echo esc_attr(self::SLUG); ?>-feedback-notice-wrapper notice notice-info">
-                <div class="logo-container">
-                    <a href="<?php echo esc_url(self::REVIEW_LINK); ?>" target="_blank">
-                        <img src="<?php echo esc_url(self::LOGO); ?>" alt="<?php echo esc_attr(self::PLUGIN); ?>" style="max-width:80px;">
-                    </a>
-                </div>
-                <div class="message-container">
-                    <?php
+            $ajax_url = esc_url(admin_url('admin-ajax.php'));
+            $ajax_callback = esc_attr(self::AJAX_REQUEST);
+            $nonce = wp_create_nonce('ccpw-nonce');
+            $wrap_cls = esc_attr('notice notice-info is-dismissible cool-feedback-notice-wrapper ccpw-review-notice-wrapper');
 
-           echo esc_html__( 'Thanks for using the', 'ccpw' ) . ' <b>' . esc_html( self::PLUGIN ) . '</b> ' . esc_html__( 'WordPress plugin! We hope you liked it.', 'ccpw' );
-echo ' ' . esc_html__( 'Please take a moment to rate it - your feedback encourages us to create more', 'ccpw' ) . ' <a href="' . esc_url( 'https://coolplugins.net/?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=review&utm_content=review-notice' ) . '" target="_blank" rel="noopener noreferrer"><strong>' . esc_html__( 'Cool Plugins', 'ccpw' ) . '</strong></a>!<br/>';
-            ?>
-                    <div class="call-to-action">
-                        <a href="<?php echo esc_url(self::REVIEW_LINK); ?>" class="button button-primary" target="_blank" title="Rate Now! ★★★★★">Rate Now! ★★★★★</a>
-                        <a href="#" class="<?php echo esc_attr(self::SLUG); ?>-dismiss-notice" title="Dismiss this notice.">I already rated it</a>
-                        <a href="#" class="<?php echo esc_attr(self::SLUG); ?>-dismiss-notice" title="Dismiss this notice.">Not interested</a>
+            $p_name = esc_html(self::PLUGIN);
+            $message = sprintf(
+                'Thanks for using <b>%s</b> WordPress plugin. We hope you liked it !<br/>Please give us a quick rating, it works as a boost for us to keep working on more <a href="https://coolplugins.net" target="_blank"><strong>Cool Plugins</strong></a>!',
+                $p_name
+            );
+
+            $rate_text = esc_html__('Rate Now! ★★★★★', 'ccpw');
+            $already_rated_text = esc_html__('Already Reviewed', 'ccpw');
+            $not_interested_text = esc_html__('Not Interested', 'ccpw');
+
+            $template = '<div data-ajax-url="%1$s" data-ajax-callback="%2$s" data-nonce="%3$s" class="%4$s">
+                <div class="message_container">%5$s
+                    <div class="callto_action">
+                        <ul>
+                            <li class="love_it"><a href="%6$s" class="like_it_btn button button-primary" target="_new" title="%7$s">%7$s</a></li>
+                            <li class="already_rated"><a href="#" class="already_rated_btn button ccew_dismiss_notice" title="%8$s">%8$s</a></li>
+                            <li class="already_rated"><a href="#" class="already_rated_btn button ccew_dismiss_notice" title="%9$s">%9$s</a></li>
+                        </ul>
+                        <div class="clrfix"></div>
                     </div>
                 </div>
-            </div>
-            <?php
+            </div>';
 
-            $html = ob_get_clean();
-
-            // Styles for the notice
-            $style = '<style>
-                .' . self::SLUG . '-feedback-notice-wrapper.notice.notice-info {
-                    padding: 5px;
-                    display: table;
-                    width: fit-content;
-                    max-width: 855px;
-                    clear: both;
-                    border-radius: 5px;
-                    border: 1px solid #b7bfc7;
-                }
-                .' . self::SLUG . '-feedback-notice-wrapper .logo-container {
-                    width: 85px;
-                    display: table-cell;
-                    padding: 5px;
-                    vertical-align: middle;
-                }
-                .' . self::SLUG . '-feedback-notice-wrapper .logo-container a,
-                .' . self::SLUG . '-feedback-notice-wrapper .logo-container img {
-                    width: fit-content;
-                    height: auto;
-                    display: block;
-                }
-                .' . self::SLUG . '-feedback-notice-wrapper .message-container {
-                    display: table-cell;
-                    padding: 5px;
-                    vertical-align: middle;
-                }
-                .' . self::SLUG . '-feedback-notice-wrapper .call-to-action {
-                    display: flex;
-                    flex-flow: row wrap;
-                    align-items: center;
-                    margin: 5px 0;
-                    gap: 20px;
-                }
-                .' . self::SLUG . '-feedback-notice-wrapper a.ccpw-dismiss-notice:after {
-                    color: #e86011;
-                    content: "\f153";
-                    display: inline-block;
-                    vertical-align: middle;
-                    margin-left: 5px;
-                    font-size: 15px;
-                    font-family: dashicons;
-                }
-                /* Additional styles if needed */
-            </style>';
-
-            // JavaScript for dismissing the notice
-            $script = '<script>
-                jQuery(document).ready(function ($) {
-                    $(".' . esc_attr(self::SLUG) . '-dismiss-notice").on("click", function (event) {
-                        event.preventDefault();
-                        var $this = $(this);
-                        var wrapper = $this.closest(".' . esc_attr(self::SLUG) . '-feedback-notice-wrapper");
-                        var ajaxURL = wrapper.data("ajax-url");
-                        var ajaxCallback = wrapper.data("ajax-callback");
-                        var ajaxNonce = wrapper.data("nonce");
-                        $.post(ajaxURL, {
-                            "action": ajaxCallback,
-                            "nonce": ajaxNonce
-                        }, function( response ) {
-                            if (response !== undefined) {
-                                wrapper.slideUp("fast");
-                            }
-                        }, "json");
-                    });
-                });
-            </script>';
-
-            return $style . $html . $script;
+            return sprintf(
+                $template,
+                $ajax_url,
+                $ajax_callback,
+                esc_attr($nonce),
+                $wrap_cls,
+                $message,
+                esc_url(self::REVIEW_LINK),
+                $rate_text,
+                $already_rated_text,
+                $not_interested_text
+            );
         }
     }
 

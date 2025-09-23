@@ -1,0 +1,49 @@
+.cool-feedback-notice-wrapper.notice.notice-info.is-dismissible {
+    padding: 5px;
+    display: table;
+    width: fit-content;
+    max-width: 820px;
+    clear: both;
+    border-radius: 5px;
+    border: 2px solid #b7bfc7;
+}
+.cool-feedback-notice-wrapper .message_container {
+    display: table-cell;
+    padding: 5px 26px 5px 5px;
+    vertical-align: middle;
+}
+
+.cool-feedback-notice-wrapper ul li.already_rated a:before{
+    color: #e86011;
+    content: "\f153";
+    display: inline-block;
+    vertical-align: middle;
+    margin: -1px 0 0 5px;
+    padding-right: 3px;
+    font-size: 15px;
+    font-family: dashicons;
+}
+
+.cool-feedback-notice-wrapper ul li {
+    float: left;
+    margin: 0px 10px 0 0;
+}
+.cool-feedback-notice-wrapper a {
+    color: #008bff;
+}
+.clrfix{
+    clear:both;
+}
+
+/* This css is for license registration page */
+.cmc-notice-red.uninstall {
+    max-width: 700px;
+    display: block;
+    padding: 8px;
+    border: 2px solid #157d0f;
+    margin: 10px 0;
+    background: #13a50b;
+    font-weight: bold;
+    font-size: 13px;
+    color: #ffffff;
+}
