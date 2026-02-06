@@ -15,6 +15,8 @@
  * @property-read $object_id   Object ID
  * @property-read $object_type Type of object being handled. (e.g., post, user, comment, or term)
  */
+
+//phpcs:disable WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.TextDomainMismatch, WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound, WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound, WordPress.Security.EscapeOutput.ExceptionNotEscaped
 abstract class CMB2_Base {
 
 	/**

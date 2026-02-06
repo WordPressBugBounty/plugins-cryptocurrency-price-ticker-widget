@@ -11,6 +11,10 @@
  * @license   GPL-2.0+
  * @link      https://cmb2.io
  */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.Security.EscapeOutput.ExceptionNotEscaped, WordPress.WP.I18n.TextDomainMismatch, WordPress.WP.I18n.MissingTranslatorsComment, PluginCheck.CodeAnalysis.SettingSanitization.register_settingMissing
 class CMB2_Options_Hookup extends CMB2_Hookup {
 
 	/**

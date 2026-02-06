@@ -1,14 +1,13 @@
 <?php
 /**
- * Plugin Name: Cryptocurrency Widgets
+ * Plugin Name: Cryptocurrency Widgets - Price Ticker & Coins List
  * Description: Cryptocurrency price widgets for WordPress website. Display crypto ticker widget, coins live price list, table, labels & coin marketcap via shortcodes.
  * Plugin URI: https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin-uri
  * Author: Cool Plugins
  * Author URI: https://coolplugins.net/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugins_list
- * Version: 2.8.8
+ * Version: 2.9.1
  * License: GPL3
- * Text Domain: ccpw
- * Domain Path: languages
+ * Text Domain: cryptocurrency-price-ticker-widget
  *
  * @package Cryptocurrency Price Ticker Widget
  */
@@ -22,7 +21,7 @@ if (defined('CCPWF_VERSION')) {
 }
 
 // Define constants for later use
-define('CCPWF_VERSION', '2.8.8');
+define('CCPWF_VERSION', '2.9.1');
 define('CCPWF_FILE', __FILE__);
 define('CCPWF_DIR', plugin_dir_path(CCPWF_FILE));
 define('CCPWF_URL', plugin_dir_url(CCPWF_FILE));
@@ -37,6 +36,8 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
      * Class Crypto_Currency_Price_Widget
      */
     require_once CCPWF_DIR . 'includes/class-helper.php';
+
+    //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     final class Crypto_Currency_Price_Widget
     {
 
@@ -94,7 +95,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
 
             if (is_admin()) {
                 add_action('admin_menu', array($this, 'init_crypto_admin_menu'), 15);
-
+                add_action('admin_notices', array($this, 'ccpw_show_api_key_expired_notice'));
                 add_action('admin_enqueue_scripts', array($this, 'ccpw_load_scripts'));
 
                 add_action('wp_ajax_ccpw_delete_transient', array($this, 'ccpw_delete_transient'));
@@ -138,6 +139,51 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
             }
        
         }
+        
+        public function ccpw_show_api_key_expired_notice() {
+            if (!current_user_can('manage_options')) {
+                return;
+            }
+            $api_key_expired = get_option('ccpw_api_key_expired', false);
+            if (!$api_key_expired) {
+                return;
+            }
+    
+            $api_option = get_option("openexchange-api-settings");
+            $api_type = (isset($api_option['ccpw_select_api'])) ? $api_option['ccpw_select_api'] : "coin_gecko";
+            $current_user = wp_get_current_user();
+            $user_name = $current_user->display_name;
+            // Determine which API key is expired
+            $api_name = 'API key';
+            if ($api_type == 'coin_gecko') {
+                $api_name = 'CoinGecko API key';
+                $settings_url = 'https://support.coingecko.com/hc/en-us/articles/21880397454233-User-Guide-How-to-sign-up-for-CoinGecko-Demo-API-and-generate-an-API-key';
+            } elseif ($api_type == 'coin_marketcap') {
+                $api_name = 'CoinMarketCap API key';
+                $settings_url = 'https://coinmarketcap.com/api/';
+            } elseif ($api_type == 'coin_capapi') {
+                $api_name = 'CoinCap API key';
+                $settings_url = 'https://pro.coincap.io/dashboard';
+            } elseif ($api_type == 'coin_paprika') {
+                $api_name = 'CoinPaprika API key';
+                $settings_url = 'https://coinpaprika.com/api/';
+            }
+            ?>
+            <div class="notice notice-error is-dismissible">
+                <p>
+                    <?php 
+                    echo sprintf(
+                        /* translators: %1s: User name, %2s: Service/API name, %3s: link or action */
+                        esc_html__('Hi, %1$s! Your %2$s has been expired. Please %3$s to update your API key.', 'cryptocurrency-price-ticker-widget'),
+                        '<strong>' . esc_html(ucwords($user_name)) . '</strong>',
+                        '<strong>' . esc_html($api_name) . '</strong>',
+                        '<a href="' . esc_url($settings_url) . '"><strong>' . esc_html__('click here', 'cryptocurrency-price-ticker-widget') . '</strong></a>'
+                    );
+                    ?>
+                </p>
+            </div>
+            <?php
+        }
 
         public function get_purge_cache_on_cmc() {
 
@@ -146,12 +192,12 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
 
             if (is_plugin_active('coin-market-cap/coin-market-cap.php') || is_plugin_active('cryptocurrency-exchanges-list-pro/cryptocurrency-exchanges-list-pro.php')) { // Adjust the plugin path as necessary
 
-                $page = isset($_GET['page']) ? sanitize_text_field($_GET['page']) : ''; // Sanitize input
+                $page = isset($_GET['page']) ? sanitize_text_field(wp_unslash($_GET['page'])) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 if ($page === 'openexchange-api-settings') {
                     //adding purge option
                     $cool_options = new_cmb2_box(array(
                         'id' => 'ccpw_settings_page',
-                        'title' => esc_html__('API Settings', 'celp1'),
+                        'title' => esc_html__('API Settings', 'cryptocurrency-price-ticker-widget'),
                         'object_types' => array('options-page'),
                         'option_key' => 'openexchange-api-settings', // The option key and admin menu page slug.
                         'menu_title' => false, // Falls back to 'title' (above).
@@ -164,7 +210,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
                         'name' => 'Purge Crypto Widget Free API Data Cache',
                         'id' => 'Delete Cache',
                         'type' => 'title',
-                        'desc' => '<button class="button button-secondary" data-ccpw-nonce="' . esc_attr($ccpw_nonce) . '" data-ajax-url="' . esc_url($ajax_url) . '" id="ccpw_delete_cache">' . __('Purge Cache', 'ccpw') . '</button>',
+                        'desc' => '<button class="button button-secondary" data-ccpw-nonce="' . esc_attr($ccpw_nonce) . '" data-ajax-url="' . esc_url($ajax_url) . '" id="ccpw_delete_cache">' . __('Purge Cache', 'cryptocurrency-price-ticker-widget') . '</button>',
 
                     ));
                 }
@@ -211,7 +257,8 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
    
                 $post_array = array('ccpw', 'cool-crypto-plugins', 'openexchange-api-settings', 'ccpw_get_started');
 
-                if (isset($_POST['submit-cmb']) || in_array($this->ccpw_get_post_type_page(), $post_array)) {
+                // phpcs:ignore WordPress.Security.NonceVerification.Missing
+                if (isset($_POST['submit-cmb']) || in_array($this->ccpw_get_post_type_page(), $post_array)) { 
                    
                     require_once CCPWF_DIR . 'admin/cmb2/init.php';
                     require_once CCPWF_DIR . 'admin/cmb2/cmb2-conditionals.php';
@@ -221,8 +268,24 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
                     }
 
                 }
+
+                require_once CCPWF_DIR . 'admin/cool-review-notice/cool-review-notice.php';
+                if (class_exists('Cool_Review_Notice')) {
+					new Cool_Review_Notice(
+						'ccpw',                       
+						'Cryptocurrency Price Ticker',
+						'https://wordpress.org/support/plugin/cryptocurrency-price-ticker-widget/reviews/#new-post',
+						CCPWF_URL,
+						CCPWF_VERSION,
+                        ['ccpw_get_started', 'ccpw', 'openexchange-api-settings'],
+                        'cool-crypto-plugins',
+                        'ccpw_activation_time',
+                        'ccpw_spare_me'
+					);
+				}
                 // Loading required functions
-                require_once CCPWF_DIR . 'admin/review-notices/class-review-notice.php';
+                // Loading required functions
+                // require_once CCPWF_DIR . 'admin/review-notices/class-review-notice.php';
                 
                 if(!class_exists('CPFM_Feedback_Notice')){
                     require_once CCPWF_DIR . 'admin/feedback/cpfm-feedback-notice.php';
@@ -235,6 +298,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
             require CCPWF_DIR . 'includes/class-database.php';
             require CCPWF_DIR . 'includes/class-widget.php';
             require_once CCPWF_DIR . 'includes/class-shortcode.php';
+
 
         }
 
@@ -253,7 +317,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
         {
 
             // Check for nonce security
-            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'ccpw-nonce')) {
+            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ccpw-nonce')) {
                 wp_send_json_error('You don\'t have permission to delete the cache.'); // Use wp_send_json_error for better response
             }
             // Delete cache if user has permission to delete it.
@@ -270,9 +334,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
          */
         public function ccpw_text_domain_loaded()
         {
-            load_plugin_textdomain('ccpw', false, basename(dirname(__FILE__)) . '/languages/');
-            
-            
+            load_plugin_textdomain('ccpw', false, basename(dirname(__FILE__)) . '/languages/'); //phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound          
         }
 
         /**
@@ -310,8 +372,9 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
         {
             if (get_option('ccpw_do_activation_redirect', false)) {
                 update_option('ccpw_do_activation_redirect', false);
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 if (!isset($_GET['activate-multi'])) {
-                    wp_redirect(admin_url('admin.php?page=ccpw_get_started'));
+                    wp_safe_redirect( admin_url( 'admin.php?page=ccpw_get_started' ) );
                     exit;
                 }
             }
@@ -457,6 +520,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
         }
     }
 
+    //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
     function Crypto_Currency_Price_Widget()
     {
         return Crypto_Currency_Price_Widget::get_instance();

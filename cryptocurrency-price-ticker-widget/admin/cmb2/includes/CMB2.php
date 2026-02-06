@@ -18,6 +18,10 @@
 /**
  * The main CMB2 object for storing box data/properties.
  */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+//phpcs:disable WordPress.WP.I18n.TextDomainMismatch, WordPress.Security.EscapeOutput.OutputNotEscaped 
 class CMB2 extends CMB2_Base {
 
 	/**

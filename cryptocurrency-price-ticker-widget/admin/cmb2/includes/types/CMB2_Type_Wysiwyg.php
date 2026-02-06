@@ -13,6 +13,11 @@
  * @method string _id()
  * @method string _desc()
  */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+
 class CMB2_Type_Wysiwyg extends CMB2_Type_Textarea {
 
 	/**

@@ -78,7 +78,7 @@ if (!class_exists('CCPW_cronjob')) {
             
             if (is_wp_error($response)) {
 
-                error_log('CCPW Feedback Send Failed: ' . $response->get_error_message());
+                error_log('CCPW Feedback Send Failed: ' . $response->get_error_message()); //phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                 return;
             }
             
@@ -101,7 +101,7 @@ if (!class_exists('CCPW_cronjob')) {
 
                 $schedules['5min'] = array(
                     'interval' => 5 * 60,
-                    'display' => __('Once every 5 minutes'),
+                    'display' => __('Once every 5 minutes', 'cryptocurrency-price-ticker-widget'),
                 );
             }
 
@@ -111,7 +111,7 @@ if (!class_exists('CCPW_cronjob')) {
 
                 $schedules['every_30_days'] = array(
                     'interval' => 30 * 24 * 60 * 60, // 2,592,000 seconds
-                    'display'  => __('Once every 30 days'),
+                    'display'  => __('Once every 30 days', 'cryptocurrency-price-ticker-widget'),
                 );
             }
 
@@ -168,7 +168,7 @@ if (!class_exists('CCPW_cronjob')) {
         public function reset_option_data_once_on_first_of_month()
         {
             // Check if it's the 1st day of the month
-            $current_date = date('j');
+            $current_date = gmdate('j');
 
             if ($current_date === '1') {
                 // Check if a flag or option indicating the reset has already been performed
@@ -190,6 +190,6 @@ if (!class_exists('CCPW_cronjob')) {
             }
         }
     }
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
     $cron_init = new CCPW_cronjob();
 }

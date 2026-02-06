@@ -3,10 +3,14 @@
 /**
  * This php file render HTML header for addons dashboard page
  */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+
     if( !isset( $this->main_menu_slug ) ):
         return;
     endif;
-
+//phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
     $cool_plugins_docs = "https://cryptocurrencyplugins.com/docs/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard";
     $cool_plugins_more_info = "https://cryptocurrencyplugins.com/demo/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=dashboard";
 ?>

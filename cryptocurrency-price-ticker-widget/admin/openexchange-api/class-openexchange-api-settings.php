@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
+//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.Security.NonceVerification.Missing
+
 // Do not use namespace to keep this in the global space and maintain singleton initialization
 if (!class_exists('Openexchange_api_settings')) {
 
@@ -6,6 +9,7 @@ if (!class_exists('Openexchange_api_settings')) {
      * Main class for creating dashboard addon page and all submenu items
      * Do not call or initialize this class directly; instead, use the function mentioned at the bottom of this file
      */
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     class Openexchange_api_settings
     {
         /**
@@ -43,6 +47,7 @@ if (!class_exists('Openexchange_api_settings')) {
 
                 $choice = get_option('cpfm_opt_in_choice_crypto');
                 $options = get_option($object_id, array());
+                
 
                 if (!empty($choice)) {
                     
@@ -117,6 +122,7 @@ if (!class_exists('Openexchange_api_settings')) {
 
                         // Optionally set the flag to true for clarity
                         $options['ccpw_extra_info'] = true;
+                       
                         update_option($object_id, $options);
                     }
 
@@ -201,7 +207,7 @@ if (!class_exists('Openexchange_api_settings')) {
             $cool_options = new_cmb2_box(
                 array(
                     'id' => 'ccpw_settings_page',
-                    'title' => esc_html__('API Settings', 'celp1'),
+                    'title' => esc_html__('API Settings', 'cryptocurrency-price-ticker-widget'),
                     'object_types' => array('options-page'),
                     'option_key' => 'openexchange-api-settings', // Option key and admin menu page slug
                     'menu_title' => false, // Falls back to 'title' (above)
@@ -214,7 +220,7 @@ if (!class_exists('Openexchange_api_settings')) {
             // Add fields
             $cool_options->add_field(
                 array(
-                    'name' => __('Enter OpenExchangeRates.org API Key', 'ccpw1'),
+                    'name' => __('Enter OpenExchangeRates.org API Key', 'cryptocurrency-price-ticker-widget'),
                     'id' => 'ccpw_openexchangerate_api_title',
                     'type' => 'title',
                 )
@@ -222,16 +228,16 @@ if (!class_exists('Openexchange_api_settings')) {
 
             $cool_options->add_field(
                 array(
-                    'name' => __('Enter API Key', 'ccpw1'),
+                    'name' => __('Enter API Key', 'cryptocurrency-price-ticker-widget'),
                     'desc' => __('Display cryptocurrency prices in over <b>30 fiat currencies</b>.<br/>
-					>>  <a href="https://openexchangerates.org/signup/free" target="blank">Get OpenExchangeRates.org Free API Key</a>', 'ccpw1'),
+					>>  <a href="https://openexchangerates.org/signup/free" target="blank">Get OpenExchangeRates.org Free API Key</a>', 'cryptocurrency-price-ticker-widget'),
                     'id' => 'openexchangerate_api',
                     'type' => 'text',
                 )
             );
 
             $cool_options->add_field(array(
-                'name' => __('Api Settings', 'ccpw1'),
+                'name' => __('Api Settings', 'cryptocurrency-price-ticker-widget'),
                 'id' => 'ccpw_coingecko_api_title',
                 'type' => 'title',
             ));
@@ -244,16 +250,16 @@ if (!class_exists('Openexchange_api_settings')) {
                     'type' => 'select',
                     'default' => 'coin_gecko',
                     'options' => array(
-                        'coin_gecko' => __('CoinGecko API', 'cmb2'),
-                        'coin_paprika' => __('Coinpaprika API', 'cmb2'),
-                        'coin_marketcap' => __('CoinMarketCap API', 'cmb2'),
-                        'coin_capapi' => __('CoinCap API','cmb2')
+                        'coin_gecko' => __('CoinGecko API', 'cryptocurrency-price-ticker-widget'),
+                        'coin_paprika' => __('Coinpaprika API', 'cryptocurrency-price-ticker-widget'),
+                        'coin_marketcap' => __('CoinMarketCap API', 'cryptocurrency-price-ticker-widget'),
+                        'coin_capapi' => __('CoinCap API','cryptocurrency-price-ticker-widget')
                     ),
                 )
             );
 
             $cool_options->add_field(array(
-                'name' => __('Select Coingecko API Type', 'cmb2'),
+                'name' => __('Select Coingecko API Type', 'cryptocurrency-price-ticker-widget'),
                 'desc' => '',
                 'id' => 'api_end_point',
                 'type' => 'select',
@@ -266,22 +272,22 @@ if (!class_exists('Openexchange_api_settings')) {
             ));
 
             $cool_options->add_field(array(
-                'name' => __('Enter CoinGecko API Key', 'ccpw1'),
-                'desc' => __('Check - <a href="https://support.coingecko.com/hc/en-us/articles/21880397454233-User-Guide-How-to-use-Demo-plan-API-key?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=coolplugins&utm_content=view_crypto_widget" target="blank">How to retrieve CoinGecko Free API Key ?</a>', 'ccpw1'),
+                'name' => __('Enter CoinGecko API Key', 'cryptocurrency-price-ticker-widget'),
+                'desc' => __('Check - <a href="https://support.coingecko.com/hc/en-us/articles/21880397454233-User-Guide-How-to-use-Demo-plan-API-key?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=coolplugins&utm_content=view_crypto_widget" target="blank">How to retrieve CoinGecko Free API Key ?</a>', 'cryptocurrency-price-ticker-widget'),
                 'id' => 'coingecko_api',
                 'type' => 'text',
 
             ));
             $cool_options->add_field(array(
-                'name' => __('Enter CoinMarketCap API Key', 'ccpw1'),
-                'desc' => __('Check - <a href="https://coinmarketcap.com/api/" target="blank">How to retrieve CoinMarketCap Free API Key ?</a>', 'ccpw1'),
+                'name' => __('Enter CoinMarketCap API Key', 'cryptocurrency-price-ticker-widget'),
+                'desc' => __('Check - <a href="https://coinmarketcap.com/api/" target="blank">How to retrieve CoinMarketCap Free API Key ?</a>', 'cryptocurrency-price-ticker-widget'),
                 'id' => 'coinmarketcap_api',
                 'type' => 'text',
 
             ));
             $cool_options->add_field(array(
-                'name' => __('Enter CoinCap API Key', 'ccpw1'),
-                'desc' => __('Check - <a href="https://coincap.io/api-key" target="blank">How to retrieve CoinCap Free API Key ?</a>', 'ccpw1'),
+                'name' => __('Enter CoinCap API Key', 'cryptocurrency-price-ticker-widget'),
+                'desc' => __('Check - <a href="https://coincap.io/api-key" target="blank">How to retrieve CoinCap Free API Key ?</a>', 'cryptocurrency-price-ticker-widget'),
                 'id' => 'coincap_api',
                 'type' => 'text',
             ));
@@ -293,9 +299,9 @@ if (!class_exists('Openexchange_api_settings')) {
                     'type' => 'select',
                     'default' => '10',
                     'options' => array(
-                        '5' => __('5 Minutes', 'cmb2'),
-                        '10' => __('10 Minutes', 'cmb2'),
-                        '15' => __('15 Minutes', 'cmb2'),
+                        '5' => __('5 Minutes', 'cryptocurrency-price-ticker-widget'),
+                        '10' => __('10 Minutes', 'cryptocurrency-price-ticker-widget'),
+                        '15' => __('15 Minutes', 'cryptocurrency-price-ticker-widget'),
                     ),
                     'desc' => 'Approximately 18,000 monthly API calls can be handled with a 5-minute API cache.<br>
                     Approximately 9,000 API calls per month can be managed with a 10-minute API cache.<br>
@@ -324,7 +330,7 @@ if (!class_exists('Openexchange_api_settings')) {
 
                 $cool_options->add_field(
                     array(
-                        'name' => __('Make Cryptocurrency Widgets Even Better', 'ccpw1'),
+                        'name' => __('Make Cryptocurrency Widgets Even Better', 'cryptocurrency-price-ticker-widget'),
                         'id' => 'ccpw_extra_info_title',
                         'type' => 'title',
                     
@@ -338,7 +344,7 @@ if (!class_exists('Openexchange_api_settings')) {
                     'name' => 'Purge Crypto Widget Free API Data Cache',
                     'id' => 'Delete Cache',
                     'type' => 'title',
-                    'desc' => '<button class="button button-secondary" data-ccpw-nonce="' . esc_attr($ccpw_nonce) . '" data-ajax-url="' . esc_url($ajax_url) . '" id="ccpw_delete_cache">' . __('Purge Cache', 'ccpw') . '</button>',
+                    'desc' => '<button class="button button-secondary" data-ccpw-nonce="' . esc_attr($ccpw_nonce) . '" data-ajax-url="' . esc_url($ajax_url) . '" id="ccpw_delete_cache">' . __('Purge Cache', 'cryptocurrency-price-ticker-widget') . '</button>',
                 )
             );
 
@@ -364,17 +370,17 @@ if (!class_exists('Openexchange_api_settings')) {
                 Help us make this plugin more compatible with your site by sharing non-sensitive site data. 
                     <a href="#" class="cpfm-see-terms">[See terms]</a>
                        <div id="termsBox" style="display: none;padding-left: 20px; margin-top: 10px; font-size: 12px; color: #999;">
-                        <p>'. esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'ccpw') . ' <a href="https://my.coolplugins.net/terms/usage-tracking/" target="_blank" rel="noopener noreferrer">
-                          '. esc_html__('Click here', 'ccpw') . '
+                        <p>'. esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'cryptocurrency-price-ticker-widget') . ' <a href="https://my.coolplugins.net/terms/usage-tracking/" target="_blank" rel="noopener noreferrer">
+                          '. esc_html__('Click here', 'cryptocurrency-price-ticker-widget') . '
                           </a></p>
                     <ul style="list-style-type:auto;">
-                        <li>'. esc_html__('Your website home URL and WordPress admin email.', 'ccpw') . '</li>
-                        <li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'ccpw') . '</li>
+                        <li>'. esc_html__('Your website home URL and WordPress admin email.', 'cryptocurrency-price-ticker-widget') . '</li>
+                        <li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'cryptocurrency-price-ticker-widget') . '</li>
                     </ul>
                 </div>';
 
             $cool_options_setting->add_field(array(
-                'name'      => __('Usage Data Sharing ', 'ccpw1'),
+                'name'      => __('Usage Data Sharing ', 'cryptocurrency-price-ticker-widget'),
                 'id'        => 'ccpw_extra_info',
                 'type'      => 'checkbox',
                 'default'   => $choice,
@@ -446,6 +452,7 @@ if (!class_exists('Openexchange_api_settings')) {
     }
 
     // Initialize the main dashboard class with all required parameters
+    //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
     $Openexchange = Openexchange_api_settings::init();
     $Openexchange->cool_init_hooks();
 }

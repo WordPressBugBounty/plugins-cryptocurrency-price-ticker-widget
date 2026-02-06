@@ -1,4 +1,10 @@
 <?php
+
+//phpcs:disable WordPress.Security.NonceVerification.Recommended
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+
 if (!class_exists('CCPW_CMB2_Settings')) {
     class CCPW_CMB2_Settings
     {
@@ -16,8 +22,8 @@ if (!class_exists('CCPW_CMB2_Settings')) {
 
                 $notice = [
 
-                    'title' => __('Cryptocurrency Plugins by Cool Plugins', 'ccpw'),
-                    'message' => __('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'cool-plugins-feedback'),
+                    'title' => __('Cryptocurrency Plugins by Cool Plugins', 'cryptocurrency-price-ticker-widget'),
+                    'message' => __('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'cryptocurrency-price-ticker-widget'),
                     'pages' => ['cool-crypto-plugins', 'ccpw_get_started','openexchange-api-settings'],
                     'always_show_on' => ['cool-crypto-plugins','ccpw_get_started','openexchange-api-settings'], // This enables auto-show
                     'plugin_name'=>'ccpw'
@@ -26,10 +32,10 @@ if (!class_exists('CCPW_CMB2_Settings')) {
                 CPFM_Feedback_Notice::cpfm_register_notice('crypto', $notice);
 
                     if (!isset($GLOBALS['cool_plugins_feedback'])) {
-                        $GLOBALS['cool_plugins_feedback'] = [];
+                        $GLOBALS['cool_plugins_feedback'] = []; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
                     }
                 
-                    $GLOBALS['cool_plugins_feedback']['crypto'][] = $notice;
+                    $GLOBALS['cool_plugins_feedback']['crypto'][] = $notice; //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
            
             });
             add_action('cpfm_after_opt_in_ccpw', function($category) {
@@ -55,7 +61,7 @@ if (!class_exists('CCPW_CMB2_Settings')) {
             $cool_options_setting = new_cmb2_box(
                 array(
                     'id' => 'ccpw_settings_page',
-                    'title' => esc_html__('API Settings', 'celp1'),
+                    'title' => esc_html__('API Settings', 'cryptocurrency-price-ticker-widget'),
                     'object_types' => array('options-page'),
                     'option_key' => 'openexchange-api-settings',
                     'menu_title' => false,
@@ -116,7 +122,7 @@ if (!class_exists('CCPW_CMB2_Settings')) {
             $cmb2 = new_cmb2_box(
                 array(
                     'id' => 'live_preview',
-                    'title' => __('Crypto Widget Live Preview', 'cmb2'),
+                    'title' => __('Crypto Widget Live Preview', 'cryptocurrency-price-ticker-widget'),
                     'object_types' => array('ccpw'), // Post type
                     'context' => 'normal',
                     'priority' => 'high',
@@ -128,7 +134,7 @@ if (!class_exists('CCPW_CMB2_Settings')) {
             $cmb = new_cmb2_box(
                 array(
                     'id' => 'generate_shortcode',
-                    'title' => __('Crypto Widget Settings', 'cmb2'),
+                    'title' => __('Crypto Widget Settings', 'cryptocurrency-price-ticker-widget'),
                     'object_types' => array('ccpw'), // Post type
                     'context' => 'normal',
                     'priority' => 'high',
@@ -145,23 +151,23 @@ if (!class_exists('CCPW_CMB2_Settings')) {
                     'type' => 'select',
                     'default' => 'table-widget',
                     'options' => array(
-                        'ticker' => __('Ticker / Marquee', 'cmb2'),
-                        'price-label' => __('Price Label', 'cmb2'),
-                        'table-widget' => __('Advanced Table', 'cmb2'),
-                        'list-widget' => __('Simple List', 'cmb2'),
-                        'multi-currency-tab' => __('Multi Currency Tabs', 'cmb2'),
+                        'ticker' => __('Ticker / Marquee', 'cryptocurrency-price-ticker-widget'),
+                        'price-label' => __('Price Label', 'cryptocurrency-price-ticker-widget'),
+                        'table-widget' => __('Advanced Table', 'cryptocurrency-price-ticker-widget'),
+                        'list-widget' => __('Simple List', 'cryptocurrency-price-ticker-widget'),
+                        'multi-currency-tab' => __('Multi Currency Tabs', 'cryptocurrency-price-ticker-widget'),
                         // widget pro widget list
-                        'accordion-block' => __('Accordion Block (Pro)', 'cmb2'),
-                        'price-block' => __('Price Block (Pro)', 'cmb2'),
-                        'price-card' => __('Price Card (Pro) ', 'cmb2'),
-                        'slider-widget' => __('Slider Widget (Pro)', 'cmb2'),
-                        'chart' => __('Chart (Pro)', 'cmb2'),
-                        'calculator' => __('Crypto Convertor (Pro)', 'cmb2'),
-                        'rss-feed' => __('News Feed (Pro)', 'cmb2'),
-                        'donation-widget' => __('Donation Box (Pro)', 'cmb2'),
-                        'technical-analysis' => __('Technical Analysis (Pro)', 'cmb2'),
-                        'coingecko-widget' => __('CoinGecko Widget (Pro)', 'cmb2'),
-                        'binance-live-widget' => __('Binance Live Widget (Pro)', 'cmb2'),
+                        'accordion-block' => __('Accordion Block (Pro)', 'cryptocurrency-price-ticker-widget'),
+                        'price-block' => __('Price Block (Pro)', 'cryptocurrency-price-ticker-widget'),
+                        'price-card' => __('Price Card (Pro) ', 'cryptocurrency-price-ticker-widget'),
+                        'slider-widget' => __('Slider Widget (Pro)', 'cryptocurrency-price-ticker-widget'),
+                        'chart' => __('Chart (Pro)', 'cryptocurrency-price-ticker-widget'),
+                        'calculator' => __('Crypto Convertor (Pro)', 'cryptocurrency-price-ticker-widget'),
+                        'rss-feed' => __('News Feed (Pro)', 'cryptocurrency-price-ticker-widget'),
+                        'donation-widget' => __('Donation Box (Pro)', 'cryptocurrency-price-ticker-widget'),
+                        'technical-analysis' => __('Technical Analysis (Pro)', 'cryptocurrency-price-ticker-widget'),
+                        'coingecko-widget' => __('CoinGecko Widget (Pro)', 'cryptocurrency-price-ticker-widget'),
+                        'binance-live-widget' => __('Binance Live Widget (Pro)', 'cryptocurrency-price-ticker-widget'),
                     ),
                 )
             );
@@ -273,9 +279,9 @@ if (!class_exists('CCPW_CMB2_Settings')) {
                     'id' => 'ticker_position',
                     'type' => 'radio_inline',
                     'options' => array(
-                        'header' => __('Header', 'cmb2'),
-                        'footer' => __('Footer', 'cmb2'),
-                        'shortcode' => __('Anywhere', 'cmb2'),
+                        'header' => __('Header', 'cryptocurrency-price-ticker-widget'),
+                        'footer' => __('Footer', 'cryptocurrency-price-ticker-widget'),
+                        'shortcode' => __('Anywhere', 'cryptocurrency-price-ticker-widget'),
                     ),
                     'default' => 'shortcode',
 
@@ -380,87 +386,87 @@ if (!class_exists('CCPW_CMB2_Settings')) {
                 'name' => 'Accordion Block (Pro)',
                 'id' => 'accordion-block',
                 'type' => 'title',
-                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'ccpwx') . '</a>
-		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-accordion-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'ccpwx') . '</a><br/><hr>
+                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'cryptocurrency-price-ticker-widget') . '</a>
+		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-accordion-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'cryptocurrency-price-ticker-widget') . '</a><br/><hr>
 		<a href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-accordion-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget"><img src="' . CCPWF_URL . 'assets\image\accordion-block.png" style="max-width:100%;"></a>',
             ));
             $cmb->add_field(array(
                 'name' => 'Price Block (Pro)',
                 'id' => 'price-block',
                 'type' => 'title',
-                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'ccpwx') . '</a>
-		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-block-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'ccpwx') . '</a><br/><hr>
+                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'cryptocurrency-price-ticker-widget') . '</a>
+		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-block-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'cryptocurrency-price-ticker-widget') . '</a><br/><hr>
 		<a href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-block-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget"><img src="' . CCPWF_URL . 'assets\image\price-block.png" style="max-width:100%;"></a>',
             ));
             $cmb->add_field(array(
                 'name' => 'Price Card (Pro)',
                 'id' => 'price-card',
                 'type' => 'title',
-                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'ccpwx') . '</a>
-		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-card-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'ccpwx') . '</a><br/><hr>
+                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'cryptocurrency-price-ticker-widget') . '</a>
+		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-card-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'cryptocurrency-price-ticker-widget') . '</a><br/><hr>
 		<a href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-card-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget"><img src="' . CCPWF_URL . 'assets\image\price-card.png" style="max-width:100%;"></a>',
             ));
             $cmb->add_field(array(
                 'name' => 'Slider Widget (Pro)',
                 'id' => 'slider-widget',
                 'type' => 'title',
-                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'ccpwx') . '</a>
-		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-slider-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'ccpwx') . '</a><br/><hr>
+                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'cryptocurrency-price-ticker-widget') . '</a>
+		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-slider-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'cryptocurrency-price-ticker-widget') . '</a><br/><hr>
 		<a href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-slider-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget"><img src="' . CCPWF_URL . 'assets\image\slider-widget.png" style="max-width:100%;"></a>',
             ));
             $cmb->add_field(array(
                 'name' => 'Historical Price Chart (Pro)',
                 'id' => 'chart',
                 'type' => 'title',
-                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'ccpwx') . '</a>
-		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-chart-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'ccpwx') . '</a><br/><hr>
+                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'cryptocurrency-price-ticker-widget') . '</a>
+		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-chart-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'cryptocurrency-price-ticker-widget') . '</a><br/><hr>
 		<a href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-price-chart-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget"><img src="' . CCPWF_URL . 'assets\image\chart.png" style="max-width:100%;"></a>',
             ));
             $cmb->add_field(array(
                 'name' => 'Crypto Convertor (Pro)',
                 'id' => 'calculator',
                 'type' => 'title',
-                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'ccpwx') . '</a>
-		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-calculator-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'ccpwx') . '</a><br/><hr>
+                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'cryptocurrency-price-ticker-widget') . '</a>
+		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-calculator-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'cryptocurrency-price-ticker-widget') . '</a><br/><hr>
 		<a href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-calculator-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget"><img src="' . CCPWF_URL . 'assets\image\calculator.png" style="max-width:100%;"></a>',
             ));
             $cmb->add_field(array(
                 'name' => 'News Feed (Pro)',
                 'id' => 'rss-feed',
                 'type' => 'title',
-                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'ccpwx') . '</a>
-		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-news-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'ccpwx') . '</a><br/><hr>
+                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'cryptocurrency-price-ticker-widget') . '</a>
+		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-news-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'cryptocurrency-price-ticker-widget') . '</a><br/><hr>
 		<a href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/crypto-news-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget"><img src="' . CCPWF_URL . 'assets\image\rss-feed.png" style="max-width:100%;"></a>',
             ));
             $cmb->add_field(array(
                 'name' => 'Donation Box (Pro)',
                 'id' => 'donation-widget',
                 'type' => 'title',
-                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'ccpwx') . '</a>
-		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/donation-box/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'ccpwx') . '</a><br/><hr>
+                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'cryptocurrency-price-ticker-widget') . '</a>
+		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/donation-box/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'cryptocurrency-price-ticker-widget') . '</a><br/><hr>
 		<a href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/donation-box/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget"><img src="' . CCPWF_URL . 'assets\image\donation-widget.png" style="max-width:100%;"></a>',
             ));
             $cmb->add_field(array(
                 'name' => 'Technical Analysis (Pro)',
                 'id' => 'technical-analysis',
                 'type' => 'title',
-                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'ccpwx') . '</a><br/><hr>
+                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'cryptocurrency-price-ticker-widget') . '</a><br/><hr>
 		<img src="' . CCPWF_URL . 'assets\image\technical-analysis.png" style="max-width:100%;">',
             ));
             $cmb->add_field(array(
                 'name' => 'Coingecko Widget (Pro)',
                 'id' => 'coingecko-widget',
                 'type' => 'title',
-                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'ccpwx') . '</a>
-		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/coingecko-widgets/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'ccpwx') . '</a><br/><hr>
+                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'cryptocurrency-price-ticker-widget') . '</a>
+		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/coingecko-widgets/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'cryptocurrency-price-ticker-widget') . '</a><br/><hr>
 		<a href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/coingecko-widgets/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget"><img src="' . CCPWF_URL . 'assets\image\coingecko-widget.png" style="max-width:100%;"></a>',
             ));
             $cmb->add_field(array(
                 'name' => 'Binance Live Widget (Pro)',
                 'id' => 'binance_live_widget',
                 'type' => 'title',
-                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'ccpwx') . '</a>
-		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/binance-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'ccpwx') . '</a><br/><hr>
+                'desc' => '<a class="button button-primary" target="_blank" href="' . CCPWF_PRO_URL . 'utm_medium=inside&utm_campaign=get_pro&utm_content=add_new_widget">' . __('Buy Now', 'cryptocurrency-price-ticker-widget') . '</a>
+		<a class="button button-secondary" target="_blank" href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/binance-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget">' . __('VIEW DEMO', 'cryptocurrency-price-ticker-widget') . '</a><br/><hr>
 		<a href="https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/binance-widget/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=demo&utm_content=add_new_widget"><img src="' . CCPWF_URL . 'assets\image\binance-live-widget.png" style="max-width:100%;"></a>',
             ));
 
@@ -477,7 +483,7 @@ if (!class_exists('CCPW_CMB2_Settings')) {
             $cmb4 = new_cmb2_box(
                 array(
                     'id' => 'settings_page_option',
-                    'title' => esc_html__('Cryptocurrency Widgets - Get Started', 'ccpw'),
+                    'title' => esc_html__('Cryptocurrency Widgets - Get Started', 'cryptocurrency-price-ticker-widget'),
                     'object_types' => array('options-page'),
                     'option_key' => 'ccpw_get_started',
                     'menu_title' => '',
@@ -619,12 +625,12 @@ if (!class_exists('CCPW_CMB2_Settings')) {
 
                 // Validate that it's a valid post ID and correct post type
                 if (!$id || get_post_type($id) !== 'ccpw') {
-                    return '<h4><strong class="micon-info-circled"></strong> ' . __('Invalid post ID. Please save the widget first.', 'ccpwx') . '</h4>';
+                    return '<h4><strong class="micon-info-circled"></strong> ' . __('Invalid post ID. Please save the widget first.', 'cryptocurrency-price-ticker-widget') . '</h4>';
                 }
 
                 $type = get_post_meta($id, 'type', true);
                 $output  = do_shortcode('[ccpw id=' . esc_attr($id) . ']');
-                $output .= '<p><strong class="micon-info-circled"></strong>' . __('Backend preview may be a little bit different from frontend / actual view. Add this shortcode on any page for frontend view - ', 'ccpwx') . '<code>[ccpw id=' . esc_attr($id) . ']</code></p>';
+                $output .= '<p><strong class="micon-info-circled"></strong>' . __('Backend preview may be a little bit different from frontend / actual view. Add this shortcode on any page for frontend view - ', 'cryptocurrency-price-ticker-widget') . '<code>[ccpw id=' . esc_attr($id) . ']</code></p>';
                 $output .= '<script type="text/javascript">
          jQuery(document).ready(function($){
            $(".ccpw-ticker-cont").fadeIn();
@@ -650,7 +656,7 @@ if (!class_exists('CCPW_CMB2_Settings')) {
                 return $output;
 
             } else {
-                return $output = '<h4><strong class="micon-info-circled"></strong> ' . __('Publish to preview the widget.', 'ccpwx') . '</h4>';
+                return $output = '<h4><strong class="micon-info-circled"></strong> ' . __('Publish to preview the widget.', 'cryptocurrency-price-ticker-widget') . '</h4>';
 
             }
         }

@@ -10,6 +10,8 @@
  * @license   GPL-2.0+
  * @link      https://cmb2.io
  */
+
+//phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped, WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.TextDomainMismatch
 abstract class CMB2_Type_Base {
 
 	/**

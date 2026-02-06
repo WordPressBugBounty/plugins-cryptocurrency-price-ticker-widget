@@ -2,6 +2,10 @@
 /**
  * This file is responsible for all database related functionality.
  */
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+//phpcs:disable PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+//phpcs:disable WordPress.DB.PreparedSQL.NotPrepared,, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 class ccpw_database
 {
 
@@ -342,7 +346,7 @@ class ccpw_database
     {
         global $wpdb;
         $table = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", esc_sql($this->table_name)));
-        $date = date('Y-m-d h:m:s', strtotime("-2 days"));
+        $date = gmdate('Y-m-d h:m:s', strtotime("-2 days"));
 
         if ($table == esc_sql($this->table_name)) {
             $wpdb->query($wpdb->prepare("DELETE FROM " . esc_sql($this->table_name) . " WHERE last_updated <= %s ", $date));

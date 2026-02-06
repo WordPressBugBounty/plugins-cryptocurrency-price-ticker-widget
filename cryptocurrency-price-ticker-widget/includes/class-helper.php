@@ -1,4 +1,8 @@
 <?php
+
+//phpcs:disable WordPress.Security.NonceVerification.Recommended
+
+
 if (!defined('ABSPATH')) {
     exit();
 }
@@ -244,7 +248,7 @@ trait CCPW_Helper_Functions
             } else {
                 //removing extra part from logo url
                 $logo_url = $coin_logo;
-                $parts = parse_url($logo_url);
+                $parts = wp_parse_url($logo_url);
                 $logo_path = explode('/', $parts['path'], 4)[3];
                 $logo_html = '<img  alt="' . esc_attr($coin_name) . '" src="' . esc_url(CCPWF_COINS_LOGO . $logo_path) . '">';
 

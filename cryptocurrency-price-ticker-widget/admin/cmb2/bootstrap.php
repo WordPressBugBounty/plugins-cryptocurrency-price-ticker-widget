@@ -15,6 +15,9 @@
  * @since  2.2.0
  * @return void
  */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 function cmb2_bootstrap() {
 
 	if ( is_admin() ) {

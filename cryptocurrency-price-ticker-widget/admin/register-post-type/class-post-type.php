@@ -1,5 +1,9 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 if (!class_exists('CPTW_Posttype')) {
+
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     class CPTW_Posttype
     {
         use CCPW_Helper_Functions;
@@ -62,37 +66,37 @@ if (!class_exists('CPTW_Posttype')) {
         public function ccpw_post_type()
         {
             $labels = array(
-                'name' => _x('Cryptocurrency Widgets', 'Post Type General Name', 'ccpwx'),
-                'singular_name' => _x('Cryptocurrency Widget', 'Post Type Singular Name', 'ccpwx'),
-                'menu_name' => __('Crypto Widgets', 'ccpwx'),
-                'name_admin_bar' => __('Post Type', 'ccpwx'),
-                'archives' => __('Item Archives', 'ccpwx'),
-                'attributes' => __('Item Attributes', 'ccpwx'),
-                'parent_item_colon' => __('Parent Item:', 'ccpwx'),
-                'all_items' => __('All Shortcodes', 'ccpwx'),
-                'add_new_item' => __('Add New Shortcode', 'ccpwx'),
-                'add_new' => __('Add New', 'ccpwx'),
-                'new_item' => __('New Item', 'ccpwx'),
-                'edit_item' => __('Edit Item', 'ccpwx'),
-                'update_item' => __('Update Item', 'ccpwx'),
-                'view_item' => __('View Item', 'ccpwx'),
-                'view_items' => __('View Items', 'ccpwx'),
-                'search_items' => __('Search Item', 'ccpwx'),
-                'not_found' => __('Not found', 'ccpwx'),
-                'not_found_in_trash' => __('Not found in Trash', 'ccpwx'),
-                'featured_image' => __('Featured Image', 'ccpwx'),
-                'set_featured_image' => __('Set featured image', 'ccpwx'),
-                'remove_featured_image' => __('Remove featured image', 'ccpwx'),
-                'use_featured_image' => __('Use as featured image', 'ccpwx'),
-                'insert_into_item' => __('Insert into item', 'ccpwx'),
-                'uploaded_to_this_item' => __('Uploaded to this item', 'ccpwx'),
-                'items_list' => __('Items list', 'ccpwx'),
-                'items_list_navigation' => __('Items list navigation', 'ccpwx'),
-                'filter_items_list' => __('Filter items list', 'ccpwx'),
+                'name' => _x('Cryptocurrency Widgets', 'Post Type General Name', 'cryptocurrency-price-ticker-widget'),
+                'singular_name' => _x('Cryptocurrency Widget', 'Post Type Singular Name', 'cryptocurrency-price-ticker-widget'),
+                'menu_name' => __('Crypto Widgets', 'cryptocurrency-price-ticker-widget'),
+                'name_admin_bar' => __('Post Type', 'cryptocurrency-price-ticker-widget'),
+                'archives' => __('Item Archives', 'cryptocurrency-price-ticker-widget'),
+                'attributes' => __('Item Attributes', 'cryptocurrency-price-ticker-widget'),
+                'parent_item_colon' => __('Parent Item:', 'cryptocurrency-price-ticker-widget'),
+                'all_items' => __('All Shortcodes', 'cryptocurrency-price-ticker-widget'),
+                'add_new_item' => __('Add New Shortcode', 'cryptocurrency-price-ticker-widget'),
+                'add_new' => __('Add New', 'cryptocurrency-price-ticker-widget'),
+                'new_item' => __('New Item', 'cryptocurrency-price-ticker-widget'),
+                'edit_item' => __('Edit Item', 'cryptocurrency-price-ticker-widget'),
+                'update_item' => __('Update Item', 'cryptocurrency-price-ticker-widget'),
+                'view_item' => __('View Item', 'cryptocurrency-price-ticker-widget'),
+                'view_items' => __('View Items', 'cryptocurrency-price-ticker-widget'),
+                'search_items' => __('Search Item', 'cryptocurrency-price-ticker-widget'),
+                'not_found' => __('Not found', 'cryptocurrency-price-ticker-widget'),
+                'not_found_in_trash' => __('Not found in Trash', 'cryptocurrency-price-ticker-widget'),
+                'featured_image' => __('Featured Image', 'cryptocurrency-price-ticker-widget'),
+                'set_featured_image' => __('Set featured image', 'cryptocurrency-price-ticker-widget'),
+                'remove_featured_image' => __('Remove featured image', 'cryptocurrency-price-ticker-widget'),
+                'use_featured_image' => __('Use as featured image', 'cryptocurrency-price-ticker-widget'),
+                'insert_into_item' => __('Insert into item', 'cryptocurrency-price-ticker-widget'),
+                'uploaded_to_this_item' => __('Uploaded to this item', 'cryptocurrency-price-ticker-widget'),
+                'items_list' => __('Items list', 'cryptocurrency-price-ticker-widget'),
+                'items_list_navigation' => __('Items list navigation', 'cryptocurrency-price-ticker-widget'),
+                'filter_items_list' => __('Filter items list', 'cryptocurrency-price-ticker-widget'),
             );
             $args = array(
-                'label' => __('Cryptocurrency Widgets', 'ccpwx'),
-                'description' => __('Post Type Description', 'ccpwx'),
+                'label' => __('Cryptocurrency Widgets', 'cryptocurrency-price-ticker-widget'),
+                'description' => __('Post Type Description', 'cryptocurrency-price-ticker-widget'),
                 'labels' => $labels,
                 'supports' => array('title'),
                 'taxonomies' => array(''),
@@ -131,7 +135,7 @@ if (!class_exists('CPTW_Posttype')) {
             // Add shortcode meta box content...
             $id = get_the_ID();
             $dynamic_attr = '';
-            esc_html_e('Copy & Paste this shortcode any in Page/Post.', 'ccpwx');
+            esc_html_e('Copy & Paste this shortcode any in Page/Post.', 'cryptocurrency-price-ticker-widget');
 
             $element_type = get_post_meta($id, 'pp_type', true);
             $dynamic_attr .= "[ccpw id=\"{$id}\"";
@@ -153,7 +157,7 @@ if (!class_exists('CPTW_Posttype')) {
         {
             add_meta_box(
                 'ccpw-feedback-section',
-                __('Information', 'ccpwx'),
+                __('Information', 'cryptocurrency-price-ticker-widget'),
                 array($this, 'ccpw_right_section'),
                 'ccpw',
                 'side',
@@ -186,7 +190,7 @@ if (!class_exists('CPTW_Posttype')) {
 			<li><b>Q4. Enjoying our free plugin?</b><br/>
 			If you really like our plugin, please leave a review on WP.org. Your review helps us keep improving the free plugin.
 			<hr>
-			<a style="width:100%;text-align:center;" href="https://wordpress.org/support/plugin/cryptocurrency-price-ticker-widget/reviews/#new-post" class="button button-primary" target="_blank">' . __('Submit Review', 'ccpwx') . ' ★★★★★</a>
+			<a style="width:100%;text-align:center;" href="https://wordpress.org/support/plugin/cryptocurrency-price-ticker-widget/reviews/#new-post" class="button button-primary" target="_blank">' . __('Submit Review', 'cryptocurrency-price-ticker-widget') . ' ★★★★★</a>
 			</li>
 		</ul>
         ';
@@ -200,8 +204,8 @@ if (!class_exists('CPTW_Posttype')) {
          */
         public function set_custom_edit_ccpw_columns($columns)
         {
-            $columns['type'] = __('Widget Type', 'ccpwx');
-            $columns['shortcode'] = __('Shortcode', 'ccpwx');
+            $columns['type'] = __('Widget Type', 'cryptocurrency-price-ticker-widget');
+            $columns['shortcode'] = __('Shortcode', 'cryptocurrency-price-ticker-widget');
             return $columns;
 
         }
@@ -216,26 +220,26 @@ if (!class_exists('CPTW_Posttype')) {
                     $type = get_post_meta($post_id, 'type', true);
                     switch ($type) {
                         case 'ticker':
-                            esc_html_e('Ticker', 'ccpwx');
+                            esc_html_e('Ticker', 'cryptocurrency-price-ticker-widget');
                             break;
                         case 'price-label':
-                            esc_html_e('Price Label', 'ccpwx');
+                            esc_html_e('Price Label', 'cryptocurrency-price-ticker-widget');
                             break;
                         case 'multi-currency-tab':
-                            esc_html_e('Multi Currency Tabs', 'ccpwx');
+                            esc_html_e('Multi Currency Tabs', 'cryptocurrency-price-ticker-widget');
                             break;
                         case 'table-widget':
-                            esc_html_e('Table Widget', 'ccpwx');
+                            esc_html_e('Table Widget', 'cryptocurrency-price-ticker-widget');
                             break;
                         default:
-                            esc_html_e('List Widget', 'ccpwx');
+                            esc_html_e('List Widget', 'cryptocurrency-price-ticker-widget');
                     }
                     break;
                 case 'shortcode':
                     echo '<code>[ccpw id="' . esc_html($post_id) . '"]</code>';
                     break;
                 default:
-                    esc_html_e('Not Matched', 'ccpwx');
+                    esc_html_e('Not Matched', 'cryptocurrency-price-ticker-widget');
             }
 
         }
@@ -258,7 +262,7 @@ if (!class_exists('CPTW_Posttype')) {
                 return;
             }
             // Verify nonce for CSRF protection
-            if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id)) {
+            if (!isset($_POST['_wpnonce']) || !wp_verify_nonce( sanitize_text_field( wp_unslash($_POST['_wpnonce'])), 'update-post_' . $post_id)) {
                 return;
             }
             // Return if it's a post revision
@@ -277,7 +281,7 @@ if (!class_exists('CPTW_Posttype')) {
             }
             // - Update the post's metadata.
             if (isset($_POST['ticker_position'])) {
-                $ticker_position = sanitize_text_field($_POST['ticker_position']);
+                $ticker_position = sanitize_text_field(wp_unslash($_POST['ticker_position']));
                 if (in_array($ticker_position, array('header', 'footer'), true)) {
                     update_option('ccpw-p-id', $post_id);
                     update_option('ccpw-shortcode', '[ccpw id=' . intval($post_id) . ']'); // Use intval to sanitize post_id

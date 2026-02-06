@@ -1,5 +1,10 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+
 if (!class_exists('CPTW_Shortcode')) {
+    //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     class CPTW_Shortcode
     {
         use CCPW_Helper_Functions;
@@ -48,13 +53,13 @@ if (!class_exists('CPTW_Shortcode')) {
 
             // Checking if selected API is CoinGecko and if user authentication is required
             if ($current_select == 'coin_gecko' && empty($coingecko_api_key) && !$this->ccpw_check_user()) {
-                return __('Please enter CoinGecko Free Api Key to get this plugin works.<br>', 'ccpw');
+                return __('Please enter CoinGecko Free Api Key to get this plugin works.<br>', 'cryptocurrency-price-ticker-widget');
             } elseif ($current_select == 'coin_marketcap' && empty($coinmarket_api_key)) {
-                return __('Please enter CoinMarketCap Free Api Key to get this plugin works.<br>', 'ccpw');
+                return __('Please enter CoinMarketCap Free Api Key to get this plugin works.<br>', 'cryptocurrency-price-ticker-widget');
             } elseif ($current_select == 'coin_capapi' && empty($coincap_api_key)) {
-                return __('Please enter CoinCap Free Api Key to get this plugin works.<br>', 'ccpw');
+                return __('Please enter CoinCap Free Api Key to get this plugin works.<br>', 'cryptocurrency-price-ticker-widget');
             } elseif (!$current_select && !$this->ccpw_check_user()) {
-                return __('Please enter CoinGecko Free Api Key to get this plugin works.<br>', 'ccpw');
+                return __('Please enter CoinGecko Free Api Key to get this plugin works.<br>', 'cryptocurrency-price-ticker-widget');
             }
 
             // Extracting post ID from shortcode attributes
@@ -107,7 +112,8 @@ if (!class_exists('CPTW_Shortcode')) {
             }else{
                 $api_by = 'CoinGecko';
             }
-            $credit_html = '<div class="ccpw-credits"><a href="https://www.' . $api_by . '.com/?utm_source=cryptocurrency-widgets&utm_medium=api-credits" target="_blank" rel="nofollow">' . __('Powered by ' . $api_by . ' API', 'ccpw') . '</a></div>';
+            //phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+            $credit_html = '<div class="ccpw-credits"><a href="https://www.' . $api_by . '.com/?utm_source=cryptocurrency-widgets&utm_medium=api-credits" target="_blank" rel="nofollow">' . __('Powered by ' . $api_by . ' API', 'cryptocurrency-price-ticker-widget') . '</a></div>';
             $fiat_currency = $currency ? $currency : 'USD';
             $ticker_position = get_post_meta($post_id, 'ticker_position', true);
             $header_ticker_position = get_post_meta($post_id, 'header_ticker_position', true);
@@ -123,7 +129,7 @@ if (!class_exists('CPTW_Shortcode')) {
             $back_color = get_post_meta($post_id, 'back_color', true);
             $font_color = get_post_meta($post_id, 'font_color', true);
             $custom_css = get_post_meta($post_id, 'custom_css', true);
-            $id = 'ccpw-ticker' . $post_id . rand(1, 20);
+            $id = 'ccpw-ticker' . $post_id . wp_rand(1, 20);
             $is_cmc_enabled = get_option('cmc-dynamic-links');
 
             // Enqueuing necessary assets
@@ -158,7 +164,7 @@ if (!class_exists('CPTW_Shortcode')) {
                         // Fetching data from db for selected currencies
                         $all_coin_data = $this->ccpw_get_coins_data($display_currencies);
                     } else {
-                        return $error = __('You have not selected any currencies to display', 'ccpw');
+                        return $error = __('You have not selected any currencies to display', 'cryptocurrency-price-ticker-widget');
                     }
                 }
 
@@ -179,7 +185,7 @@ if (!class_exists('CPTW_Shortcode')) {
                         }
                     }
                 } else {
-                    $error = __('You have not selected any currencies to display', 'ccpw');
+                    $error = __('You have not selected any currencies to display', 'cryptocurrency-price-ticker-widget');
                     return $error . '<!-- Cryptocurrency Widget ID: ' . esc_attr($post_id) . ' !-->';
                 }
             }
@@ -226,10 +232,10 @@ if (!class_exists('CPTW_Shortcode')) {
                     $id = 'ccpw-list-widget-' . esc_attr($post_id);
                     $cls = 'ccpw-widget';
                     $output .= '<div id="' . esc_attr($id) . '" class="' . esc_attr($cls) . '"><table class="ccpw_table" style="border:none!important;"><thead>
-                    <th>' . esc_html__('Name', 'ccpw') . '</th>
-                    <th>' . esc_html__('Price', 'ccpw') . '</th>';
+                    <th>' . esc_html__('Name', 'cryptocurrency-price-ticker-widget') . '</th>
+                    <th>' . esc_html__('Price', 'cryptocurrency-price-ticker-widget') . '</th>';
                     if ($display_changes) {
-                        $output .= '<th>' . esc_html__('24H (%)', 'ccpw') . '</th>';
+                        $output .= '<th>' . esc_html__('24H (%)', 'cryptocurrency-price-ticker-widget') . '</th>';
                     }
                     $output .= '</thead><tbody>';
                     $output .= $crypto_html;
@@ -245,11 +251,11 @@ if (!class_exists('CPTW_Shortcode')) {
 
                     $output .= '<div class="currency_tabs" id="' . esc_attr($id) . '">
                     <ul class="multi-currency-tab">
-                        <li data-currency="usd" class="active-tab">' . __('USD', 'ccpwx') . '</li>
-                        <li data-currency="eur">' . __('EUR', 'ccpwx') . '</li>
-                        <li data-currency="gbp">' . __('GBP', 'ccpwx') . '</li>
-                        <li data-currency="aud">' . __('AUD', 'ccpwx') . '</li>
-                        <li data-currency="jpy">' . __('JPY', 'ccpwx') . '</li>
+                        <li data-currency="usd" class="active-tab">' . __('USD', 'cryptocurrency-price-ticker-widget') . '</li>
+                        <li data-currency="eur">' . __('EUR', 'cryptocurrency-price-ticker-widget') . '</li>
+                        <li data-currency="gbp">' . __('GBP', 'cryptocurrency-price-ticker-widget') . '</li>
+                        <li data-currency="aud">' . __('AUD', 'cryptocurrency-price-ticker-widget') . '</li>
+                        <li data-currency="jpy">' . __('JPY', 'cryptocurrency-price-ticker-widget') . '</li>
                     </ul>';
                     $output .= '<div><ul class="multi-currency-tab-content">';
                     $output .= $crypto_html;
@@ -261,10 +267,10 @@ if (!class_exists('CPTW_Shortcode')) {
                 case 'table-widget':
                     $cls = 'ccpw-coinslist_wrapper';
                     $preloader_url = CCPWF_URL . 'assets/chart-loading.svg';
-                    $ccpw_prev_coins = __('Previous', 'ccpw');
-                    $ccpw_next_coins = __('Next', 'ccpw');
-                    $coin_loading_lbl = __('Loading...', 'ccpw');
-                    $ccpw_no_data = __('No Coin Found', 'ccpw');
+                    $ccpw_prev_coins = __('Previous', 'cryptocurrency-price-ticker-widget');
+                    $ccpw_next_coins = __('Next', 'cryptocurrency-price-ticker-widget');
+                    $coin_loading_lbl = __('Loading...', 'cryptocurrency-price-ticker-widget');
+                    $ccpw_no_data = __('No Coin Found', 'cryptocurrency-price-ticker-widget');
                     $getRecords = '';
                     $id = 'ccpw-coinslist_wrapper';
                     $datatable_pagination = (int) get_post_meta($post_id, 'pagination_for_table', true);
@@ -288,7 +294,7 @@ if (!class_exists('CPTW_Shortcode')) {
                             $getRecords = count($display_currencies);
                             $c_id_arr = $display_currencies;
                         } else {
-                            return $error = __('You have not selected any currencies to display', 'ccpw');
+                            return $error = __('You have not selected any currencies to display', 'cryptocurrency-price-ticker-widget');
                         }
                         $r_type = 'custom';
                     } else {
@@ -322,16 +328,16 @@ if (!class_exists('CPTW_Shortcode')) {
                     class="display ccpw_table_widget table-striped table-bordered no-footer"
                     style="border:none!important;">
                     <thead data-preloader="' . esc_url($preloader_url) . '">
-                    <th data-classes="desktop ccpw_coin_rank" data-index="rank">' . __('#', 'ccpw') . '</th>
-                    <th data-classes="desktop ccpw_name" data-index="name">' . __('Name', 'ccpw') . '</th>
-                    <th data-classes="desktop ccpw_coin_price" data-index="price">' . __('Price', 'ccpw') . '</th>
-                    <th data-classes="desktop ccpw_coin_change24h" data-index="change_percentage_24h">' . __('Changes 24h', 'ccpw') . '</th>
-                    <th data-classes="desktop ccpw_coin_market_cap" data-index="market_cap">' . __('Market CAP', 'ccpw') . '</th>';
+                    <th data-classes="desktop ccpw_coin_rank" data-index="rank">' . __('#', 'cryptocurrency-price-ticker-widget') . '</th>
+                    <th data-classes="desktop ccpw_name" data-index="name">' . __('Name', 'cryptocurrency-price-ticker-widget') . '</th>
+                    <th data-classes="desktop ccpw_coin_price" data-index="price">' . __('Price', 'cryptocurrency-price-ticker-widget') . '</th>
+                    <th data-classes="desktop ccpw_coin_change24h" data-index="change_percentage_24h">' . __('Changes 24h', 'cryptocurrency-price-ticker-widget') . '</th>
+                    <th data-classes="desktop ccpw_coin_market_cap" data-index="market_cap">' . __('Market CAP', 'cryptocurrency-price-ticker-widget') . '</th>';
                     if ($api === "coin_gecko") {
-                        $output .= '<th data-classes="ccew_coin_total_volume" data-index="total_volume">' . esc_html__('Volume', 'ccpw') . '</th>';
+                        $output .= '<th data-classes="ccew_coin_total_volume" data-index="total_volume">' . esc_html__('Volume', 'cryptocurrency-price-ticker-widget') . '</th>';
                     }
                     if ($api === "coin_gecko" || $api === "coin_marketcap") {
-                        $output .= '<th data-classes="ccpw_coin_supply" data-index="supply">' . __('Supply', 'ccpw') . '</th>';
+                        $output .= '<th data-classes="ccpw_coin_supply" data-index="supply">' . __('Supply', 'cryptocurrency-price-ticker-widget') . '</th>';
                     }
                     
                     $output .= '</tr></thead><tbody>';
@@ -503,7 +509,7 @@ if (!class_exists('CPTW_Shortcode')) {
         public function ccpw_get_ajax_data()
         {
             // Verify nonce
-            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'ccpwf-tbl-widget')) {
+            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ccpwf-tbl-widget')) {
                 $response = array("draw" => 1, "recordsTotal" => 1, "recordsFiltered" => 1, "data" => [], 'error' => 'nonce_failed');
                 echo json_encode($response);
                 wp_die();
@@ -512,7 +518,7 @@ if (!class_exists('CPTW_Shortcode')) {
             // Initialize variables with proper validation
             // Validate request type against whitelist
             $allowed_rtypes = array('top', 'custom', '0');
-            $rtype = isset($_POST['rtype']) ? sanitize_text_field($_POST['rtype']) : '0';
+            $rtype = isset($_POST['rtype']) ? sanitize_text_field(wp_unslash($_POST['rtype'])) : '0';
             $rtype = in_array($rtype, $allowed_rtypes, true) ? $rtype : '0';
             
             // Validate and sanitize start_point (pagination offset)
@@ -533,11 +539,11 @@ if (!class_exists('CPTW_Shortcode')) {
             
             // Validate fiat currency against whitelist
             $allowed_currencies = array('USD', 'GBP', 'EUR', 'INR', 'JPY', 'CNY', 'ILS', 'KRW', 'RUB', 'DKK', 'PLN', 'AUD', 'BRL', 'MXN', 'SEK', 'CAD', 'HKD', 'MYR', 'SGD', 'CHF', 'HUF', 'NOK', 'THB', 'CLP', 'IDR', 'NZD', 'TRY', 'PHP', 'TWD', 'CZK', 'PKR', 'ZAR');
-            $fiat_currency = isset($_POST['currency']) ? strtoupper(sanitize_text_field($_POST['currency'])) : 'USD';
+            $fiat_currency = isset($_POST['currency']) ? strtoupper(sanitize_text_field(wp_unslash($_POST['currency']))) : 'USD';
             $fiat_currency = in_array($fiat_currency, $allowed_currencies, true) ? $fiat_currency : 'USD';
             
             // Validate currency rate to prevent manipulation
-            $fiat_currency_rate = isset($_POST['currencyRate']) ? (float) sanitize_text_field($_POST['currencyRate']) : 1;
+            $fiat_currency_rate = isset($_POST['currencyRate']) ? (float) sanitize_text_field(wp_unslash($_POST['currencyRate'])) : 1;
             $fiat_currency_rate = max(0.0001, min($fiat_currency_rate, 10000)); // Range: 0.0001 to 10,000
             $coin_no = $start_point + 1;
             $coins_list = array();
@@ -550,7 +556,7 @@ if (!class_exists('CPTW_Shortcode')) {
             $api = (!isset($selected_api['ccpw_select_api']) && empty($selected_api['ccpw_select_api'])) ? "coin_gecko" : sanitize_text_field($selected_api['ccpw_select_api']);
             
             // Validate and limit coinslist array
-            $coinslist = isset($_POST['coinslist']) ? array_map('sanitize_text_field', $_POST['coinslist']) : array();
+            $coinslist = isset($_POST['coinslist']) ? array_map('sanitize_text_field', $_POST['coinslist']) : array(); //phpcs:ignore WordPress.Security.ValidatedSanitizedInput
             $coinslist = array_slice($coinslist, 0, 250); // Limit to maximum 250 coins
             $coindata = $rtype == 'top' ? $DB->get_coins(array('number' => $data_length, 'offset' => $start_point, 'orderby' => $order_col_name, 'order' => $order_type)) : $DB->get_coins(array('coin_id' => $coinslist, 'offset' => $start_point, 'number' => $data_length, 'orderby' => $order_col_name, 'order' => $order_type));
 

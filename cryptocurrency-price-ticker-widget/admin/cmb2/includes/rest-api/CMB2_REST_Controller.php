@@ -19,6 +19,8 @@ if ( ! class_exists( 'WP_REST_Controller' ) ) {
  * @license   GPL-2.0+
  * @link      https://cmb2.io
  */
+
+//phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound, WordPress.WP.I18n.TextDomainMismatch
 abstract class CMB2_REST_Controller extends WP_REST_Controller {
 
 	/**

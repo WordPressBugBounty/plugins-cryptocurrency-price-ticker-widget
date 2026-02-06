@@ -16,6 +16,11 @@
  * @param  string $path Path to append.
  * @return string        Directory with optional path appended
  */
+
+//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 function cmb2_dir( $path = '' ) {
 	return CMB2_DIR . $path;
 }
@@ -104,7 +109,7 @@ function cmb2_get_oembed( $args = array() ) {
 
 	$error = sprintf(
 		/* translators: 1: results for. 2: link to codex.wordpress.org/Embeds */
-		esc_html__( 'No oEmbed Results Found for %1$s. View more info at %2$s.', 'cmb2' ),
+		esc_html__( 'No oEmbed Results Found for %1$s. View more info at %2$s.', 'cryptocurrency-price-ticker-widget' ),
 		$oembed['fallback'],
 		'<a href="https://wordpress.org/support/article/embeds/" target="_blank">codex.wordpress.org/Embeds</a>'
 	);
@@ -209,6 +214,8 @@ function cmb2_get_field_value( $meta_box, $field_id, $object_id = 0, $object_typ
  * @param  array $meta_box_config Metabox Config array.
  * @return CMB2 object            Instantiated CMB2 object
  */
+
+//phpcs:ignore 	WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 function new_cmb2_box( array $meta_box_config ) {
 	return cmb2_get_metabox( $meta_box_config );
 }
@@ -305,7 +312,7 @@ function cmb2_print_metabox_form( $meta_box, $object_id = 0, $args = array() ) {
 
 	$args = wp_parse_args( $args, array(
 		'form_format' => '<form class="cmb-form" method="post" id="%1$s" enctype="multipart/form-data" encoding="multipart/form-data"><input type="hidden" name="object_id" value="%2$s">%3$s<input type="submit" name="submit-cmb" value="%4$s" class="button-primary"></form>',
-		'save_button' => esc_html__( 'Save', 'cmb2' ),
+		'save_button' => esc_html__( 'Save', 'cryptocurrency-price-ticker-widget' ),
 		'object_type' => $cmb->mb_object_type(),
 		'cmb_styles'  => $cmb->prop( 'cmb_styles' ),
 		'enqueue_js'  => $cmb->prop( 'enqueue_js' ),

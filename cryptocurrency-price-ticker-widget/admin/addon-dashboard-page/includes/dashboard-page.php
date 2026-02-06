@@ -11,7 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! isset( $this->main_menu_slug ) ) {
 	return false;
 }
-$is_active             = false;
+//phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$is_active             = false; 
 $classes               = 'plugin-block';
 $is_installed          = false;
 $button                = null;

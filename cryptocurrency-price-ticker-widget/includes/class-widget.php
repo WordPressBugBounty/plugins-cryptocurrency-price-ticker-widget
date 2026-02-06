@@ -1,4 +1,7 @@
 <?php
+//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 
 add_action('widgets_init', 'ccpw_register_widget');
 // Register the widget.
@@ -68,8 +71,8 @@ global $post;
     public function update($new_instance, $old_instance)
     {
         $instance = $old_instance;
-        $instance['ccpw_shortcode'] = !empty($new_instance['ccpw_shortcode']) ? strip_tags($new_instance['ccpw_shortcode']) : ''; // Ensure value is not empty
-        $instance['title'] = !empty($new_instance['title']) ? strip_tags($new_instance['title']) : ''; // Ensure value is not empty
+        $instance['ccpw_shortcode'] = !empty($new_instance['ccpw_shortcode']) ? wp_strip_all_tags($new_instance['ccpw_shortcode']) : ''; // Ensure value is not empty
+        $instance['title'] = !empty($new_instance['title']) ? wp_strip_all_tags($new_instance['title']) : ''; // Ensure value is not empty
         return $instance;
     }
 

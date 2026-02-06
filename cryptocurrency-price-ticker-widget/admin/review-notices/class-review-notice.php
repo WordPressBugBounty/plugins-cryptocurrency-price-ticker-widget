@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 if (!class_exists('CCPW_Review_Notice')) {
     class CCPW_Review_Notice
     {
@@ -31,7 +33,7 @@ if (!class_exists('CCPW_Review_Notice')) {
         public function dismiss_review_notice()
         {
             // Check for nonce and validate it
-            if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'ccpw-nonce')) {
+            if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ccpw-nonce' ) ) {
                 wp_send_json_error('You don\'t have permission to hide notice.');
                 return;
             }
@@ -73,8 +75,8 @@ if (!class_exists('CCPW_Review_Notice')) {
             $diff_days = $install_date->diff($current_date)->days;
 
             if ($diff_days >= 3) {
-                wp_enqueue_script('ccpwf-review-notices-script', CCPWF_URL . 'admin/review-notices/js/ccpwf-review-notices.js', array('jquery'), null, true);
-                wp_enqueue_style('ccpwf-review-notices-styles', CCPWF_URL . 'admin/review-notices/css/ccpwf-review-notices.css');   
+                wp_enqueue_script('ccpwf-review-notices-script', CCPWF_URL . 'admin/review-notices/js/ccpwf-review-notices.js', array('jquery'), CCPWF_VERSION, true);
+                wp_enqueue_style('ccpwf-review-notices-styles', CCPWF_URL . 'admin/review-notices/css/ccpwf-review-notices.css', array(), CCPWF_VERSION);   
                 echo wp_kses_post($this->create_notice_content());
             }
         }
@@ -93,9 +95,9 @@ if (!class_exists('CCPW_Review_Notice')) {
                 $p_name
             );
 
-            $rate_text = esc_html__('Rate Now! ★★★★★', 'ccpw');
-            $already_rated_text = esc_html__('Already Reviewed', 'ccpw');
-            $not_interested_text = esc_html__('Not Interested', 'ccpw');
+            $rate_text = esc_html__('Rate Now! ★★★★★', 'cryptocurrency-price-ticker-widget');
+            $already_rated_text = esc_html__('Already Reviewed', 'cryptocurrency-price-ticker-widget');
+            $not_interested_text = esc_html__('Not Interested', 'cryptocurrency-price-ticker-widget');
 
             $template = '<div data-ajax-url="%1$s" data-ajax-callback="%2$s" data-nonce="%3$s" class="%4$s">
                 <div class="message_container">%5$s

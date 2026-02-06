@@ -8,6 +8,8 @@
  * @license   GPL-2.0+
  * @link      https://cmb2.io
  */
+
+//phpcs:disable WordPress.WP.EnqueuedResourceParameters.NotInFooter, WordPress.WP.I18n.TextDomainMismatch
 class CMB2_JS {
 
 	/**

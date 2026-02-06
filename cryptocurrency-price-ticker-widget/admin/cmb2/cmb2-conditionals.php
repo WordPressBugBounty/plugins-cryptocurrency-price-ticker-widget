@@ -1,5 +1,6 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'CMB2_Conditionals' ) ) {
 

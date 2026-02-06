@@ -1,5 +1,7 @@
 <?php
 
+//phpcs:disable WordPress.WP.I18n.TextDomainMismatch, missing_direct_file_access_protection
+
 /**
  * CMB2 ajax methods
  * (i.e. a lot of work to get oEmbeds to work with non-post objects)
@@ -11,6 +13,9 @@
  * @author    CMB2 team
  * @license   GPL-2.0+
  */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 class CMB2_Ajax {
 
 	// Whether to hijack the oembed cache system.
@@ -291,7 +296,7 @@ class CMB2_Ajax {
 		$modified = false;
 		if ( is_array( $options ) ) {
 
-			$ttl = apply_filters( 'oembed_ttl', DAY_IN_SECONDS, '', array(), 0 );
+			$ttl = apply_filters( 'oembed_ttl', DAY_IN_SECONDS, '', array(), 0 ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			$now = time();
 
 			foreach ( $options as $key => $value ) {

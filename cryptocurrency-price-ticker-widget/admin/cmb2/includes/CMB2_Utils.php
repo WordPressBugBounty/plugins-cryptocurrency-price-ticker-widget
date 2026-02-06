@@ -10,6 +10,8 @@
  * @license   GPL-2.0+
  * @link      https://cmb2.io
  */
+
+//phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 class CMB2_Utils {
 
 	/**

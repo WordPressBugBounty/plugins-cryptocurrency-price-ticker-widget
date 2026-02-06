@@ -14,6 +14,8 @@
  * @license   GPL-2.0+
  * @link      https://cmb2.io
  */
+
+//phpcs:disable WordPress.WP.I18n.TextDomainMismatch, WordPress.WP.I18n.MissingTranslatorsComment
 class CMB2_REST_Controller_Fields extends CMB2_REST_Controller_Boxes {
 
 	/**

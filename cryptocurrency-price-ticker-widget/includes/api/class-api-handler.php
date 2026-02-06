@@ -53,9 +53,13 @@ if (!class_exists('CCPW_api_data')) {
 
             // Fetch data from CoinGecko API
             $request = wp_remote_get($api_url, array('timeout' => 120, 'sslverify' => false));
-
+            if($request['response']['code'] == 401) {
+                update_option('ccpw_api_key_expired', true);
+                return false;
+            }
             // Check for WP error
             if (is_wp_error($request)) {
+                update_option('ccpw_api_key_expired', true);
                 return false; // Bail early
             }
 
@@ -67,6 +71,7 @@ if (!class_exists('CCPW_api_data')) {
 
             // Process coin data
             if (isset($coins) && $coins != "" && is_array($coins)) {
+                delete_option('ccpw_api_key_expired');
                 // Track CoinGecko API hit
                 $this->ccpw_track_coingecko_api_hit();
 
@@ -100,7 +105,7 @@ if (!class_exists('CCPW_api_data')) {
                 }
 
                 // Set transients for cache
-                set_transient($data_cache_name, date('H:s:i'), $coingecko_api_cache_time * MINUTE_IN_SECONDS);
+                set_transient($data_cache_name, gmdate('H:s:i'), $coingecko_api_cache_time * MINUTE_IN_SECONDS);
                 set_transient($update_api_name, 'CoinGecko', 0);
             }
         }
@@ -140,6 +145,7 @@ if (!class_exists('CCPW_api_data')) {
             // Fetch data from CoinMarketCap API
             $request = wp_remote_get($api_url, array('timeout' => 120, 'sslverify' => false));
             if (is_wp_error($request)) {
+                update_option('ccpw_api_key_expired', true);
                 return false; // Bail early
             }
 
@@ -148,6 +154,7 @@ if (!class_exists('CCPW_api_data')) {
             $response = array();
             $coin_data = array();
             if (isset($coins['data']) && $coins['data'] != "" && is_array($coins['data'])) {
+                delete_option('ccpw_api_key_expired');
                 $this->ccpw_track_coingecko_api_hit();
                 foreach ($coins['data'] as $coin) {
                     // Skip coins with emoji in name, symbol, or coin_id
@@ -183,7 +190,7 @@ if (!class_exists('CCPW_api_data')) {
                 }
 
                 // Set transients for cache
-                set_transient($data_cache_name, date('H:s:i'), $cmc_api_cache_time * MINUTE_IN_SECONDS);
+                set_transient($data_cache_name, gmdate('H:s:i'), $cmc_api_cache_time * MINUTE_IN_SECONDS);
                 set_transient($update_api_name, 'CoinMarketCap', 0);
             }
         }
@@ -221,6 +228,7 @@ if (!class_exists('CCPW_api_data')) {
 
             // Check for WP error
             if (is_wp_error($request)) {
+                update_option('ccpw_api_key_expired', true);
                 return false; // Bail early
             }
 
@@ -232,6 +240,7 @@ if (!class_exists('CCPW_api_data')) {
             
             // Process coin data
             if (isset($coins) && $coins != "" && is_array($coins)) {
+                delete_option('ccpw_api_key_expired');
                 // Track CoinGecko API hit
                 //$this->ccpw_track_coingecko_api_hit();
 
@@ -275,7 +284,7 @@ if (!class_exists('CCPW_api_data')) {
                 }
                 
                 // Set transients for cache
-                set_transient($data_cache_name, date('H:s:i'), $coincap_api_cache_time * MINUTE_IN_SECONDS);
+                set_transient($data_cache_name, gmdate('H:s:i'), $coincap_api_cache_time * MINUTE_IN_SECONDS);
                 set_transient($update_api_name, 'CoinCap', 0);
             }
         } //end of ccpw_get_coin_cap_data
@@ -315,6 +324,7 @@ if (!class_exists('CCPW_api_data')) {
 
             // Check for WP error
             if (is_wp_error($request)) {
+                update_option('ccpw_api_key_expired', true);
                 return false; // Bail early
             }
 
@@ -326,9 +336,10 @@ if (!class_exists('CCPW_api_data')) {
 
             // Limit the number of coins data to 250
             $coin_info = array_slice($coin_info, 0, 250);
-
+     
             // Process coin data
             if (is_array($coin_info) && !empty($coin_info)) {
+                delete_option('ccpw_api_key_expired');
                 foreach ($coin_info as $coin) {
                     // Skip coins with emoji in name, symbol, or coin_id
                     if ($this->contains_emoji($coin['name']) || $this->contains_emoji($coin['symbol']) || $this->contains_emoji($coin['id'])) {
@@ -360,7 +371,7 @@ if (!class_exists('CCPW_api_data')) {
                 }
 
                 // Set transients for cache
-                set_transient($data_cache_name, date('H:s:i'), $cache_time * MINUTE_IN_SECONDS);
+                set_transient($data_cache_name, gmdate('H:s:i'), $cache_time * MINUTE_IN_SECONDS);
                 set_transient($update_api_name, 'CoinPaprika', 0);
             }
         }

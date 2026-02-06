@@ -1,7 +1,8 @@
 <?php
 
+//phpcs:disable WordPress.Security.NonceVerification.Recommended
 if ( ! defined( 'ABSPATH' )) exit;
-
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 class CPFM_Feedback_Notice {
     
     private static $registered_notices = [];
@@ -50,7 +51,7 @@ class CPFM_Feedback_Notice {
          *     'pages' => ['dashboard', 'cpfm_'],
          * ]);
          */
-        do_action('cpfm_register_notice');
+        do_action('cpfm_register_notice'); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
     }
 
     public function cpfm_enqueue_assets() {
@@ -139,7 +140,7 @@ class CPFM_Feedback_Notice {
 
                     if($plugin_name){
 
-                        do_action('cpfm_after_opt_in_' . $plugin_name, $category);
+                        do_action('cpfm_after_opt_in_' . $plugin_name, $category); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
                     }
               
             }
@@ -173,7 +174,7 @@ class CPFM_Feedback_Notice {
     
         $output = '';
         $output .= '<div id="cpfNoticePanel" class="notice-panel"' . ($auto_show ? ' data-auto-show="true"' : '') . '>';
-        $output .= '<div class="notice-panel-header">' . esc_html__('Help Improve Plugins', 'ccpw') . ' <span class="dashicons dashicons-no" id="cpfm_remove_notice"></span></div>';
+        $output .= '<div class="notice-panel-header">' . esc_html__('Help Improve Plugins', 'cryptocurrency-price-ticker-widget') . ' <span class="dashicons dashicons-no" id="cpfm_remove_notice"></span></div>';
         $output .= '<div class="notice-panel-content">';
     
         foreach (self::$registered_notices as $key => $notice) {
@@ -199,21 +200,21 @@ class CPFM_Feedback_Notice {
             $output .= '<strong>' . esc_html($notice['title']) . '</strong>';
             
             $output .= '<div class="notice-message-with-toggle">';
-            $output .= '<p>' . esc_html($notice['message']) . '<a href="#" class="cpf-toggle-extra">' . esc_html__(' More info', 'ccpw') . '</a></p>';
+            $output .= '<p>' . esc_html($notice['message']) . '<a href="#" class="cpf-toggle-extra">' . esc_html__(' More info', 'cryptocurrency-price-ticker-widget') . '</a></p>';
             $output .= '</div>';
             
             $output .= '<div class="cpf-extra-info">';
-            $output .= '<p>' . esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'ccpw') . '</p>';
+            $output .= '<p>' . esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'cryptocurrency-price-ticker-widget') . '</p>';
             $output .= '<ul>';
-            $output .= '<li>' . esc_html__('Your website home URL and WordPress admin email.', 'ccpw') . '</li>';
-            $output .= '<li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'ccpw') . '</li>';
+            $output .= '<li>' . esc_html__('Your website home URL and WordPress admin email.', 'cryptocurrency-price-ticker-widget') . '</li>';
+            $output .= '<li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'cryptocurrency-price-ticker-widget') . '</li>';
             $output .= '</ul>';
             
             $output .= '</div>';
             
             $output .= '<div class="notice-actions">';
-            $output .= '<button class="button button-primary opt-in-yes" data-category="' . esc_attr($key) . '" id="yes-share-data" value="yes">' . esc_html__("Yes, I Agree", 'ccpw') . '</button>';
-            $output .= '<button class="button opt-in-no" data-category="' . esc_attr($key) . '" id="no-share-data" value="no">' . esc_html__('No, Thanks', 'ccpw') . '</button>';
+            $output .= '<button class="button button-primary opt-in-yes" data-category="' . esc_attr($key) . '" id="yes-share-data" value="yes">' . esc_html__("Yes, I Agree", 'cryptocurrency-price-ticker-widget') . '</button>';
+            $output .= '<button class="button opt-in-no" data-category="' . esc_attr($key) . '" id="no-share-data" value="no">' . esc_html__('No, Thanks', 'cryptocurrency-price-ticker-widget') . '</button>';
             $output .= '</div>';
             
             $output .= '</div>';

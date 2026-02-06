@@ -13,6 +13,10 @@
  * @property-read string $object_type
  * @property-read CMB2   $cmb
  */
+
+ if ( ! defined( 'ABSPATH' ) ) exit;
+
+ //phpcs:disable WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.TextDomainMismatch, WordPress.Security.EscapeOutput.ExceptionNotEscaped
 abstract class CMB2_Hookup_Base {
 
 	/**

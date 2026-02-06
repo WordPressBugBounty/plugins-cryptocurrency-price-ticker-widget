@@ -5,10 +5,13 @@
  * Addon dashboard sidebar.
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 if ( ! isset( $this->main_menu_slug ) ) :
 	return false;
  endif;
 
+ //phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
  $cool_support_email = 'https://cryptocurrencyplugins.com/support/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=support&utm_content=dashboard';
 ?>
 

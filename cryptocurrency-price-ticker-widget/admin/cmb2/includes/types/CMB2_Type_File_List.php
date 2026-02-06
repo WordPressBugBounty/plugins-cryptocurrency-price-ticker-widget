@@ -10,6 +10,8 @@
  * @license   GPL-2.0+
  * @link      https://cmb2.io
  */
+
+//phpcs:disable WordPress.WP.I18n.TextDomainMismatch
 class CMB2_Type_File_List extends CMB2_Type_File_Base {
 
 	public function render( $args = array() ) {

@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 if (!class_exists('Plugin_Upgrader')) {
     require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 }
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 class cool_plugins_downloader extends Plugin_Upgrader
 {
 

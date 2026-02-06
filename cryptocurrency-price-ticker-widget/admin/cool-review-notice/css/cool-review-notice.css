@@ -1,0 +1,12 @@
+.wp-pointer-content h3::before {
+   display: none;
+}
+
+
+.wp-pointer-content h3 {
+    padding: 15px 18px 14px 30px !important;
+}
+
+
+
+

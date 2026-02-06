@@ -15,6 +15,8 @@
  * @package   CMB2
  * @author    CMB2 team
  */
+
+//phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped, WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.TextDomainMismatch
 class CMB2_Options {
 	/**
 	 * Array of all CMB2_Option instances
