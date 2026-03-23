@@ -18,11 +18,23 @@ jQuery(document).ready(function ($) {
 		if ($btn.prop('disabled')) {
 			return;
 		}
-		var slug = $btn.data('slug') || $btn.attr('data-plugin-slug');
-		var nonce = (typeof cp_events !== 'undefined' && cp_events.install_nonce) ? cp_events.install_nonce : $btn.data('nonce') || $btn.attr('data-action-nonce');
+		// Use attr() so slug always matches the DOM (jQuery .data() can cache / coerce).
+		var slug = $btn.attr('data-slug') || $btn.attr('data-plugin-slug') || $btn.data('slug');
+		var nonce = (typeof cp_events !== 'undefined' && cp_events.install_nonce) ? cp_events.install_nonce : $btn.attr('data-nonce') || $btn.data('nonce') || $btn.attr('data-action-nonce');
 		var action = (typeof cp_events !== 'undefined' && cp_events.install_action) ? cp_events.install_action : 'ccew_dashboard_install_plugin';
 
 		if (!slug || !nonce) {
+			return;
+		}
+
+		// Server-rendered: no AJAX, no "Activating…" / "Installed!" when WooCommerce is inactive (reliable vs cp_events/class checks).
+		if ($btn.attr('data-ccew-block-wc-activate') === '1') {
+			return;
+		}
+
+		// Same pattern as Timeline + Divi: allow "Install Now"; block "Activate Now" when WooCommerce is inactive.
+		var isActivateBtn = $btn.hasClass('ccew-btn-activate') || $btn.is('[class*="-btn-activate"]');
+		if (isActivateBtn && typeof cp_events !== 'undefined' && cp_events.woocommerce_active !== true && Array.isArray(cp_events.woocommerce_slugs) && cp_events.woocommerce_slugs.indexOf(slug) !== -1) {
 			return;
 		}
 
@@ -77,6 +89,17 @@ jQuery(document).ready(function ($) {
 				idx += 1;
 			}
 			if (response && response.success) {
+				var d = response.data || {};
+				// Installed but not auto-activated (e.g. WooCommerce-dependent add-on without Woo active).
+				if (d.activated === false) {
+					$btn.prop('disabled', false).removeClass('ccew-btn-processing');
+					var installedLabel = (typeof cp_events !== 'undefined' && cp_events.installed_pending_wc_label) ? cp_events.installed_pending_wc_label : 'Installed!';
+					$btn.text(installedLabel);
+					requestAnimationFrame(function () {
+						setTimeout(function () { window.location.reload(); }, 1200);
+					});
+					return;
+				}
 				$btn.prop('disabled', false).removeClass('ccew-btn-processing');
 				$btn.text('Activated Successfully!');
 				requestAnimationFrame(function () {
@@ -94,12 +117,7 @@ jQuery(document).ready(function ($) {
 			// Re-enable all buttons on failure.
 			enableAllBtns();
 			$btn.text($btn.hasClass('ccew-btn-activate') ? 'Activate Now' : 'Install Now');
-			// WooCommerce dependency: no alert — keep this button disabled / unclickable.
 			if (errCode === 'woocommerce_required') {
-				$btn.prop('disabled', true).addClass('ccew-btn-dependency-disabled');
-				if (typeof cp_events !== 'undefined' && cp_events.woocommerce_required_msg) {
-					$btn.attr('title', cp_events.woocommerce_required_msg);
-				}
 				return;
 			}
 			if (msg) {
@@ -124,10 +142,6 @@ jQuery(document).ready(function ($) {
 				} catch (e) {}
 			}
 			if (failErrCode === 'woocommerce_required') {
-				$btn.prop('disabled', true).addClass('ccew-btn-dependency-disabled');
-				if (typeof cp_events !== 'undefined' && cp_events.woocommerce_required_msg) {
-					$btn.attr('title', cp_events.woocommerce_required_msg);
-				}
 				return;
 			}
 			if (msg) {
@@ -146,6 +160,9 @@ jQuery(document).ready(function ($) {
 		var pluginSlug = $btn.attr('data-plugin-slug');
 		var ajaxUrl = (typeof cp_events !== 'undefined' && cp_events.ajax_url) ? cp_events.ajax_url : '';
 		if (!pluginSlug || !nonce || !ajaxUrl) {
+			return;
+		}
+		if (typeof cp_events !== 'undefined' && !cp_events.woocommerce_active && cp_events.woocommerce_slugs && cp_events.woocommerce_slugs.indexOf(pluginSlug) !== -1) {
 			return;
 		}
 		disableAllBtns();
@@ -182,16 +199,4 @@ jQuery(document).ready(function ($) {
 			$this.append('<div class="empty-message">' + message + '</div>');
 		}
 	});
-
-	// Keep Install/Activate disabled when WooCommerce is not active (dependency plugins).
-	if (typeof cp_events !== 'undefined' && !cp_events.woocommerce_active && cp_events.woocommerce_slugs && cp_events.woocommerce_slugs.length) {
-		cp_events.woocommerce_slugs.forEach(function (depSlug) {
-			$('button[data-slug="' + depSlug + '"]').each(function () {
-				var $b = $(this);
-				if ($b.is('.ccew-install-plugin, [class*="-install-plugin"]')) {
-					$b.prop('disabled', true).addClass('ccew-btn-dependency-disabled').attr('title', cp_events.woocommerce_required_msg || '');
-				}
-			});
-		});
-	}
 });

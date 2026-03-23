@@ -4,7 +4,7 @@ Tags: cryptocurrency,coinmarketcap, cryptocurrency price ticker, Crypto Widgets,
 Requires at least:6.0
 Tested up to: 6.9
 Requires PHP:7.2
-Stable tag: 2.10.0
+Stable tag: 2.10.1
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html 
 Donate link: https://coolplugins.net/donate-and-support-cool-plugins/
@@ -182,6 +182,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 8. Cryptocurrency Widgets Pro - Price cards & more layouts.
 
 == Changelog == 
+
+= Version 2.10.1| 23 March 2026 =
+*  Fixed: Wrong plugin slug.
 
 = Version 2.10.0| 23 March 2026 =
 * Improved: Improved dashboard design and usability.

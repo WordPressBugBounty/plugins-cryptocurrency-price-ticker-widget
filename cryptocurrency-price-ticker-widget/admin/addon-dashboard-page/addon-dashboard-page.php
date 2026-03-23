@@ -238,6 +238,31 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 		}
 
 		/**
+		 * Whether WooCommerce is active (for add-ons that require it to activate).
+		 *
+		 * @return bool
+		 */
+		private static function ccew_is_woocommerce_active() {
+			if ( ! function_exists( 'is_plugin_active' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+			return is_plugin_active( 'woocommerce/woocommerce.php' );
+		}
+
+		/**
+		 * Whether activation is allowed for this slug (WooCommerce gate for payment add-ons).
+		 *
+		 * @param string $slug Plugin slug.
+		 * @return bool
+		 */
+		private static function ccew_is_activation_allowed_for_slug( $slug ) {
+			if ( ! in_array( $slug, self::$woocommerce_dependent_slugs, true ) ) {
+				return true;
+			}
+			return self::ccew_is_woocommerce_active();
+		}
+
+		/**
 		 * Handle AJAX: install plugin via WordPress core or activate if already installed (including Pro).
 		 */
 		public function ccew_dashboard_install_plugin() {
@@ -271,21 +296,6 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 						'errorMessage' => __( 'This plugin cannot be installed from here.', 'cryptocurrency-widgets-for-elementor' ),
 					)
 				);
-			}
-
-			if ( in_array( $slug, self::$woocommerce_dependent_slugs, true ) ) {
-				if ( ! function_exists( 'is_plugin_active' ) ) {
-					require_once ABSPATH . 'wp-admin/includes/plugin.php';
-				}
-				if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-					wp_send_json_error(
-						array(
-							'slug'         => $slug,
-							'errorCode'    => 'woocommerce_required',
-							'errorMessage' => __( 'WooCommerce must be installed and active before you can install or activate this plugin.', 'cryptocurrency-widgets-for-elementor' ),
-						)
-					);
-				}
 			}
 
 			$status = array(
@@ -351,6 +361,15 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 						)
 					);
 				}
+				if ( ! self::ccew_is_activation_allowed_for_slug( $slug ) ) {
+					wp_send_json_error(
+						array(
+							'slug'         => $slug,
+							'errorCode'    => 'woocommerce_required',
+							'errorMessage' => __( 'WooCommerce must be installed and active before you can activate this plugin.', 'cryptocurrency-widgets-for-elementor' ),
+						)
+					);
+				}
 				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce checked above.
 				$pagenow      = isset( $_POST['pagenow'] ) ? sanitize_key( wp_unslash( $_POST['pagenow'] ) ) : '';
 				$network_wide = is_multisite() && 'import' !== $pagenow;
@@ -408,7 +427,7 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 					// phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce checked above.
 					$pagenow       = isset( $_POST['pagenow'] ) ? sanitize_key( wp_unslash( $_POST['pagenow'] ) ) : '';
 					$network_wide  = is_multisite() && 'import' !== $pagenow;
-					if ( current_user_can( 'activate_plugin', $install_status['file'] ) ) {
+					if ( current_user_can( 'activate_plugin', $install_status['file'] ) && self::ccew_is_activation_allowed_for_slug( $slug ) ) {
 						$activation_result = activate_plugin( $install_status['file'], '', $network_wide );
 						if ( is_wp_error( $activation_result ) ) {
 							$status['errorCode']    = $activation_result->get_error_code();
@@ -416,6 +435,8 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 							wp_send_json_error( $status );
 						}
 						$status['activated'] = true;
+					} elseif ( current_user_can( 'activate_plugin', $install_status['file'] ) && ! self::ccew_is_activation_allowed_for_slug( $slug ) ) {
+						$status['activated'] = false;
 					}
 					wp_send_json_success( $status );
 				}
@@ -445,13 +466,17 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 			$network_wide = is_multisite() && 'import' !== $pagenow;
 
 			if ( current_user_can( 'activate_plugin', $install_status['file'] ) && is_plugin_inactive( $install_status['file'] ) ) {
-				$activation_result = activate_plugin( $install_status['file'], '', $network_wide );
-				if ( is_wp_error( $activation_result ) ) {
-					$status['errorCode']    = $activation_result->get_error_code();
-					$status['errorMessage'] = $activation_result->get_error_message();
-					wp_send_json_error( $status );
+				if ( self::ccew_is_activation_allowed_for_slug( $slug ) ) {
+					$activation_result = activate_plugin( $install_status['file'], '', $network_wide );
+					if ( is_wp_error( $activation_result ) ) {
+						$status['errorCode']    = $activation_result->get_error_code();
+						$status['errorMessage'] = $activation_result->get_error_message();
+						wp_send_json_error( $status );
+					}
+					$status['activated'] = true;
+				} else {
+					$status['activated'] = false;
 				}
-				$status['activated'] = true;
 			}
 			wp_send_json_success( $status );
 		}
@@ -859,13 +884,18 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 					<?php elseif ( 'available' === $type ) : ?>
 						<div class="<?php echo esc_attr( $prefix ); ?>-card-footer">
 							<?php
-							$needs_activation = ! empty( $plugin['needs_activation'] ) && ! empty( $plugin['plugin_basename'] );
+							$needs_activation = ! empty( $plugin['needs_activation'] );
 							$install_nonce    = wp_create_nonce( 'ccew-plugins-download' );
+							// Markup hint for JS: block Activate AJAX when WooCommerce is off (no disabled attr — early return only).
+							$ccew_block_wc_activate = $needs_activation
+								&& in_array( $plugin_slug, self::$woocommerce_dependent_slugs, true )
+								&& ! self::ccew_is_woocommerce_active();
 							?>
 							<button type="button"
 								class="button <?php echo esc_attr( $prefix ); ?>-button-primary <?php echo esc_attr( $prefix ); ?>-install-plugin <?php echo $needs_activation ? esc_attr( $prefix ) . '-btn-activate' : esc_attr( $prefix ) . '-btn-install'; ?>"
 								data-slug="<?php echo esc_attr( $plugin_slug ); ?>"
-								data-nonce="<?php echo esc_attr( $install_nonce ); ?>">
+								data-nonce="<?php echo esc_attr( $install_nonce ); ?>"
+								<?php echo $ccew_block_wc_activate ? ' data-ccew-block-wc-activate="1"' : ''; ?>>
 								<?php echo $needs_activation ? esc_html__( 'Activate Now', 'cryptocurrency-widgets-for-elementor' ) : esc_html__( 'Install Now', 'cryptocurrency-widgets-for-elementor' ); ?>
 							</button>
 							<?php $this->render_plugin_card_demo_docs_links( $prefix, $plugin_slug, $is_pro ); ?>
@@ -918,7 +948,8 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 						'activated_label' => __( 'Activated', 'cryptocurrency-widgets-for-elementor' ),
 						'woocommerce_active'       => function_exists( 'is_plugin_active' ) && is_plugin_active( 'woocommerce/woocommerce.php' ),
 						'woocommerce_slugs'        => array_values( self::$woocommerce_dependent_slugs ),
-						'woocommerce_required_msg' => __( 'WooCommerce must be installed and active before you can install or activate this plugin.', 'cryptocurrency-widgets-for-elementor' ),
+						'woocommerce_required_msg'   => __( 'WooCommerce must be installed and active before you can activate this plugin.', 'cryptocurrency-widgets-for-elementor' ),
+						'installed_pending_wc_label' => __( 'Installed!', 'cryptocurrency-widgets-for-elementor' ),
 					)
 				);
 			}
