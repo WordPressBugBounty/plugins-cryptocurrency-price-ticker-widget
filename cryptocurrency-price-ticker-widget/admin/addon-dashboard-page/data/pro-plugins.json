@@ -1,0 +1,64 @@
+[
+  {
+    "slug": "cryptocurrency-price-ticker-widget-pro",
+    "name": "Cryptocurrency Widgets (Pro)",
+    "info": "Advanced crypto price tickers, multi-currency tickers, historical charts and more premium display options.",
+    "version": "3.0.0",
+    "latest_version": "{{CCPWP_VERSION}}",
+    "image_url": "icon-crypto-widgets.png",
+    "free_version": "cryptocurrency-price-ticker-widget",
+    "main_file": "cryptocurrency-price-ticker-widget-pro.php",
+    "buy_url": "https://cryptocurrencyplugins.com/plugin/cryptocurrency-price-ticker-widget-pro/",
+    "docs_url": "https://cryptocurrencyplugins.com/docs/cryptocurrency-price-ticker-widget-pro/",
+    "demo_url": "https://cryptocurrencyplugins.com/demo/cryptocurrency-price-ticker-widget-pro/"
+  },
+  {                    
+    "slug": "cryptocurrency-exchanges-list-pro",
+    "name": "Cryptocurrency Exchanges List (Pro)",
+    "info": "Show detailed cryptocurrency exchanges lists, trading pairs and market information with premium layouts.",
+    "version": "1.5.0",
+    "latest_version": "{{CELP_VERSION}}",
+    "image_url": "icon-crypto-exchanges-list.png",
+    "main_file": "cryptocurrency-exchanges-list-pro.php",
+    "buy_url": "https://cryptocurrencyplugins.com/plugin/cryptocurrency-exchanges-list-pro/",
+    "docs_url": "https://cryptocurrencyplugins.com/docs/cryptocurrency-exchanges-list-pro/",
+    "demo_url": "https://cryptocurrencyplugins.com/demo/cryptocurrency-exchanges-list-pro/"
+  },
+
+  {
+    "slug": "pay-with-metamask-for-woocommerce-pro",
+    "name": "Pay With MetaMask For WooCommerce (Pro)",
+    "info": "Accept crypto payments in WooCommerce stores via MetaMask with advanced options and reporting.",
+    "version": "2.0.0",
+    "latest_version": "{{CCPMWP_VERSION}}",
+    "image_url": "icon-pay-with-metamask.png",
+    "free_version": "cryptocurrency-payments-using-metamask-for-woocommerce",
+    "main_file": "pay-with-metamask-for-woocommerce-pro.php",
+    "buy_url": "https://cryptocurrencyplugins.com/plugin/pay-with-metamask-for-woocommerce-pro/",
+    "docs_url": "https://cryptocurrencyplugins.com/docs/pay-with-metamask-for-woocommerce-pro/",
+    "demo_url": "https://cryptocurrencyplugins.com/demo/pay-with-metamask-for-woocommerce-pro/"
+  },
+
+  {
+    "slug": "coin-market-cap",
+    "name": "Coins MarketCap (Pro)",
+    "info": "Show cryptocurrency prices, market cap and coins list in tables, tickers and cards layouts with premium options.",
+    "version": "3.0.0",
+    "latest_version": "{{CMC}}",
+    "image_url": "coin-market-cap.png",
+    "buy_url": "https://cryptocurrencyplugins.com/plugin/cryptocurrency-widgets-coin-market-cap/",
+    "docs_url": "https://cryptocurrencyplugins.com/docs/cryptocurrency-widgets-coin-market-cap/",
+    "demo_url": "https://cryptocurrencyplugins.com/demo/coin-market-cap/"
+  },
+  {
+    "slug": "cryptocurrency-search-addon",
+    "name": "Cryptocurrency Search Addon (Pro)",
+    "info": "Advanced cryptocurrency search addon with extra filters, layouts and integration options.",
+    "version": "1.0.0",
+    "latest_version": "{{CCSA_VERSION}}",
+    "image_url": "icon-crypto-search-addon.png",
+    "buy_url": "https://cryptocurrencyplugins.com/plugin/cryptocurrency-search-addon/",
+    "docs_url": "https://cryptocurrencyplugins.com/docs/cryptocurrency-search-addon/",
+    "demo_url": "https://cryptocurrencyplugins.com/demo/cryptocurrency-search-addon/"
+  }
+]

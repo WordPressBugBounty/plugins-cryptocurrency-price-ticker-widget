@@ -5,7 +5,7 @@
  * Plugin URI: https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin-uri
  * Author: Cool Plugins
  * Author URI: https://coolplugins.net/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugins_list
- * Version: 2.9.1
+ * Version: 2.10.0
  * License: GPL3
  * Text Domain: cryptocurrency-price-ticker-widget
  *
@@ -21,7 +21,7 @@ if (defined('CCPWF_VERSION')) {
 }
 
 // Define constants for later use
-define('CCPWF_VERSION', '2.9.1');
+define('CCPWF_VERSION', '2.10.0');
 define('CCPWF_FILE', __FILE__);
 define('CCPWF_DIR', plugin_dir_path(CCPWF_FILE));
 define('CCPWF_URL', plugin_dir_url(CCPWF_FILE));
@@ -94,6 +94,8 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
             add_action('cmb2_admin_init', array($this, 'get_purge_cache_on_cmc'));
 
             if (is_admin()) {
+                add_action('admin_enqueue_scripts', array($this, 'ccew_enqueue_addon_fonts'));
+                add_action( 'admin_print_scripts', array( $this, 'ccew_hide_unrelated_notices' ), 999 );
                 add_action('admin_menu', array($this, 'init_crypto_admin_menu'), 15);
                 add_action('admin_notices', array($this, 'ccpw_show_api_key_expired_notice'));
                 add_action('admin_enqueue_scripts', array($this, 'ccpw_load_scripts'));
@@ -248,7 +250,7 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
 
             if (is_admin()) {
 
-                require_once CCPWF_DIR . 'admin/addon-dashboard-page/class-addon-dashboard-page.php';
+                require_once CCPWF_DIR . 'admin/addon-dashboard-page/addon-dashboard-page.php';
                 cool_plugins_crypto_addon_settings_page('crypto', 'cool-crypto-plugins', 'Cryptocurrency Plugins Dashboard', 'Crypto Plugins', 'dashicons-chart-area');
 
                 // Load post type generator
@@ -282,11 +284,10 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
                         'ccpw_activation_time',
                         'ccpw_spare_me'
 					);
-				}
+                }
                 // Loading required functions
-                // Loading required functions
-                // require_once CCPWF_DIR . 'admin/review-notices/class-review-notice.php';
-                
+                require_once CCPWF_DIR . 'admin/review-notices/class-review-notice.php';
+
                 if(!class_exists('CPFM_Feedback_Notice')){
                     require_once CCPWF_DIR . 'admin/feedback/cpfm-feedback-notice.php';
                 }
@@ -517,6 +518,164 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
             }
         }
           
+        }
+
+        public function ccew_enqueue_addon_fonts() {
+            if ( ! function_exists( 'ccew_is_crypto_addon_page' ) || ! ccew_is_crypto_addon_page() ) {
+                return;
+            }
+
+            $font_file    = 'Inter-Regular.woff2';
+            $style_handle = 'cool-plugins-crypto-addon';
+
+            if ( ! wp_style_is( $style_handle, 'enqueued' ) && ! wp_style_is( $style_handle, 'registered' ) ) {
+                wp_enqueue_style(
+                    $style_handle,
+                    CCPWF_URL . 'admin/addon-dashboard-page/assets/css/styles.css',
+                    array(),
+                    CCPWF_VERSION
+                );
+            }
+
+            if ( file_exists( CCPWF_DIR . 'admin/addon-dashboard-page/assets/fonts/' . $font_file ) ) {
+                $base      = CCPWF_URL . 'admin/addon-dashboard-page/assets/';
+                $font_url  = $base . 'fonts/';
+                $font_face = sprintf(
+                    "@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('%sInter-Regular.woff2') format('woff2');}\n" .
+                    "@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('%sInter-Medium.woff2') format('woff2');}\n" .
+                    "@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('%sInter-SemiBold.woff2') format('woff2');}\n" .
+                    "@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('%sInter-Bold.woff2') format('woff2');}",
+                    esc_url( $font_url ),
+                    esc_url( $font_url ),
+                    esc_url( $font_url ),
+                    esc_url( $font_url )
+                );
+                wp_add_inline_style( $style_handle, $font_face );
+            } else {
+                wp_enqueue_style(
+                    'cool-plugins-inter-font',
+                    'https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap',
+                    array(),
+                    null
+                );
+            }
+        }
+
+        public function ccew_hide_unrelated_notices() {
+            // Always register dispatcher once, on all admin pages.
+            if ( ! defined( 'CCEW_ADMIN_NOTICE_HOOKED' ) ) {
+                define( 'CCEW_ADMIN_NOTICE_HOOKED', true );
+                add_action(
+                    'admin_notices',
+                    array( $this, 'ccew_dash_admin_notices' ),
+                    PHP_INT_MAX
+                );
+            }
+
+            if ( ! function_exists( 'ccew_is_crypto_addon_page' ) || ! ccew_is_crypto_addon_page() ) {
+                return;
+            }
+
+            global $wp_filter;
+
+            $rules = array(
+                'user_admin_notices'    => array(),
+                'admin_notices'         => array(),
+                'all_admin_notices'     => array(),
+                'network_admin_notices' => array(),
+                'admin_footer'          => array(
+                    'render_delayed_admin_notices',
+                ),
+            );
+
+            foreach ( array_keys( $rules ) as $notice_type ) {
+                if ( empty( $wp_filter[ $notice_type ] ) || empty( $wp_filter[ $notice_type ]->callbacks ) || ! is_array( $wp_filter[ $notice_type ]->callbacks ) ) {
+                    continue;
+                }
+
+                $remove_all = empty( $rules[ $notice_type ] );
+
+                foreach ( $wp_filter[ $notice_type ]->callbacks as $priority => $hooks ) {
+                    foreach ( $hooks as $name => $arr ) {
+                        $fn = $arr['function'];
+
+                        if ( $remove_all ) {
+                            $keep  = false;
+                            $class = '';
+
+                            // Never prune our dispatcher; it triggers `ccew_display_admin_notices`.
+                            if ( is_array( $fn ) && isset( $fn[1] ) && 'ccew_dash_admin_notices' === $fn[1] ) {
+                                $keep = true;
+                            }
+
+                            if ( is_array( $fn ) && ! empty( $fn[0] ) && is_object( $fn[0] ) ) {
+                                $class = strtolower( get_class( $fn[0] ) );
+                            } elseif ( is_object( $fn ) ) {
+                                $class = strtolower( get_class( $fn ) );
+                            }
+
+                            if ( $class ) {
+                                // Only keep notices clearly tied to this crypto widget / dashboard stack.
+                                $keep = (
+                                    $keep ||
+                                    false !== strpos( $class, 'cryptocurrency' ) ||
+                                    false !== strpos( $class, 'crypto_' ) ||
+                                    false !== strpos( $class, 'ccpw_' ) ||
+                                    false !== strpos( $class, 'ccew_' ) ||
+                                    false !== strpos( $class, 'cool_plugins' ) ||
+                                    false !== strpos( $class, 'coolplugins' ) ||
+                                    false !== strpos( $class, 'coin-market-cap' ) ||
+                                    false !== strpos( $class, 'coin_market_cap' ) ||
+                                    false !== strpos( $class, 'coinmarketcap' ) ||
+                                    false !== strpos( $class, 'license_helper' ) ||
+                                    false !== strpos( $class, 'celp_' ) ||
+                                    false !== strpos( $class, 'cmc_' ) ||
+                                    0 === strpos( $class, 'cmc' )
+                                );
+                            }
+
+                            if ( ! $keep && is_string( $fn ) ) {
+                                // Also keep callbacks whose function name clearly belongs to crypto widgets/addons.
+                                $keep = (
+                                    0 === strpos( $fn, 'ccpwf_' ) ||
+                                    0 === strpos( $fn, 'ccew_' ) ||
+                                    0 === strpos( $fn, 'celp_' ) ||
+                                    0 === strpos( $fn, 'cmc_' ) ||
+                                    0 === strpos( $fn, 'cool_' )
+                                );
+                            }
+
+                            if ( ! $keep ) {
+                                unset( $wp_filter[ $notice_type ]->callbacks[ $priority ][ $name ] );
+                            }
+                            continue;
+                        }
+
+                        $cb = is_array( $fn ) ? $fn[1] : $fn;
+                        if ( in_array( $cb, $rules[ $notice_type ], true ) ) {
+                            unset( $wp_filter[ $notice_type ]->callbacks[ $priority ][ $name ] );
+                        }
+                    }
+                }
+            }
+        }
+
+        public function ccew_dash_admin_notices() {
+            if ( defined( 'CCEW_ADMIN_NOTICE_RENDERED' ) ) {
+                return;
+            }
+
+            define( 'CCEW_ADMIN_NOTICE_RENDERED', true );
+
+            global $pagenow;
+            $is_plugins_screen = ( isset( $pagenow ) && in_array( $pagenow, array( 'plugins.php', 'plugin-install.php' ), true ) );
+            $is_crypto_screen  = ( function_exists( 'ccew_is_crypto_addon_page' ) && ccew_is_crypto_addon_page() );
+
+            if ( ! $is_crypto_screen && ! $is_plugins_screen ) {
+                return;
+            }
+
+            do_action( 'ccew_display_admin_notices' );
         }
     }
 

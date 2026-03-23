@@ -23,7 +23,7 @@ if (!class_exists('CCPW_Review_Notice')) {
         public function setup()
         {
             if (is_admin()) {
-                add_action('admin_notices', array($this, 'display_review_notice'));
+                add_action('ccew_display_admin_notices', array($this, 'display_review_notice'));
                 add_action('wp_ajax_' . self::AJAX_REQUEST, array($this, 'dismiss_review_notice'));
             }
         }

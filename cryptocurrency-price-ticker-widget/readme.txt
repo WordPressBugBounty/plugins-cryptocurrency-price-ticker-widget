@@ -4,7 +4,7 @@ Tags: cryptocurrency,coinmarketcap, cryptocurrency price ticker, Crypto Widgets,
 Requires at least:6.0
 Tested up to: 6.9
 Requires PHP:7.2
-Stable tag: 2.9.1
+Stable tag: 2.10.0
 License: GPL3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html 
 Donate link: https://coolplugins.net/donate-and-support-cool-plugins/
@@ -79,6 +79,8 @@ Get a [complete website like coinmarketcap.com](https://cryptocurrencyplugins.co
 * **[Cryptocurrency Exchanges List Pro](https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-exchanges-list-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=celp_view_plugin):** Display real-time data from over 250 cryptocurrency exchanges on your website. Create automatic exchange pages showing trading pairs and volumes. Easily enable or disable exchanges as needed.
 
 * **[Pay With MetaMask](https://cryptocurrencyplugins.com/wordpress-plugin/pay-with-metamask-for-woocommerce-pro/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=get_pro&utm_content=cpmw_view_plugin):** If you run a WooCommerce store and want to accept cryptocurrency payments at checkout, our WooCommerce Crypto Payments plugin makes it simple. Customers can pay directly with crypto using Web3 wallets such as MetaMask, WalletConnect, and more. You can [test crypto payment integration in WooCommerce](https://paywithcryptocurrency.net/wordpress-plugin/test-cryptocurrency-payment/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=cpmw_view_demo) by purchasing a dummy product on our demo site using [faucet tokens](https://paywithcryptocurrency.net/plugin-features/test-networks-and-tokens/?utm_source=ccw_plugin&utm_medium=readme&utm_campaign=demo&utm_content=cpmw_faucet).
+
+**Use of 3rd Party Services:** This plugin connects to the Cool Plugins API to display information about related plugins inside the dashboard. It also offers optional usage tracking and optional feedback submission on deactivation. Data is sent only after explicit user consent. No hidden tracking is performed, and no frontend visitor or site user data is collected. For more details, please review our [Data Usage Policy](https://my.coolplugins.net/terms/usage-tracking/), [TOS](https://my.coolplugins.net/terms/), and [Privacy Policy](https://my.coolplugins.net/terms/privacy-policy/).
 
 ### Disclaimer
 Our Cryptocurrency Widgets plugin offers price widgets for crypto coins through a third-party API. Please note that it does not provide crypto investment advice, buy/sell or guarantee price accuracy due to third-party API usage. Additionally, some links on this page may be affiliate links, meaning we may earn a commission if you make a purchase through these links, at no extra cost to you.
@@ -180,6 +182,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 8. Cryptocurrency Widgets Pro - Price cards & more layouts.
 
 == Changelog == 
+
+= Version 2.10.0| 23 March 2026 =
+* Improved: Improved dashboard design and usability.
 
 = Version 2.9.1| 19th January 2026 =
 * Fixed: Fixed all issues reported by “Plugin Check” plugin.

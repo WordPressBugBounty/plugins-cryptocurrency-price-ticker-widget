@@ -1,168 +1,1067 @@
-.plugin-not-required {
-    opacity: 0.4;
+.toplevel_page_cool-crypto-plugins #wpwrap {
+  background: #F5F6F9;
 }
-
+.plugin-not-required {
+  opacity: 0.4;
+}
+li#toplevel_page_cool-crypto-plugins img {
+  width: 18px;
+  height: 18px;
+}
+.ccew_row-rev{
+    display: flex;
+    flex-direction: row-reverse;
+}
 #cool-plugins-container {
-    display: inline-block;
-    margin: 15px auto;
-    padding: 0;
-    box-sizing: border-box;
-    width: calc(100% - 20px);
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px -5px #afafaf;
-    overflow: hidden;
+  display: inline-block;
+  margin: 15px auto;
+  padding: 0;
+  box-sizing: border-box;
+  width: calc(100% - 20px);
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px -5px #afafaf;
+  overflow: hidden;
 }
 
 #cool-plugins-container * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #cool-plugins-container .button {
-    border-radius: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    -ms-border-radius: 0;
-    -o-border-radius: 0;
-    height: 24px;
-    line-height: 22px;
-    min-height: 24px;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  height: 24px;
+  line-height: 22px;
+  min-height: 24px;
 }
 
-.cool-crypto-plugins .cool-header {
-    background-color: #e86011;
-    background: linear-gradient(to right, #e86011, #ff9f3c);
-    padding: 20px 10px;
-    margin: 0;
-    display: inline-block;
-    width: 100%;
+#cool-plugins-container.cool-crypto-plugins .cool-header {
+  background-color: #f12945;
+  background: linear-gradient(to right, #f12945, #dfacb3, #6cddd9, #02c5be);
+  padding: 20px 10px;
+  margin: 0;
+  display: inline-block;
+  width: 100%;
 }
 
-.cool-crypto-plugins .cool-header h2 {
-    color: #fff;
-    display: inline-block;
-    padding: 0;
-    margin: 0;
-    vertical-align: middle;
-    width: auto;
+#cool-plugins-container.cool-crypto-plugins .cool-header h2 {
+  color: #fff;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  vertical-align: middle;
+  width: auto;
 }
 
-.cool-crypto-plugins .cool-header a.button {
-    float: right;
-    margin: 0 5px;
+#cool-plugins-container.cool-crypto-plugins .cool-header a.button {
+  float: right;
+  margin: 0 5px;
 }
 
 .cool-body-left {
-    display: inline-block;
-    width: calc(100% - 231px);
-    vertical-align: top;
-    padding: 10px;
-    border-right: 1px solid #ddd;
+  display: inline-block;
+  width: calc(100% - 231px);
+  vertical-align: top;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .cool-body-right {
-    display: inline-block;
-    width: 230px;
-    vertical-align: top;
-    float: right;
-    padding: 10px;
+  display: inline-block;
+  width: 230px;
+  vertical-align: top;
+  float: right;
+  padding: 10px;
 }
 
 .cool-body-right ul li {
-    list-style: square;
-    margin-left: 15px;
+  list-style: square;
+  margin-left: 15px;
 }
 
 .cool-body-left h3 {
-    padding: 0 0 10px;
-    margin: 0 0 15px;
-    border-bottom: 1px solid #ddd;
+  padding: 0 0 10px;
+  margin: 0 0 15px;
+  border-bottom: 1px solid #ddd;
 }
 
 .cool-body-left .plugins-list {
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 20px;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.cool-crypto-plugins .ccew_welcome_plugin_list {
+  margin-top: 3rem;
 }
 
 .cool-body-left .plugin-block {
-    display: inline-block;
-    width: calc(50% - 2px);
-    padding: 0 10px 30px;
+  display: inline-block;
+  width: calc(50% - 2px);
+  padding: 0 10px 30px;
 }
 
 .cool-body-left .plugin-block-inner {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 .plugin-info {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
 .plugin-logo img {
-    width: 72px;
-    height: 72px;
+  width: 72px;
+  height: 72px;
 }
 
 h4.plugin-title {
-    margin: 0 0 3px;
-    font-size: 14px;
+  margin: 0 0 3px;
+  font-size: 14px;
 }
 
 .plugin-desc {
-    color: #a0a0a0;
-    font-size: 12px;
+  color: #a0a0a0;
+  font-size: 12px;
 }
 
 .plugin-stats {
-    display: inline-flex;
-    margin-top: 10px;
-    justify-content: center;
+  display: inline-flex;
+  margin-top: 10px;
+  justify-content: center;
 }
-.cool-body-right img {
-    width: 200px;
-}
-#cool-plugins-container .plugin-stats * {
-    border-radius: 0;
-    height: 24px;
-    line-height: 22px;
-    min-height: 24px;
+
+#cool-plugins-container.cool-crypto-plugins .plugin-stats * {
+  border-radius: 0;
+  height: 24px;
+  line-height: 22px;
+  min-height: 24px;
 }
 
 .plugin-version {
-    background: #1bb95a;
-    border: 1px solid #139648;
-    color: #fff;
-    font-size: 11px;
-    font-weight: bold;
-    padding: 0 3px;
+  background: #1bb95a;
+  border: 1px solid #139648;
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 0 3px;
 }
 
 span.plugin-update-available {
-    padding: 0 5px;
-    color: #d21e01;
-    font-size: 12px;
-    font-weight: bold;
+  padding: 0 5px;
+  color: #d21e01;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .wp-submenu a[href*="edit.php?post_type=ccpw"] strong,
 .wp-submenu a[href*="page=cmc-coins-list"] strong,
 .wp-submenu a[href*="page=celp-ex-list"] strong,
-.wp-submenu a[href*="edit.php?post_type=cilw"] strong {
-    background: #e86011;
-    padding: 2px 4px;
-    border-radius: 2px;
-    color: #fff;
+.wp-submenu a[href*="edit.php?post_type=cilw"] strong,
+.wp-submenu a[href*="page=ccew-settings"] strong{
+  background: #e86011;
+  padding: 2px 4px;
+  border-radius: 2px;
+  color: #fff;
 }
 
 @media only screen and (max-width: 600px) {
-    .cool-body-left,
-    .cool-body-right {
-        width: 100%;
-    }
-    .cool-body-left .plugin-block {
-        width: 100%;
-        padding: 0 0 30px;
-    }
+  .cool-body-left,
+  .cool-body-right {
+    width: 100%;
+  }
+  .cool-body-left .plugin-block {
+    width: 100%;
+    padding: 0 0 30px;
+  }
+}
+
+/* Old dashboard CSS End */
+
+:root {
+  --ccew-bg: #f8fafc;
+  --ccew-primary: #D2660D;
+  --ccew-purple: #6366f1;
+  --ccew-border: #e7e6e6;
+  --ccew-text-main: #1e293b;
+  --ccew-text-dim: #64748b;
+  --ccew-success: #22c55e;
+  --ccew-pink: #db2777;
+  --ccew-orange: #ea580c;
+  --ccew-green: #16a34a;
+}
+
+
+/* Global header: keep in flow so page content is not covered. */
+.ccew-global-crypto-header {
+  margin: 0 0 20px 0;
+  clear: both;
+}
+.ccew-global-crypto-header .ccew-top-header {
+  position: static;
+  width: 101%;
+  margin-left: -17px !important;
+}
+
+/* Header and Screen Options spacing on crypto pages */
+
+/* Header and Screen Options spacing on all crypto pages */
+#wpbody .ccew-global-crypto-header {
+  margin-bottom: 0;
+}
+
+#wpbody #screen-meta {
+  margin-top: 0;
+}
+
+.ccew-dashboard-wrapper {
+  position: relative;
+  margin: 0 20px 0 0;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--ccew-text-main);
+}
+/* Ensure Inter wins over core admin fonts on the dashboard page */
+body.toplevel_page_cool-crypto-plugins .ccew-dashboard-wrapper,
+body.toplevel_page_cool-crypto-plugins .ccew-dashboard-wrapper * {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+/* Dashicons are an icon-font; don't override with Inter (prevents □ boxes). */
+body.toplevel_page_cool-crypto-plugins .ccew-dashboard-wrapper .dashicons,
+body.toplevel_page_cool-crypto-plugins .ccew-dashboard-wrapper .dashicons:before {
+  font-family: dashicons !important;
+}
+
+.ccew-top-header {
+  position: absolute;
+  top: 0;
+  left: -20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+  height: 62px;
+  width: calc(100% + 40px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+  z-index: 99;
+}
+
+
+.ccew-header-left .ccew-header-img-box {
+  width: 182px;
+  height: 48px
+}
+
+.ccew-header-left .ccew-header-img-box img {
+  width: 100%;
+  height: 100%;
+}
+
+.ccew-top-header .ccew-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 20px;
+}
+
+.ccew-header-left h1 {
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.ccew-top-header .ccew-header-right {
+  display: flex;
+  gap: 12px;
+  margin-right: 20px;
+}
+
+.ccew-top-header .ccew-header-right svg {
+  width: 17px;
+  height: 18px;
+}
+.ccew-top-header .ccew-header-right a:focus{
+  box-shadow: none !important;
+}
+
+.ccew-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.ccew-btn-outline {
+  background: #fff;
+  color: #475569;
+  border: 1px solid var(--ccew-border);
+}
+.ccew-btn-primary{
+  background: var(--ccew-primary);
+  border: 1px solid var(--ccew-primary);
+  color: #fff !important;
+}
+
+.ccew-top-header .ccew-btn-primary {
+  background: #D2660D;
+  border: none;
+  color: #fff !important;
+}
+
+.ccew-top-header .ccew-btn-primary a:focus {
+  box-shadow: none !important;
+}
+
+.ccew-top-header .ccew-btn-primary:hover {
+  box-shadow: none !important;
+  border: none;
+  background: #b85300;
+}
+
+.ccew-btn:hover {
+  opacity: 0.9;
+}
+
+.ccew-btn-outline:hover {
+  color: #475569;
+}
+
+.ccew-indicator {
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  margin-right: 12px;
+}
+
+.ccew-sidebar-card a.ccew-button-primary,
+.ccew-card button.ccew-button-primary,
+.ccew-card a.ccew-button-primary {
+  background-color: #D2660D;
+  height: auto;
+  line-height: 1.5;
+  padding: 10px 22px;
+  font-size: 14px;
+  border-radius: 10px;
+  color: #fff !important;
+  border: none !important;
+}
+
+.ccew-sidebar-card a.ccew-button-primary:focus,
+.ccew-card button.ccew-button-primary:focus,
+.ccew-card a.ccew-button-primary:focus {
+  background-color: #b85300 !important;
+  color: #fff !important;
+}
+
+.ccew-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-left: 7px;
+}
+.ccew-feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-size: 15px;
+  color: var(--ccew-text-dim);
+}
+
+.ccew-feature-list li svg {
+  width: 18px;
+  height: 18px;
+  color: var(--ccew-primary);
+}
+
+.ccew-button-primary:hover {
+  opacity: 0.9;
+  background-color: #b85300 !important;
+  border-color: #b85300 !important;
+}
+
+.ccew-btn-buy {
+  background-color: #020e21 !important;
+  border-color: #020e21 !important;
+  color: white !important;
+}
+
+.ccew-btn-buy:hover {
+  opacity: 0.9;
+  background-color: #2d3644 !important;
+  border-color: #2d3644 !important;
+}
+
+/* Card Action Buttons */
+.ccew-card-action {
+  margin-top: 15px;
+}
+
+.ccew-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 30px;
+}
+
+.ccew-cards-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.ccew-dashboard-wrapper .ccew-section-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 35px 0 20px;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  color: var(--ccew-text-main);
+}
+
+.ccew-title-count {
+  margin-left: auto;
+  font-weight: 500;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.ccew-card {
+  background: #fff;
+  border: 1px solid var(--ccew-border);
+  border-radius: 12px;
+  padding: 28px;
+  display: flex;
+  gap: 20px;
+  position: relative;
+  transition: box-shadow 0.2s ease;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.ccew-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.ccew-premium-addons .ccew-card {
+  background: linear-gradient(90deg, #f9fafd 50%, #d2660d1f 100%);
+  border-color: #e2e2e2;
+}
+
+.ccew-content {
+  min-width: 0;
+}
+
+.ccew-info {
+  flex: 1;
+}
+
+.ccew-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.ccew-info p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ccew-text-dim);
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.ccew-icon-box {
+  width: 44px;
+  height: 44px;
+}
+
+.ccew-icon-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ccew-badge-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  border-top: 1px solid rgba(226, 232, 240, 0.72);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ccew-badge {
+  font-size: 11px;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.ccew-active-update {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ccew-badge-active {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid rgba(134, 239, 172, 0.65);
+}
+
+.ccew-badge-version {
+  color: #919191;
+  font-weight: 500;
+  letter-spacing: 1.6px;
+  background: rgba(227, 227, 227, 0.64);
+  border: 1px solid #dbdbdb;
+}
+
+.ccew-badge-premium {
+  background: #000;
+  color: #fff;
+  position: absolute;
+  text-transform: uppercase;
+  top: -1px;
+  right: 40px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 11px;
+  border-radius: 0 0 5px 5px;
+  letter-spacing: 0.5px;
+}
+
+.ccew-notification-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 10px;
+  right: 10px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  z-index: 10;
+}
+
+.ccew-pulse-wrapper {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
+  background: rgba(239, 68, 68, 0.15);
+  border-radius: 50%;
+  animation: ccew-pulse 2s infinite;
+  z-index: 9;
+}
+
+@keyframes ccew-pulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.ccew-card-links {
+  display: flex;
+  gap: 20px;
+}
+
+.ccew-card-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.ccew-card-links a:hover {
+  color: var(--ccew-primary);
+}
+
+.ccew-card-links a:focus {
+  box-shadow: none;
+}
+
+.ccew-card-links .dashicons {
+  font-size: 18px;
+}
+
+.ccew-card-links svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.ccew-card-footer {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  gap: 16px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.ccew-sidebar {
+  margin-top: 30px;
+}
+
+.ccew-sidebar-card {
+  background: #fff;
+  border: 1px solid var(--ccew-border);
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.ccew-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 16px;
+}
+
+.ccew-sidebar-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--ccew-text-main);
+}
+
+.ccew-sidebar-header svg {
+  width: 20px;
+  height: 20px;
+  padding: 8px;
+  border-radius: 20px;
+}
+
+.ccew-premium-support {
+  background: #fff3ea;
+  border-color: #dfdfdf;
+}
+
+.ccew-key-features .ccew-sidebar-header svg {
+  background: #EFFFFE;
+  color: var(--ccew-primary);
+}
+
+.ccew-trustpilot-rating .ccew-sidebar-header svg {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.ccew-cool-crypto-pro .ccew-sidebar-header svg {
+  background: #EFFFFE;
+  color: var(--ccew-primary);
+}
+
+.ccew-premium-support .ccew-sidebar-header svg {
+  width: 22px;
+  height: 22px;
+  background: white;
+  color: var(--ccew-primary);
+  padding: 10px;
+  border-radius: 20px;
+}
+.ccew-premium-support a:focus {
+  box-shadow: none !important;
+}
+
+.ccew-key-features .ccew-feature-list li svg {
+  width: 18px;
+  height: 18px;
+  color: var(--ccew-primary);
+}
+
+.ccew-sidebar-text {
+  font-size: 15px;
+  color: var(--ccew-text-dim);
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.ccew-trustpilot {
+  margin-top: 12px;
+}
+
+.ccew-trustpilot-rating .ccew-stars a {
+  margin-bottom: 12px;
+}
+
+.ccew-trustpilot-rating .ccew-stars img {
+  width: 150px;
+  height: auto;
+}
+
+.ccew-trustpilot-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ccew-green);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.ccew-trustpilot-link:hover {
+  text-decoration: underline;
+}
+
+.ccew-trustpilot-link .dashicons {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+.ccew-btn-full {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .ccew-cards-container {
+    gap: 25px;
+  }
+  .ccew-main-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .ccew-sidebar {
+    margin-top: 0;
+    order: 2;
+  }
+  .ccew-content {
+    order: 1;
+  }
+  .ccew-header-right {
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width: 782px) {
+  .ccew-cards-container {
+    grid-template-columns: 1fr;
+  }
+  .ccew-top-header {
+    left: -10px;
+    width: calc(100% + 10px);
+    padding: 0 15px;
+  }
+  .ccew-header-left h1 {
+    font-size: 15px;
+  }
+  .ccew-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .ccew-badge {
+    font-size: 8px;
+  }
+  .ccew-dashboard-wrapper .ccew-section-title {
+    font-size: 16px;
+  }
+  .ccew-card-footer {
+    justify-content: center;
+  }
+  .ccew-top-header {
+    height: auto;
+    flex-direction: column;
+    padding: 15px;
+    gap: 12px;
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .ccew-dashboard-wrapper {
+    padding-top: 0;
+  }
+  .ccew-header-left,
+  .ccew-header-right {
+    width: 100%;
+    justify-content: center;
+    margin-right: 0;
+  }
+  .ccew-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+  .ccew-dashboard-wrapper .ccew-section-title {
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .ccew-badge-group {
+    justify-content: center;
+  }
+  .ccew-feature-list {
+    margin-left: 0;
+  }
+}
+
+/*   Manager Icons Select Box height */
+.ccew-modal-icon .ccew-modal-inner {
+  height: 550px !important;
+}
+.ccew-modal-icon .ccew-modal-content {
+  padding: 10px;
+  height: 400px !important;
+}
+
+/* demo page css start*/
+
+.ccew_started-section {
+  width: 100%;
+}
+.ccew_started-section .tab_panel {
+  width: 100%;
+  border: 2px solid whitesmoke;
+}
+
+.ccew_started-section .button {
+  background: #2271b1;
+  border-color: #2271b1;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: none;
+}
+.ccew_get-heading h2 {
+  font-size: 40px;
+  font-weight: 700;
+  color: black;
+  padding: 10px 20px;
+}
+.ccew_steps h6 {
+  color: white;
+  font-size: 15px;
+  background: #f12945;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 0px;
+}
+.ccew_step {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  align-items: start;
+}
+.ccew_step-content {
+  width: 48%;
+  margin: 0 auto;
+}
+.ccew_video-section {
+  width: 48%;
+  margin: auto;
+}
+.ccew_steps-list {
+  padding-right: 10px;
+}
+.ccew_steps-title h2 {
+  color: black;
+  font-size: 32px;
+  padding: 25px 0px;
+  margin: 0px;
+  line-height: 30px;
+  font-weight: bold;
+}
+li.ccew_step-data {
+  padding-bottom: 6px;
+  border-bottom: 1px solid #ebebeb;
+  margin-bottom: 10px;
+}
+span.ccew_list-icon i {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border: 2px solid black;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  font-size: 15px;
+  margin-right: 10px;
+  color: #13c7c0;
+  transition: 0.3s all ease-in-out;
+}
+
+.ccew_started-section > .ccew_tab_btn_wrapper {
+  position: relative;
+  bottom: -2px;
+}
+
+.ccew_started-section > .ccew_tab_btn_wrapper > button.ccew_tab_active {
+  background-color: transparent;
+  border-bottom-color: white !important;
+  border-bottom-width: 2px;
+  color: #2271b1;
+}
+.ccew_started-section > .ccew_tab_btn_wrapper > button:hover,
+.ccew_started-section > .ccew_tab_btn_wrapper > button:focus,
+.ccew_started-section > .ccew_tab_btn_wrapper > button:visited {
+  border-color: #f0f0f1;
+  box-shadow: 0px 0px #f0f0f1;
+}
+span.ccew_list-text {
+  font-size: 16px;
+  word-spacing: 2px;
+  color: #555555;
+  line-height: 26px;
+}
+strong.ccew_high {
+  color: #222222;
+}
+.ccew_high-txt {
+  color: #555555;
+  font-size: 17px;
+  padding-bottom: 15px;
+  font-weight: 700;
+}
+video.ccew_timeline-video {
+  width: 100%;
+}
+iframe.ccew_timeline-video {
+  width: 100%;
+}
+
+@media only screen and (max-width: 991px) {
+  .ccew_step-content {
+    width: 100%;
+    margin: auto;
+  }
+  .ccew_col-rev {
+    flex-direction: column-reverse;
+  }
+  .ccew_video-section {
+    width: 100%;
+    margin-top: 30px;
+  }
+  video.ccew_timeline-video {
+    width: 100%;
+  }
+  .ccew_step {
+    padding: 20px 0px;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .ccew_steps-title h2 {
+    font-size: 25px;
+  }
+}
+
+/* migration css  */
+
+.ccew-progress-bar {
+  display: none;
+  margin-top: 15px;
+  position: relative;
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ccew-progress-bar-inner {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #2271b152, #1f78bfe0);
+  transition: width 0.3s ease-in-out;
+  position: relative;
+}
+
+.migration-redirect-button {
+  margin-top: 12px;
+  padding: 8px 13px;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  background-color: #2271b1;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.migration-status,
+.migration-error {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000000;
+}
+
+.migration-error {
+  color: red;
+  font-weight: bold;
+}
+
+.notice.ccew_migration{
+  padding: 5px;
+  display: table;
+  width: calc(100% - 10px);
+  max-width: 700px;
+  clear: both;
+  border-radius: 5px;
+  border: 2px solid #808080b8;
+  box-sizing: border-box;
+}
+
+.notice.ccew_migration .ccew_logo_container{
+  width: 80px;
+  display: table-cell;
+  padding: 0 10px 0 0;
+  vertical-align: middle;
+}
+
+.cool-crypto-plugins .cool-body-right img{
+  width: 100%;
+}
+
+.migration_message_container .ccew_migration_btn{
+  background-color: #2271b1;
+  color: white;
+  margin-top:3px;
+}
+.migration_message_container .ccew_migration_btn:hover{
+  background: #135e96;
+  border-color: #135e96;
+  color: #fff;
+}
+#termsBox .ccew_data_share{
+  margin-top:10px;
+}
+.ccew-dependency-notice {
+  margin: 16px 0 0 0 !important;
+  padding: 7px 10px;
+  background: #fff8e5;
+  border-left: 4px solid #ffb900;
+  border-radius: 3px;
+  color: #856404;
+  font-size: 12px;
+  line-height: 1.5;
 }

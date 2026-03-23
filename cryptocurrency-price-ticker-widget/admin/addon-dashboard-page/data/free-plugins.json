@@ -1,0 +1,43 @@
+[
+  {
+    "slug": "cryptocurrency-price-ticker-widget",
+    "name": "Cryptocurrency Widgets - Price Ticker & Coins List",
+    "info": "Display live cryptocurrency price tickers and widgets using data from popular crypto APIs.",
+    "version": "2.0.0",
+    "latest_version": "{{CCPWF_VERSION}}",
+    "image_url": "icon-crypto-widgets-elementor.png",
+    "tag": "crypto",
+    "type": "free",
+    "download_url": "https://downloads.wordpress.org/plugin/cryptocurrency-price-ticker-widget.zip",
+    "demo_url": "https://cryptocurrencyplugins.com/demo/price-ticker-widget/",
+    "docs_url": "https://wordpress.org/plugins/cryptocurrency-price-ticker-widget/"
+  },
+
+
+  {
+    "slug": "cryptocurrency-widgets-for-elementor",
+    "name": "Cryptocurrency Widgets For Elementor",
+    "info": "Display crypto price tickers, lists and cards inside Elementor using multiple layouts and APIs.",
+    "version": "1.8.1",
+    "latest_version": "{{CCEW_VERSION}}",
+    "image_url": "cryptocurrency-widgets-for-elementor.png",
+    "tag": "crypto",
+    "type": "free",
+    "download_url": "https://downloads.wordpress.org/plugin/cryptocurrency-widgets-for-elementor.zip",
+    "demo_url": "https://cryptocurrencyplugins.com/?utm_source=ccew_plugin&utm_medium=inside&utm_campaign=demo&utm_content=dashboard",
+    "docs_url": "https://wordpress.org/plugins/cryptocurrency-widgets-for-elementor/"
+  },
+  {
+    "slug": "cryptocurrency-payments-using-metamask-for-woocommerce",
+    "name": "Cryptocurrency Payments Using MetaMask For WooCommerce",
+    "info": "Accept cryptocurrency payments in WooCommerce using MetaMask with basic options.",
+    "version": "1.0.0",
+    "latest_version": "{{CPMW_VERSION}}",
+    "image_url": "cryptocurrency-payments-using-metamask-for-woocommerce.png",
+    "tag": "crypto",
+    "type": "free",
+    "download_url": "https://downloads.wordpress.org/plugin/cryptocurrency-payments-using-metamask-for-woocommerce.zip",
+    "demo_url": "https://cryptocurrencyplugins.com/demo/cryptocurrency-payments-using-metamask-for-woocommerce/",
+    "docs_url": "https://wordpress.org/plugins/cryptocurrency-payments-using-metamask-for-woocommerce/"
+  }
+]
