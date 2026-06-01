@@ -41,6 +41,18 @@ a.button.button-secondary.red {
 .cmb2-wrap .cmb-row {
     padding-bottom: 10px !important;
 }
+
+/* CMB2 focus background overrides WP checkbox checked state; restore core admin styles */
+.cmb2-wrap input[type="checkbox"]:focus,
+.cmb2-wrap input[type="radio"]:focus {
+    background: #fff !important;
+}
+
+.cmb2-wrap input[type="checkbox"]:checked:focus,
+.cmb2-wrap input[type="radio"]:checked:focus {
+    background: var(--wp-admin-theme-color) !important;
+    border-color: var(--wp-admin-theme-color) !important;
+}
 .selection .select2-search--inline {
     width: 100%;
 }

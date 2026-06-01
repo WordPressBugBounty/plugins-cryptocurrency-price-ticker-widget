@@ -41,8 +41,8 @@ $dashboard_instance = isset( $dashboard_instance ) ? $dashboard_instance : null;
 	<!-- Currently Activated Addons -->
 	<div class="<?php echo esc_attr( $prefix ); ?>-section-title">
 		<span class="<?php echo esc_attr( $prefix ); ?>-indicator" style="background: var(--<?php echo esc_attr( $prefix ); ?>-success);"></span>
-		<?php echo esc_html__( 'Currently Activated Crypto Addons', 'cryptocurrency-widgets-for-elementor' ); ?>
-		<span class="<?php echo esc_attr( $prefix ); ?>-title-count"><?php echo esc_html( count( $activated_addons ) . ' ' . __( 'Active Addons', 'cryptocurrency-widgets-for-elementor' ) ); ?></span>
+		<?php echo esc_html__( 'Currently Activated Crypto Addons', 'cryptocurrency-price-ticker-widget' ); ?>
+		<span class="<?php echo esc_attr( $prefix ); ?>-title-count"><?php echo esc_html( count( $activated_addons ) . ' ' . __( 'Active Addons', 'cryptocurrency-price-ticker-widget' ) ); ?></span>
 	</div>
 	<div class="<?php echo esc_attr( $prefix ); ?>-cards-container">
 		<?php
@@ -59,7 +59,7 @@ $dashboard_instance = isset( $dashboard_instance ) ? $dashboard_instance : null;
 	<!-- Premium Addons -->
 	<div class="<?php echo esc_attr( $prefix ); ?>-section-title">
 		<span class="<?php echo esc_attr( $prefix ); ?>-indicator" style="background: #000;"></span>
-		<?php echo esc_html__( 'Premium Crypto Plugins', 'cryptocurrency-widgets-for-elementor' ); ?>
+		<?php echo esc_html__( 'Premium Crypto Plugins', 'cryptocurrency-price-ticker-widget' ); ?>
 	</div>
 	<div class="<?php echo esc_attr( $prefix ); ?>-cards-container <?php echo esc_attr( $prefix ); ?>-premium-addons">
 		<?php
@@ -76,7 +76,7 @@ $dashboard_instance = isset( $dashboard_instance ) ? $dashboard_instance : null;
 	<!-- Available Addons -->
 	<div class="<?php echo esc_attr( $prefix ); ?>-section-title">
 		<span class="<?php echo esc_attr( $prefix ); ?>-indicator" style="background: #94a3b8;"></span>
-		<?php echo esc_html__( 'Available Crypto Addons', 'cryptocurrency-widgets-for-elementor' ); ?>
+		<?php echo esc_html__( 'Available Crypto Addons', 'cryptocurrency-price-ticker-widget' ); ?>
 	</div>
 	<div class="<?php echo esc_attr( $prefix ); ?>-cards-container">
 		<?php

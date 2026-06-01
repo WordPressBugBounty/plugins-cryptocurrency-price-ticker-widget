@@ -12,7 +12,7 @@ if (!class_exists('CCPW_api_data')) {
          */
         const COINPAPRIKA_API_ENDPOINT = 'https://api.coinpaprika.com/v1/tickers';
         const COINMARKETCAP_API_ENDPOINT = 'https://pro-api.coinmarketcap.com/';
-        const COINCAP_API_ENDPOINT = 'https://api.coincap.io/v3/';
+        const COINCAP_API_ENDPOINT = 'https://rest.coincap.io/v3/';
         const OPENEXCHANGERATE_API_ENDPOINT = 'https://openexchangerates.org/api/latest.json?app_id=';
 
         public function __construct()
@@ -49,19 +49,31 @@ if (!class_exists('CCPW_api_data')) {
             }
 
             // API URL for CoinGecko
-            $api_url =  $this->ccpw_get_api_end_point() . 'coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&'. $this->ccpw_get_api_key_end_point() .'=' . $coingecko_api_key;
+                $api_url = $this->ccpw_get_api_end_point() . 'coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false';
 
-            // Fetch data from CoinGecko API
-            $request = wp_remote_get($api_url, array('timeout' => 120, 'sslverify' => false));
-            if($request['response']['code'] == 401) {
-                update_option('ccpw_api_key_expired', true);
-                return false;
-            }
-            // Check for WP error
-            if (is_wp_error($request)) {
-                update_option('ccpw_api_key_expired', true);
-                return false; // Bail early
-            }
+                $request_args = array(
+                            'timeout'   => 120,
+                            'sslverify' => false,
+                        );
+            
+                if (!empty($coingecko_api_key)) {
+                            // x_cg_demo_api_key / x_cg_pro_api_key → x-cg-demo-api-key / x-cg-pro-api-key
+                            $header_name = str_replace('_', '-', $this->ccpw_get_api_key_end_point());
+                            $request_args['headers'] = array(
+                                $header_name => sanitize_text_field($coingecko_api_key),
+                            );
+                        }
+            
+                        // Fetch data from CoinGecko API
+                $request = wp_remote_get($api_url, $request_args);
+                if (is_wp_error($request)) {
+                    return false;
+                }
+    
+                if (401 === (int) wp_remote_retrieve_response_code($request)) {
+                    update_option('ccpw_api_key_expired', true);
+                    return false;
+                }
 
             // Retrieve response body
             $body = wp_remote_retrieve_body($request);
@@ -140,10 +152,21 @@ if (!class_exists('CCPW_api_data')) {
             }
            
             // API URL for CoinMarketCap
-            $api_url = self::COINMARKETCAP_API_ENDPOINT . 'v1/cryptocurrency/listings/latest?start=' . $numberoftokens . '&limit=200&CMC_PRO_API_KEY=' . $cmc_api_key;
+             $api_url = self::COINMARKETCAP_API_ENDPOINT . 'v1/cryptocurrency/listings/latest?start=' . absint($numberoftokens) . '&limit=200';
 
-            // Fetch data from CoinMarketCap API
-            $request = wp_remote_get($api_url, array('timeout' => 120, 'sslverify' => false));
+            $request_args = array(
+                            'timeout'   => 120,
+                            'sslverify' => false,
+                        );
+            
+            if (!empty($cmc_api_key)) {
+                            $request_args['headers'] = array(
+                                'X-CMC_PRO_API_KEY' => sanitize_text_field($cmc_api_key),
+                            );
+                        }
+            
+                        // Fetch data from CoinMarketCap API
+                        $request = wp_remote_get($api_url, $request_args);
             if (is_wp_error($request)) {
                 update_option('ccpw_api_key_expired', true);
                 return false; // Bail early
@@ -173,7 +196,7 @@ if (!class_exists('CCPW_api_data')) {
                     $response['circulating_supply'] = $this->ccpw_set_default_if_empty($coin['circulating_supply']);
                     $response['logo'] = null;
                     $extradata = array('cmc_id' => $coin['id'], 'rank' => $coin['cmc_rank']);
-                    $response['extradata'] = maybe_serialize($extradata);
+                    $response['extradata'] = wp_json_encode($extradata);
                     $response['last_updated'] = gmdate('Y-m-d h:i:s');
                     $coin_data[] = $response;
 
@@ -221,11 +244,19 @@ if (!class_exists('CCPW_api_data')) {
                 return;
             }
             // API URL for CoinGecko
-            $api_url = self::COINCAP_API_ENDPOINT . 'assets?limit=250&apiKey=' . $coincap_api_key;
-
-            // Fetch data from CoinGecko API
-            $request = wp_remote_get($api_url, array('timeout' => 120, 'sslverify' => false));
-
+            $api_url = self::COINCAP_API_ENDPOINT . 'assets?limit=250';
+            $request_args = array(
+                            'timeout'   => 120,
+                            'sslverify' => false,
+                        );
+            
+            if (!empty($coincap_api_key)) {
+                            $request_args['headers'] = array(
+                                'Authorization' => 'Bearer ' . sanitize_text_field($coincap_api_key),
+                            );
+                        }
+                        // Fetch data from CoinCap API
+             $request = wp_remote_get($api_url, $request_args);
             // Check for WP error
             if (is_wp_error($request)) {
                 update_option('ccpw_api_key_expired', true);
@@ -268,7 +299,7 @@ if (!class_exists('CCPW_api_data')) {
                     $response['circulating_supply'] = $this->ccpw_set_default_if_empty($coin['supply']);
                     $response['logo'] = null;
                     $extradata = array('cc_id' => $coin['id'], 'rank' => $coin['rank'], 'sym'=>strtolower($coin['symbol']));
-                    $response['extradata'] = maybe_serialize($extradata);
+                    $response['extradata'] = wp_json_encode($extradata);
                     $coins_data[] = $response;
                     
                     // Save data in chunks of 50 to avoid memory issues

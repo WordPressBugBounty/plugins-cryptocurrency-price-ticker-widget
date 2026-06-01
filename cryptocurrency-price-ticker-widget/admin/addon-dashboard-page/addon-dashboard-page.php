@@ -107,10 +107,10 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 		/** Allowed plugin slugs for install/activate from this dashboard (whitelist). */
 		private static $allowed_slugs = array(
 			// Free plugins (install from WordPress.org).
-			'cryptocurrency-price-ticker-widget',
+			'cryptocurrency-widgets-for-elementor',
 			'cryptocurrency-donation-box',
 			'cryptocurrency-payments-using-metamask-for-woocommerce',
-			'cryptocurrency-widgets-for-elementor',
+			'cryptocurrency-price-ticker-widget',
 			// Pro plugins (no download; activate only if already installed).
 			'cryptocurrency-price-ticker-widget-pro',
 			'cryptocurrency-donation-box-pro',
@@ -269,7 +269,7 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 			if ( ! current_user_can( 'install_plugins' ) ) {
 				wp_send_json_error(
 					array(
-						'errorMessage' => __( 'Sorry, you are not allowed to install plugins on this site.', 'cryptocurrency-widgets-for-elementor' ),
+						'errorMessage' => __( 'Sorry, you are not allowed to install plugins on this site.', 'cryptocurrency-price-ticker-widget' ),
 					)
 				);
 			}
@@ -283,7 +283,7 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 					array(
 						'slug'         => '',
 						'errorCode'    => 'no_plugin_specified',
-						'errorMessage' => __( 'No plugin specified.', 'cryptocurrency-widgets-for-elementor' ),
+						'errorMessage' => __( 'No plugin specified.', 'cryptocurrency-price-ticker-widget' ),
 					)
 				);
 			}
@@ -293,7 +293,7 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 					array(
 						'slug'         => $slug,
 						'errorCode'    => 'plugin_not_allowed',
-						'errorMessage' => __( 'This plugin cannot be installed from here.', 'cryptocurrency-widgets-for-elementor' ),
+						'errorMessage' => __( 'This plugin cannot be installed from here.', 'cryptocurrency-price-ticker-widget' ),
 					)
 				);
 			}
@@ -350,14 +350,14 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 				if ( ! file_exists( $plugin_path ) ) {
 					wp_send_json_error(
 						array(
-							'errorMessage' => __( 'Pro plugin must be installed manually. Purchase and download from the product page.', 'cryptocurrency-widgets-for-elementor' ),
+							'errorMessage' => __( 'Pro plugin must be installed manually. Purchase and download from the product page.', 'cryptocurrency-price-ticker-widget' ),
 						)
 					);
 				}
 				if ( ! current_user_can( 'activate_plugin', $plugin_file ) ) {
 					wp_send_json_error(
 						array(
-							'message' => __( 'Permission denied', 'cryptocurrency-widgets-for-elementor' ),
+							'message' => __( 'Permission denied', 'cryptocurrency-price-ticker-widget' ),
 						)
 					);
 				}
@@ -366,7 +366,7 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 						array(
 							'slug'         => $slug,
 							'errorCode'    => 'woocommerce_required',
-							'errorMessage' => __( 'WooCommerce must be installed and active before you can activate this plugin.', 'cryptocurrency-widgets-for-elementor' ),
+							'errorMessage' => __( 'WooCommerce must be installed and active before you can activate this plugin.', 'cryptocurrency-price-ticker-widget' ),
 						)
 					);
 				}
@@ -383,7 +383,7 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 				}
 				wp_send_json_success(
 					array(
-						'message'     => __( 'Plugin activated successfully', 'cryptocurrency-widgets-for-elementor' ),
+						'message'     => __( 'Plugin activated successfully', 'cryptocurrency-price-ticker-widget' ),
 						'activated'   => true,
 						'plugin_slug' => $slug,
 					)
@@ -453,7 +453,7 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 			if ( is_null( $result ) ) {
 				global $wp_filesystem;
 				$status['errorCode']    = 'unable_to_connect_to_filesystem';
-				$status['errorMessage'] = __( 'Unable to connect to the filesystem. Please confirm your credentials.', 'cryptocurrency-widgets-for-elementor' );
+				$status['errorMessage'] = __( 'Unable to connect to the filesystem. Please confirm your credentials.', 'cryptocurrency-price-ticker-widget' );
 				if ( $wp_filesystem instanceof \WP_Filesystem_Base && is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->has_errors() ) {
 					$status['errorMessage'] = esc_html( $wp_filesystem->errors->get_error_message() );
 				}
@@ -496,8 +496,8 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 			);
 			add_submenu_page(
 				$this->main_menu_slug,
-				__( 'Dashboard', 'cryptocurrency-widgets-for-elementor' ),
-				__( 'Dashboard', 'cryptocurrency-widgets-for-elementor' ),
+				__( 'Dashboard', 'cryptocurrency-price-ticker-widget' ),
+				__( 'Dashboard', 'cryptocurrency-price-ticker-widget' ),
 				'manage_options',
 				$this->main_menu_slug,
 				array( $this, 'displayPluginAdminDashboard' ),
@@ -713,7 +713,7 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 			if ( ! empty( $activated_addons ) || ! empty( $available_addons ) || ! empty( $pro_addons ) ) {
 				$this->render_modern_dashboard( $prefix, $activated_addons, $available_addons, $pro_addons );
 			} else {
-				echo '<div class="notice notice-warning"><p>' . esc_html__( 'No plugins data available at the moment.', 'cryptocurrency-widgets-for-elementor' ) . '</p></div>';
+				echo '<div class="notice notice-warning"><p>' . esc_html__( 'No plugins data available at the moment.', 'cryptocurrency-price-ticker-widget' ) . '</p></div>';
 			}
 		}
 
@@ -817,13 +817,13 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 			$docs = empty( $urls['docs'] ) ? 'https://cryptocurrencyplugins.com/docs/?utm_source=ccew_plugin&utm_medium=inside&utm_campaign=docs&utm_content=dashboard' : $urls['docs'];
 			?>
 			<div class="<?php echo esc_attr( $prefix ); ?>-card-links">
-				<a href="<?php echo esc_url( $demo ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'View Demo', 'cryptocurrency-widgets-for-elementor' ); ?>">
+				<a href="<?php echo esc_url( $demo ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'View Demo', 'cryptocurrency-price-ticker-widget' ); ?>">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g fill="currentColor"><path d="M10.5 8a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7a3.5 3.5 0 0 0 0 7"/></g></svg>
-					<?php esc_html_e( 'Demo', 'cryptocurrency-widgets-for-elementor' ); ?>
+					<?php esc_html_e( 'Demo', 'cryptocurrency-price-ticker-widget' ); ?>
 				</a>
-				<a href="<?php echo esc_url( $docs ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Documentation', 'cryptocurrency-widgets-for-elementor' ); ?>">
+				<a href="<?php echo esc_url( $docs ); ?>" target="_blank" rel="noopener" title="<?php esc_attr_e( 'Documentation', 'cryptocurrency-price-ticker-widget' ); ?>">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56"><path fill="currentColor" d="M15.555 53.125h24.89c4.852 0 7.266-2.461 7.266-7.336V24.508H30.742c-3 0-4.406-1.43-4.406-4.43V2.875H15.555c-4.828 0-7.266 2.484-7.266 7.36v35.554c0 4.898 2.438 7.336 7.266 7.336m15.258-31.828h16.64c-.164-.961-.844-1.899-1.945-3.047L32.57 5.102c-1.078-1.125-2.062-1.805-3.047-1.97v16.9c0 .843.446 1.265 1.29 1.265m-11.836 13.36c-.961 0-1.641-.68-1.641-1.594c0-.915.68-1.594 1.64-1.594h18.07c.938 0 1.665.68 1.665 1.593c0 .915-.727 1.594-1.664 1.594Zm0 8.929c-.961 0-1.641-.68-1.641-1.594s.68-1.594 1.64-1.594h18.07c.938 0 1.665.68 1.665 1.594s-.727 1.594-1.664 1.594Z"/></svg>
-					<?php esc_html_e( 'Docs', 'cryptocurrency-widgets-for-elementor' ); ?>
+					<?php esc_html_e( 'Docs', 'cryptocurrency-price-ticker-widget' ); ?>
 				</a>
 			</div>
 			<?php
@@ -857,11 +857,11 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 			?>
 			<div class="<?php echo esc_attr( $prefix ); ?>-card">
 				<?php if ( ! empty( $has_update ) ) : ?>
-					<div title="<?php esc_attr_e( 'Update available', 'cryptocurrency-widgets-for-elementor' ); ?>" class="<?php echo esc_attr( $prefix ); ?>-pulse-wrapper"></div>
-					<div title="<?php esc_attr_e( 'Update available', 'cryptocurrency-widgets-for-elementor' ); ?>" class="<?php echo esc_attr( $prefix ); ?>-notification-dot"></div>
+					<div title="<?php esc_attr_e( 'Update available', 'cryptocurrency-price-ticker-widget' ); ?>" class="<?php echo esc_attr( $prefix ); ?>-pulse-wrapper"></div>
+					<div title="<?php esc_attr_e( 'Update available', 'cryptocurrency-price-ticker-widget' ); ?>" class="<?php echo esc_attr( $prefix ); ?>-notification-dot"></div>
 				<?php endif; ?>
 				<?php if ( $is_pro ) : ?>
-					<span class="<?php echo esc_attr( $prefix ); ?>-badge <?php echo esc_attr( $prefix ); ?>-badge-premium"><?php esc_html_e( 'Pro', 'cryptocurrency-widgets-for-elementor' ); ?></span>
+					<span class="<?php echo esc_attr( $prefix ); ?>-badge <?php echo esc_attr( $prefix ); ?>-badge-premium"><?php esc_html_e( 'Pro', 'cryptocurrency-price-ticker-widget' ); ?></span>
 				<?php endif; ?>
 				<div class="<?php echo esc_attr( $prefix ); ?>-icon-box">
 					<img src="<?php echo esc_url( $plugin_logo ); ?>" alt="<?php echo esc_attr( $plugin_name ); ?>">
@@ -872,7 +872,7 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 					<?php if ( 'activated' === $type ) : ?>
 						<div class="<?php echo esc_attr( $prefix ); ?>-badge-group">
 							<div class="<?php echo esc_attr( $prefix ); ?>-active-update">
-								<span class="<?php echo esc_attr( $prefix ); ?>-badge <?php echo esc_attr( $prefix ); ?>-badge-active"><?php esc_html_e( 'Active', 'cryptocurrency-widgets-for-elementor' ); ?></span>
+								<span class="<?php echo esc_attr( $prefix ); ?>-badge <?php echo esc_attr( $prefix ); ?>-badge-active"><?php esc_html_e( 'Active', 'cryptocurrency-price-ticker-widget' ); ?></span>
 								<?php if ( $show_ver ) : ?>
 									<span class="<?php echo esc_attr( $prefix ); ?>-badge <?php echo esc_attr( $prefix ); ?>-badge-version">v <?php echo esc_html( $show_ver ); ?></span>
 								<?php endif; ?>
@@ -896,14 +896,14 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 								data-slug="<?php echo esc_attr( $plugin_slug ); ?>"
 								data-nonce="<?php echo esc_attr( $install_nonce ); ?>"
 								<?php echo $ccew_block_wc_activate ? ' data-ccew-block-wc-activate="1"' : ''; ?>>
-								<?php echo $needs_activation ? esc_html__( 'Activate Now', 'cryptocurrency-widgets-for-elementor' ) : esc_html__( 'Install Now', 'cryptocurrency-widgets-for-elementor' ); ?>
+								<?php echo $needs_activation ? esc_html__( 'Activate Now', 'cryptocurrency-price-ticker-widget' ) : esc_html__( 'Install Now', 'cryptocurrency-price-ticker-widget' ); ?>
 							</button>
 							<?php $this->render_plugin_card_demo_docs_links( $prefix, $plugin_slug, $is_pro ); ?>
 						</div>
 					<?php elseif ( 'pro' === $type ) : ?>
 						<div class="<?php echo esc_attr( $prefix ); ?>-card-footer">
 							<a href="<?php echo esc_url( isset( $plugin['buyLink'] ) ? $plugin['buyLink'] : '#' ); ?>" target="_blank" rel="noopener" class="button <?php echo esc_attr( $prefix ); ?>-button-primary <?php echo esc_attr( $prefix ); ?>-btn-buy">
-								<?php esc_html_e( 'Buy Pro', 'cryptocurrency-widgets-for-elementor' ); ?>
+								<?php esc_html_e( 'Buy Pro', 'cryptocurrency-price-ticker-widget' ); ?>
 							</a>
 							<?php $this->render_plugin_card_demo_docs_links( $prefix, $plugin_slug, true ); ?>
 						</div>
@@ -945,11 +945,11 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 						'prefix'          => 'ccew',
 						'install_action'  => 'ccew_dashboard_install_plugin',
 						'install_nonce'   => wp_create_nonce( 'ccew-plugins-download' ),
-						'activated_label' => __( 'Activated', 'cryptocurrency-widgets-for-elementor' ),
+						'activated_label' => __( 'Activated', 'cryptocurrency-price-ticker-widget' ),
 						'woocommerce_active'       => function_exists( 'is_plugin_active' ) && is_plugin_active( 'woocommerce/woocommerce.php' ),
 						'woocommerce_slugs'        => array_values( self::$woocommerce_dependent_slugs ),
-						'woocommerce_required_msg'   => __( 'WooCommerce must be installed and active before you can activate this plugin.', 'cryptocurrency-widgets-for-elementor' ),
-						'installed_pending_wc_label' => __( 'Installed!', 'cryptocurrency-widgets-for-elementor' ),
+						'woocommerce_required_msg'   => __( 'WooCommerce must be installed and active before you can activate this plugin.', 'cryptocurrency-price-ticker-widget' ),
+						'installed_pending_wc_label' => __( 'Installed!', 'cryptocurrency-price-ticker-widget' ),
 					)
 				);
 			}
@@ -980,7 +980,12 @@ if ( ! class_exists( 'cool_plugins_crypto_addons' ) ) {
 				return array();
 			}
 
-			$json_content = file_get_contents( $json_file );
+			global $wp_filesystem;
+			if ( empty( $wp_filesystem ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+				WP_Filesystem();
+			}
+			$json_content = $wp_filesystem->get_contents( $json_file );
 
 			$placeholders = array(
 				'{{CCEW_VERSION}}' => 'CCEW_VERSION',

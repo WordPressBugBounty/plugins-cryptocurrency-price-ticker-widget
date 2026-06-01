@@ -117,7 +117,7 @@ class CPFM_Feedback_Notice {
 
         check_ajax_referer('dismiss_admin_notice', 'nonce');
 
-        $category   = isset($_POST['category']) ? sanitize_text_field( wp_unslash( $_POST['category'] ) ): '';
+        $category   = isset($_POST['category']) ? sanitize_key( wp_unslash( $_POST['category'] ) ): '';
         $opt_in_raw = isset($_POST['opt_in']) ? sanitize_text_field( wp_unslash( $_POST['opt_in'] ) ) : '';
         $opt_in = ($opt_in_raw === 'yes') ? 'yes' : 'no';
         $category_notices   = self::$registered_notices;
@@ -204,7 +204,7 @@ class CPFM_Feedback_Notice {
             $output .= '</div>';
             
             $output .= '<div class="cpf-extra-info">';
-            $output .= '<p>' . esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'cryptocurrency-price-ticker-widget') . '</p>';
+            $output .= '<p>' . esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'cryptocurrency-price-ticker-widget') . ' <a href="https://my.coolplugins.net/terms/usage-tracking/?utm_source=cryptocurrency-price-ticker-widget&utm_medium=inside&utm_campaign=terms&utm_content=dashboard" target="_blank" rel="noopener noreferrer">'. esc_html__('Click here', 'cryptocurrency-price-ticker-widget') . '</a></p>';
             $output .= '<ul>';
             $output .= '<li>' . esc_html__('Your website home URL and WordPress admin email.', 'cryptocurrency-price-ticker-widget') . '</li>';
             $output .= '<li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'cryptocurrency-price-ticker-widget') . '</li>';

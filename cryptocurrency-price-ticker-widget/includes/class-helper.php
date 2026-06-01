@@ -230,7 +230,7 @@ trait CCPW_Helper_Functions
             if (file_exists($coin_svg)) {
                 $coin_svg = CCPWF_URL . 'assets/coin-logos/' . strtolower($coin_id) . '.svg';
                 if ($HTML == true) {
-                    $logo_html = '<img id="' . $coin_id . '" alt="' . $coin_id . '" src="' . $coin_svg . '" width="' . $size . '">';
+                    $logo_html = '<img id="' . esc_attr( $coin_id ) . '" alt="' . esc_attr( $coin_id ) . '" src="' . esc_url( $coin_svg ) . '" width="' . absint( $size ) . '">';
                 } else {
                     $logo_html = $coin_svg;
                 }
@@ -239,7 +239,7 @@ trait CCPW_Helper_Functions
             } else if (file_exists($coin_png)) {
                 $coin_png = CCPWF_URL . 'assets/coin-logos/' . strtolower($coin_id) . '.png';
                 if ($HTML == true) {
-                    $logo_html = '<img id="' . $coin_id . '" alt="' . $coin_id . '" src="' . $coin_png . '" width="' . $size . '">';
+                    $logo_html = '<img id="' . esc_attr( $coin_id ) . '" alt="' . esc_attr( $coin_id ) . '" src="' . esc_url( $coin_png ) . '" width="' . absint( $size ) . '">';
                 } else {
                     $logo_html = $coin_png;
                 }
@@ -256,6 +256,7 @@ trait CCPW_Helper_Functions
             }
 
         } else {
+
             $original_id = $coin_id;
             $coin_id = $this->ccpw_coin_array($coin_id);
 
@@ -265,7 +266,7 @@ trait CCPW_Helper_Functions
             if (file_exists($coin_svg)) {
                 $coin_svg = CCPWF_URL . 'assets/coin-logos/' . strtolower($coin_id) . '.svg';
                 if ($HTML == true) {
-                    $logo_html = '<img id="' . $coin_id . '" alt="' . $coin_id . '" src="' . $coin_svg . '" width="' . $size . '">';
+                    $logo_html = '<img id="' . esc_attr( $coin_id ) . '" alt="' . esc_attr( $coin_id ) . '" src="' . esc_url( $coin_svg ) . '" width="' . absint( $size ) . '">';
                 } else {
                     $logo_html = $coin_svg;
                 }
@@ -274,7 +275,7 @@ trait CCPW_Helper_Functions
             } else if (file_exists($coin_png)) {
                 $coin_png = CCPWF_URL . 'assets/coin-logos/' . strtolower($coin_id) . '.png';
                 if ($HTML == true) {
-                    $logo_html = '<img id="' . $coin_id . '" alt="' . $coin_id . '" src="' . $coin_png . '" width="' . $size . '">';
+                    $logo_html = '<img id="' . esc_attr( $coin_id ) . '" alt="' . esc_attr( $coin_id ) . '" src="' . esc_url( $coin_png ) . '" width="' . absint( $size ) . '">';
                 } else {
                     $logo_html = $coin_png;
                 }
@@ -290,14 +291,14 @@ trait CCPW_Helper_Functions
                     if ($decode && isset($decode['cmc_id'])) {
                         $cmc_id = absint($decode['cmc_id']); // Ensure it's a positive integer
                         $coin_png = 'https://s2.coinmarketcap.com/static/img/coins/64x64/' . $cmc_id . '.png';
-                        $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . $coin_png . '" width="' . $size . '">';
+                        $logo_html = '<img id="' . esc_attr( $original_id ) . '" alt="' . esc_attr( $original_id ) . '" src="' . esc_url( $coin_png ) . '" width="' . absint( $size ) . '">';
                     } else {
                         // Fallback to default if data is invalid
-                        $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . CCPWF_URL . 'assets/images/default-logo.png" width="' . $size . '">';
+                        $logo_html = '<img id="' . esc_attr( $original_id ) . '" alt="' . esc_attr( $original_id ) . '" src="' . esc_url( CCPWF_URL . 'assets/image/default-logo.png' ) . '" width="' . absint( $size ) . '">';
                     }
                 }elseif($api == 'coin_paprika'){
-                    $coin_png = "https://static.coinpaprika.com/coin/$original_id/logo.png";
-                    $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . $coin_png . '" width="' . $size . '">';
+                    $coin_png = 'https://static.coinpaprika.com/coin/' . rawurlencode( $original_id ) . '/logo.png';
+                    $logo_html = '<img id="' . esc_attr( $original_id ) . '" alt="' . esc_attr( $original_id ) . '" src="' . esc_url( $coin_png ) . '" width="' . absint( $size ) . '">';
                 }elseif($api == 'coin_capapi'){
                     $DB = new ccpw_database();
                     $coin_icon = $DB->get_coin_logo($original_id);
@@ -307,20 +308,18 @@ trait CCPW_Helper_Functions
                     if ($decode && isset($decode['sym'])) {
                         $symbol = sanitize_text_field($decode['sym']); // Sanitize symbol
                         $coin_png = 'https://assets.coincap.io/assets/icons/' . $symbol . '@2x.png';
-                        $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . $coin_png . '" width="' . $size . '">';
+                        $logo_html = '<img id="' . esc_attr( $original_id ) . '" alt="' . esc_attr( $original_id ) . '" src="' . esc_url( $coin_png ) . '" width="' . absint( $size ) . '">';
                     } else {
                         // Fallback to default if data is invalid
-                        $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . CCPWF_URL . 'assets/images/default-logo.png" width="' . $size . '">';
+                        $logo_html = '<img id="' . esc_attr( $original_id ) . '" alt="' . esc_attr( $original_id ) . '" src="' . esc_url( CCPWF_URL . 'assets/image/default-logo.png' ) . '" width="' . absint( $size ) . '">';
                     }
                 }
-                // $coin_png = "https://static.coinpaprika.com/coin/$original_id/logo.png";
-                // $logo_html = '<img id="' . $original_id . '" alt="' . $original_id . '" src="' . $coin_png . '" width="' . $size . '">';
             }
             return $logo_html;
 
         }
 
-        return $logo_path = CCPWF_URL . 'assets/images/default-logo.png';
+        return $logo_path = CCPWF_URL . 'assets/image/default-logo.png';
 
         //return 'https://static.coinpaprika.com/coin/' . ccpws_coin_array($coin_id, true) . '/logo.png';
 
@@ -716,7 +715,7 @@ trait CCPW_Helper_Functions
 
         // Fallback to serialized data for backward compatibility
         if ($decoded === false) {
-            $decoded = maybe_unserialize($data);
+            $decoded = json_decode($data, true);
         }
 
         // Validate that result is an array

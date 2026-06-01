@@ -101,7 +101,6 @@ if (!class_exists('CPTW_Shortcode')) {
             $currency = get_post_meta($post_id, 'currency', true);
             $enable_formatting = get_post_meta($post_id, 'enable_formatting', true);
             $show_credit = get_post_meta($post_id, 'ccpw_coinexchangeprice_credits', true);
-            //$api_by = ($api == 'coin_paprika') ? 'Coinpaprika' : 'CoinGecko';
             
             if($api == 'coin_paprika'){
                 $api_by = 'Coinpaprika';
@@ -164,7 +163,7 @@ if (!class_exists('CPTW_Shortcode')) {
                         // Fetching data from db for selected currencies
                         $all_coin_data = $this->ccpw_get_coins_data($display_currencies);
                     } else {
-                        return $error = __('You have not selected any currencies to display', 'cryptocurrency-price-ticker-widget');
+                        return $error = esc_html__('You have not selected any currencies to display', 'cryptocurrency-price-ticker-widget');
                     }
                 }
 
@@ -185,7 +184,7 @@ if (!class_exists('CPTW_Shortcode')) {
                         }
                     }
                 } else {
-                    $error = __('You have not selected any currencies to display', 'cryptocurrency-price-ticker-widget');
+                    $error = esc_html__('You have not selected any currencies to display', 'cryptocurrency-price-ticker-widget');
                     return $error . '<!-- Cryptocurrency Widget ID: ' . esc_attr($post_id) . ' !-->';
                 }
             }
@@ -294,7 +293,7 @@ if (!class_exists('CPTW_Shortcode')) {
                             $getRecords = count($display_currencies);
                             $c_id_arr = $display_currencies;
                         } else {
-                            return $error = __('You have not selected any currencies to display', 'cryptocurrency-price-ticker-widget');
+                            return $error = esc_html__('You have not selected any currencies to display', 'cryptocurrency-price-ticker-widget');
                         }
                         $r_type = 'custom';
                     } else {
@@ -323,8 +322,8 @@ if (!class_exists('CPTW_Shortcode')) {
                     data-zero-records="' . esc_attr($ccpw_no_data) . '"
                     data-pagination="' . esc_attr($limit) . '"
                     data-number-formating="' . esc_attr($enable_formatting) . '"
-                    data-currency-symbol="' . $this->ccpw_currency_symbol($fiat_currency) . '"
-                    data-currency-rate="' . $api_obj->ccpw_usd_conversions($fiat_currency) . '"
+                    data-currency-symbol="' . esc_attr($this->ccpw_currency_symbol($fiat_currency)) . '"
+                    data-currency-rate="' . esc_attr($api_obj->ccpw_usd_conversions($fiat_currency)) . '"
                     class="display ccpw_table_widget table-striped table-bordered no-footer"
                     style="border:none!important;">
                     <thead data-preloader="' . esc_url($preloader_url) . '">
@@ -351,6 +350,7 @@ if (!class_exists('CPTW_Shortcode')) {
 
             // Adding dynamic CSS
             $dynamic_styles = $this->ccpw_dynamic_style($type, $post_id, $back_color, $font_color, $ticker_top);
+            $custom_css = current_user_can( 'unfiltered_html' ) ? $custom_css : wp_strip_all_tags( $custom_css );
             $ccpwcss = "<style type='text/css'>" . $dynamic_styles . $custom_css . "</style>";
 
             // Adding version comment for debugging
@@ -429,7 +429,7 @@ if (!class_exists('CPTW_Shortcode')) {
                     $coin_html .= '<span class="ccpw_icon">' . $coin_logo_html . '</span>';
                     $coin_html .= '<span class="name">' . esc_html($coin_name) . '(' . esc_html($coin_symbol) . ')</span>';
                     $coin_html .= $coin_link_end;
-                    $coin_html .= '<span class="price">' . $coin_price_html . '</span>';
+                    $coin_html .= '<span class="price">' . esc_html($coin_price_html) . '</span>';
                     if ($display_changes) {
                         $coin_html .= '<span class="changes ' . esc_attr($change_class) . '">';
                         $coin_html .= $change_sign . esc_html($percent_change_24h);
@@ -445,7 +445,7 @@ if (!class_exists('CPTW_Shortcode')) {
                     $coin_html .= '<span class="ccpw_icon">' . $coin_logo_html . '</span>';
                     $coin_html .= '<span class="name">' . esc_html($coin_name) . '</span>';
                     $coin_html .= $coin_link_end;
-                    $coin_html .= '<span class="price">' . $coin_price_html . '</span>';
+                    $coin_html .= '<span class="price">' . esc_html($coin_price_html) . '</span>';
                     if ($display_changes) {
                         $coin_html .= '<span class="changes ' . esc_attr($change_class) . '">';
                         $coin_html .= $change_sign . esc_html($percent_change_24h);
@@ -489,7 +489,7 @@ if (!class_exists('CPTW_Shortcode')) {
                     $coin_html .= '<div class="ccpw_coin_info">';
                     $coin_html .= '<span class="name">' . esc_html($coin_name) . '</span>';
                     $coin_html .= '<span class="coin_symbol">(' . esc_html($coin_symbol) . ')</span>';
-                    $coin_html .= '</div></td><td class="price"><div class="price-value">' . $coin_price_html . '</div>';
+                    $coin_html .= '</div></td><td class="price"><div class="price-value">' . esc_html($coin_price_html) . '</div>';
                     $coin_html .= $coin_link_end;
                     $coin_html .= '</td>';
                     if ($display_changes) {
@@ -511,7 +511,7 @@ if (!class_exists('CPTW_Shortcode')) {
             // Verify nonce
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ccpwf-tbl-widget')) {
                 $response = array("draw" => 1, "recordsTotal" => 1, "recordsFiltered" => 1, "data" => [], 'error' => 'nonce_failed');
-                echo json_encode($response);
+                wp_send_json( $response );
                 wp_die();
             }
 
@@ -556,7 +556,7 @@ if (!class_exists('CPTW_Shortcode')) {
             $api = (!isset($selected_api['ccpw_select_api']) && empty($selected_api['ccpw_select_api'])) ? "coin_gecko" : sanitize_text_field($selected_api['ccpw_select_api']);
             
             // Validate and limit coinslist array
-            $coinslist = isset($_POST['coinslist']) ? array_map('sanitize_text_field', $_POST['coinslist']) : array(); //phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+            $coinslist = isset( $_POST['coinslist'] ) && is_array( $_POST['coinslist'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['coinslist'] ) ) : array(); //phpcs:ignore WordPress.Security.ValidatedSanitizedInput
             $coinslist = array_slice($coinslist, 0, 250); // Limit to maximum 250 coins
             $coindata = $rtype == 'top' ? $DB->get_coins(array('number' => $data_length, 'offset' => $start_point, 'orderby' => $order_col_name, 'order' => $order_type)) : $DB->get_coins(array('coin_id' => $coinslist, 'offset' => $start_point, 'number' => $data_length, 'orderby' => $order_col_name, 'order' => $order_type));
 
@@ -573,7 +573,6 @@ if (!class_exists('CPTW_Shortcode')) {
             $coins = array();
             $bitcoin_price = get_transient('ccpw_btc_price');
             $coins_list = array();
-
             // Process coin data
             if ($coindata) {
                 foreach ($coindata as $coin) {
@@ -587,9 +586,13 @@ if (!class_exists('CPTW_Shortcode')) {
                     $coins['logo'] = $this->ccpw_get_coin_logo($coin['coin_id'], esc_html($coin['name']), esc_url($coin['logo']),  $size = 32) == false ? '<img alt="' . esc_attr($coin['name']) . '" src="' . esc_url(CCPWF_COINS_LOGO . $coin['logo']) . '">' : $this->ccpw_get_coin_logo($coin['coin_id'], esc_html($coin['name']), esc_url($coin['logo']));
                     $coins['symbol'] = esc_html(strtoupper($coin['symbol']));
                     $coins['name'] = esc_html(strtoupper($coin['name']));
-                    $coins['price'] = esc_html($fiat_currency == 'USD' ? $coin['price'] : $coin['price'] * $fiat_currency_rate);
-                    $coins['market_cap'] = esc_html($fiat_currency == 'USD' ? $coin['market_cap'] : $coin['market_cap'] * $fiat_currency_rate);
-                    $coins['total_volume'] = esc_html($fiat_currency == 'USD' ? $coin['total_volume'] : $coin['total_volume'] * $fiat_currency_rate);
+                    $price_raw = (float) $coin['price'] * ($fiat_currency === 'USD' ? 1.0 : $fiat_currency_rate);
+                    $mc_raw    = (float) $coin['market_cap'] * ($fiat_currency === 'USD' ? 1.0 : $fiat_currency_rate);
+                    $vol_raw   = (float) $coin['total_volume'] * ($fiat_currency === 'USD' ? 1.0 : $fiat_currency_rate);
+
+                    $coins['price']        = esc_html(number_format($price_raw, 8, '.', ''));
+                    $coins['market_cap']   = esc_html(number_format($mc_raw, 2, '.', ''));
+                    $coins['total_volume'] = esc_html(number_format($vol_raw, 2, '.', ''));
                     $coins['change_percentage_24h'] = esc_html(number_format($coin['percent_change_24h'], 2, '.', ''));
                     $coins['supply'] = esc_html($coin['circulating_supply']);
                     $coin_no++;
@@ -606,7 +609,7 @@ if (!class_exists('CPTW_Shortcode')) {
             );
             
             // Send response
-            echo json_encode($response);
+            wp_send_json( $response );
             wp_die();
         }
 
@@ -715,7 +718,7 @@ if (!class_exists('CPTW_Shortcode')) {
                     wp_add_inline_script(
                         'ccpw_bxslider_js',
                         'jQuery(document).ready(function($){
-				$(".ccpw-ticker-cont #' . $ticker_id . '").each(function(index){
+				$(".ccpw-ticker-cont #' . esc_js( $ticker_id ) . '").each(function(index){
 					var tickerCon=$(this);
 					var ispeed=Number(tickerCon.attr("data-tickerspeed"));
 					$(this).bxSlider({

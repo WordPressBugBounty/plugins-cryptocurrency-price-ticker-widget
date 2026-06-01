@@ -41,8 +41,8 @@ if (!class_exists('Openexchange_api_settings')) {
             add_action('cmb2_save_options-page_fields', array($this, 'ccpw_handle_unchecked_checkbox'), 10, 3);
         }
 
-        function ccpw_handle_unchecked_checkbox($object_id, $updated, $cmb) {
-
+       public function ccpw_handle_unchecked_checkbox($object_id, $updated, $cmb) {
+            if ( ! current_user_can( 'manage_options' ) ) { return; }
             if ($object_id === 'openexchange-api-settings') {
 
                 $choice = get_option('cpfm_opt_in_choice_crypto');
@@ -50,8 +50,9 @@ if (!class_exists('Openexchange_api_settings')) {
                 
 
                 if (!empty($choice)) {
-                    
-                    if (!isset($_POST['ccpw_extra_info'])) {
+                    $post = wp_unslash($_POST);
+
+                    if (!isset($post['ccpw_extra_info'])) {
 
                         $options['ccpw_extra_info'] = false;
                        
@@ -59,21 +60,19 @@ if (!class_exists('Openexchange_api_settings')) {
                         wp_clear_scheduled_hook('ccpw_extra_data_update');
                         
                         // Only check for CMC if the class exists and the option isn't set
-                        if ( method_exists('CMC_cronjob', 'cmc_send_data')  && !isset($_POST['cmc_extra_info'])) {
-                            
+                        if (method_exists('CMC_cronjob', 'cmc_send_data') && !isset($post['cmc_extra_info'])) {
 
                             $options['cmc_extra_info'] = false;
                             wp_clear_scheduled_hook('cmc_extra_data_update');
                         }
 
-                        if (method_exists('CELP_cron', 'celp_send_data') && !isset($_POST['celp_extra_info'])) {
-                        
+                        if (method_exists('CELP_cron', 'celp_send_data') && !isset($post['celp_extra_info'])) {
 
                             $options['celp_extra_info'] = false;
                             wp_clear_scheduled_hook('celp_extra_data_update');
                         }
 
-                        if ( method_exists('CCEW_cronjob', 'ccew_send_data') &&  !isset($_POST['ccew_extra_info'])) {
+                        if (method_exists('CCEW_cronjob', 'ccew_send_data') && !isset($post['ccew_extra_info'])) {
 
                             $options['ccew_extra_info'] = false;
                             wp_clear_scheduled_hook('ccew_extra_data_update');
@@ -90,7 +89,7 @@ if (!class_exists('Openexchange_api_settings')) {
                             wp_schedule_event(time(), 'every_30_days', 'ccpw_extra_data_update');
                         }
 
-                        if ( method_exists('CMC_cronjob', 'cmc_send_data') && !isset($_POST['cmc_extra_info'])) {
+                        if (method_exists('CMC_cronjob', 'cmc_send_data') && !isset($post['cmc_extra_info'])) {
 
                             if (!wp_next_scheduled('cmc_extra_data_update')) {
 
@@ -101,16 +100,15 @@ if (!class_exists('Openexchange_api_settings')) {
                             
                         }
 
-                        if (method_exists('CELP_cron', 'celp_send_data') && !isset($_POST['celp_extra_info'])) {
-                        if (!wp_next_scheduled('celp_extra_data_update')) {
-                              $options['celp_extra_info'] = true;
-                              CELP_cron::celp_send_data(); // Trigger immediate data send
-                              wp_schedule_event(time(), 'every_30_days', 'celp_extra_data_update');
-
-                          }
+                        if (method_exists('CELP_cron', 'celp_send_data') && !isset($post['celp_extra_info'])) {
+                            if (!wp_next_scheduled('celp_extra_data_update')) {
+                                $options['celp_extra_info'] = true;
+                                CELP_cron::celp_send_data(); // Trigger immediate data send
+                                wp_schedule_event(time(), 'every_30_days', 'celp_extra_data_update');
+                            }
                         }
 
-                        if (  method_exists('CCEW_cronjob', 'ccew_send_data') && !isset($_POST['ccew_extra_info'])) {
+                        if (method_exists('CCEW_cronjob', 'ccew_send_data') && !isset($post['ccew_extra_info'])) {
 
                             if (!wp_next_scheduled('ccew_extra_data_update')) {
                                 
@@ -229,8 +227,16 @@ if (!class_exists('Openexchange_api_settings')) {
             $cool_options->add_field(
                 array(
                     'name' => __('Enter API Key', 'cryptocurrency-price-ticker-widget'),
-                    'desc' => __('Display cryptocurrency prices in over <b>30 fiat currencies</b>.<br/>
-					>>  <a href="https://openexchangerates.org/signup/free" target="blank">Get OpenExchangeRates.org Free API Key</a>', 'cryptocurrency-price-ticker-widget'),
+                    'desc' => sprintf(
+                        '%s<br/><a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+                        sprintf(
+                            /* translators: %s: number of fiat currencies (e.g. 30). */
+                            esc_html__('Display cryptocurrency prices in over %s fiat currencies.', 'cryptocurrency-price-ticker-widget'),
+                            '<strong>30</strong>'
+                        ),
+                        esc_url('https://openexchangerates.org/signup/free'),
+                        esc_html__('Get OpenExchangeRates.org Free API Key', 'cryptocurrency-price-ticker-widget')
+                    ),
                     'id' => 'openexchangerate_api',
                     'type' => 'text',
                 )
@@ -273,21 +279,33 @@ if (!class_exists('Openexchange_api_settings')) {
 
             $cool_options->add_field(array(
                 'name' => __('Enter CoinGecko API Key', 'cryptocurrency-price-ticker-widget'),
-                'desc' => __('Check - <a href="https://support.coingecko.com/hc/en-us/articles/21880397454233-User-Guide-How-to-use-Demo-plan-API-key?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=coolplugins&utm_content=view_crypto_widget" target="blank">How to retrieve CoinGecko Free API Key ?</a>', 'cryptocurrency-price-ticker-widget'),
+                'desc' => sprintf(
+                  
+                    __('Check - %s', 'cryptocurrency-price-ticker-widget'),
+                    '<a href="' . esc_url('https://support.coingecko.com/hc/en-us/articles/21880397454233-User-Guide-How-to-use-Demo-plan-API-key?utm_source=cryptocurrency-widgets&utm_medium=plugin&utm_campaign=coolplugins&utm_content=view_crypto_widget') . '" target="_blank" rel="noopener noreferrer">' . esc_html__('How to retrieve CoinGecko Free API Key?', 'cryptocurrency-price-ticker-widget') . '</a>'
+                ),
                 'id' => 'coingecko_api',
                 'type' => 'text',
 
             ));
             $cool_options->add_field(array(
                 'name' => __('Enter CoinMarketCap API Key', 'cryptocurrency-price-ticker-widget'),
-                'desc' => __('Check - <a href="https://coinmarketcap.com/api/" target="blank">How to retrieve CoinMarketCap Free API Key ?</a>', 'cryptocurrency-price-ticker-widget'),
+                'desc' => sprintf(
+           
+                    __('Check - %s', 'cryptocurrency-price-ticker-widget'),
+                    '<a href="' . esc_url('https://coinmarketcap.com/api/') . '" target="_blank" rel="noopener noreferrer">' . esc_html__('How to retrieve CoinMarketCap Free API Key?', 'cryptocurrency-price-ticker-widget') . '</a>'
+                ),
                 'id' => 'coinmarketcap_api',
                 'type' => 'text',
 
             ));
             $cool_options->add_field(array(
                 'name' => __('Enter CoinCap API Key', 'cryptocurrency-price-ticker-widget'),
-                'desc' => __('Check - <a href="https://coincap.io/api-key" target="blank">How to retrieve CoinCap Free API Key ?</a>', 'cryptocurrency-price-ticker-widget'),
+                'desc' => sprintf(
+
+                    __('Check - %s', 'cryptocurrency-price-ticker-widget'),
+                    '<a href="' . esc_url('https://coincap.io/api-key') . '" target="_blank" rel="noopener noreferrer">' . esc_html__('How to retrieve CoinCap Free API Key?', 'cryptocurrency-price-ticker-widget') . '</a>'
+                ),
                 'id' => 'coincap_api',
                 'type' => 'text',
             ));
@@ -319,7 +337,7 @@ if (!class_exists('Openexchange_api_settings')) {
                     'name' => 'API Usage Report',
                     'id' => 'ccpw_api_hit_title',
                     'type' => 'title',
-                    'desc' => '<div class="cmb-th"></div><div class="cmb-td"><table><tr><td><a href="' . $active_api . ' " target="blank">Click here to view API usage details</a></td><td></td></tr></table></div>',
+                    'desc' => '<div class="cmb-th"></div><div class="cmb-td"><table><tr><td><a href="' . esc_url($active_api) . ' " target="_blank">Click here to view API usage details</a></td><td></td></tr></table></div>',
                 ));
             }
 
@@ -366,18 +384,17 @@ if (!class_exists('Openexchange_api_settings')) {
 
             $choice = (!empty($choice) && $choice === 'yes') ? 'on' : '';
 
-            $terms_html = '
-                Help us make this plugin more compatible with your site by sharing non-sensitive site data. 
-                    <a href="#" class="cpfm-see-terms">[See terms]</a>
-                       <div id="termsBox" style="display: none;padding-left: 20px; margin-top: 10px; font-size: 12px; color: #999;">
-                        <p>'. esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'cryptocurrency-price-ticker-widget') . ' <a href="https://my.coolplugins.net/terms/usage-tracking/" target="_blank" rel="noopener noreferrer">
-                          '. esc_html__('Click here', 'cryptocurrency-price-ticker-widget') . '
-                          </a></p>
-                    <ul style="list-style-type:auto;">
-                        <li>'. esc_html__('Your website home URL and WordPress admin email.', 'cryptocurrency-price-ticker-widget') . '</li>
-                        <li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'cryptocurrency-price-ticker-widget') . '</li>
-                    </ul>
-                </div>';
+            $terms_html = esc_html__('Help us make this plugin more compatible with your site by sharing non-sensitive site data.', 'cryptocurrency-price-ticker-widget')
+                . ' <a href="#" class="cpfm-see-terms">' . esc_html__('[See terms]', 'cryptocurrency-price-ticker-widget') . '</a>'
+                . '<div id="termsBox" style="display: none;padding-left: 20px; margin-top: 10px; font-size: 12px; color: #999;">'
+                . '<p>' . esc_html__('Opt in to receive email updates about security improvements, new features, helpful tutorials, and occasional special offers. We\'ll collect:', 'cryptocurrency-price-ticker-widget')
+                . ' <a href="' . esc_url('https://my.coolplugins.net/terms/usage-tracking/') . '" target="_blank" rel="noopener noreferrer">'
+                . esc_html__('Click here', 'cryptocurrency-price-ticker-widget')
+                . '</a></p>'
+                . '<ul style="list-style-type:auto;">'
+                . '<li>' . esc_html__('Your website home URL and WordPress admin email.', 'cryptocurrency-price-ticker-widget') . '</li>'
+                . '<li>' . esc_html__('To check plugin compatibility, we will collect the following: list of active plugins and themes, server type, MySQL version, WordPress version, memory limit, site language and database prefix.', 'cryptocurrency-price-ticker-widget') . '</li>'
+                . '</ul></div>';
 
             $cool_options_setting->add_field(array(
                 'name'      => __('Usage Data Sharing ', 'cryptocurrency-price-ticker-widget'),
@@ -417,7 +434,7 @@ if (!class_exists('Openexchange_api_settings')) {
             if (empty($openexchange_api)) {
                 ?>
 				<div  class="license-warning notice notice-error is-dismissible">
-					<p>Hi, <strong><?php echo ucwords($user_name); ?></strong>! Please <strong><a href="<?php echo esc_url(get_admin_url(null, 'admin.php?page=openexchange-api-settings')); ?>">enter</a></strong> Openexchangerates.org free API key for crypto to fiat price conversions.</p>
+					<p>Hi, <strong><?php echo esc_html(ucwords($user_name)); ?></strong>! Please <strong><a href="<?php echo esc_url(get_admin_url(null, 'admin.php?page=openexchange-api-settings')); ?>">enter</a></strong> Openexchangerates.org free API key for crypto to fiat price conversions.</p>
 				</div>
 				<?php
             }
@@ -427,14 +444,14 @@ if (!class_exists('Openexchange_api_settings')) {
                 if (empty($coin_gecko_api)) {
                     ?>
 					<div  class="license-warning notice notice-error is-dismissible">
-						<p>Hi, <strong><?php echo ucwords($user_name); ?></strong>! Please <strong><a href="<?php echo esc_url(get_admin_url(null, 'admin.php?page=openexchange-api-settings')); ?>">enter</a></strong> Coingecko free API key to work with this plugin.</p>
+						<p>Hi, <strong><?php echo esc_html(ucwords($user_name)); ?></strong>! Please <strong><a href="<?php echo esc_url(get_admin_url(null, 'admin.php?page=openexchange-api-settings')); ?>">enter</a></strong> Coingecko free API key to work with this plugin.</p>
 					</div>
 					<?php
                 }
             } elseif (($api_type == "coin_marketcap") && empty($coin_marketcap_api)) {
                 ?>
                 <div  class="license-warning notice notice-error is-dismissible">
-                    <p>Hi, <strong><?php echo ucwords($user_name); ?></strong>! Please <strong><a href="<?php echo esc_url(get_admin_url(null, 'admin.php?page=openexchange-api-settings')); ?>">enter</a></strong> Coinmarketcap API key to work this plugin.</p>
+                    <p>Hi, <strong><?php echo esc_html(ucwords($user_name)); ?></strong>! Please <strong><a href="<?php echo esc_url(get_admin_url(null, 'admin.php?page=openexchange-api-settings')); ?>">enter</a></strong> Coinmarketcap API key to work this plugin.</p>
 
                 </div>
                 <?php
@@ -442,7 +459,7 @@ if (!class_exists('Openexchange_api_settings')) {
             } elseif (($api_type == "coin_capapi") && empty($coin_cap_api)) {
                 ?>
                 <div  class="license-warning notice notice-error is-dismissible">
-                    <p>Hi, <strong><?php echo ucwords($user_name); ?></strong>! Please <strong><a href="<?php echo esc_url(get_admin_url(null, 'admin.php?page=openexchange-api-settings')); ?>">enter</a></strong> CoinCap API key to work this plugin.</p>
+                    <p>Hi, <strong><?php echo esc_html(ucwords($user_name)); ?></strong>! Please <strong><a href="<?php echo esc_url(get_admin_url(null, 'admin.php?page=openexchange-api-settings')); ?>">enter</a></strong> CoinCap API key to work this plugin.</p>
 
                 </div>
                 <?php

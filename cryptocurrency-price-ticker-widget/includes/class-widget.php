@@ -82,7 +82,7 @@ global $post;
         $ccpw_shortcode = !empty($instance['ccpw_shortcode']) ? $instance['ccpw_shortcode'] : ''; // Ensure value is not empty
         $title = apply_filters('widget_title', $instance['title']);
 
-        echo wp_kses_post($args['before_widget'] . $args['before_title'] . $title . $args['after_title']);
+        echo wp_kses_post( $args['before_widget'] . $args['before_title'] ) . esc_html( $title ) . wp_kses_post( $args['after_title'] );
 
         if (!empty($ccpw_shortcode)) {
             echo do_shortcode('[ccpw id="' . esc_attr($ccpw_shortcode) . '"]'); // Use esc_attr for security

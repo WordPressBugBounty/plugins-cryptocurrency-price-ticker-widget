@@ -9,7 +9,7 @@
     "tag": "crypto",
     "type": "free",
     "download_url": "https://downloads.wordpress.org/plugin/cryptocurrency-price-ticker-widget.zip",
-    "demo_url": "https://cryptocurrencyplugins.com/demo/price-ticker-widget/",
+    "demo_url": "https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/",
     "docs_url": "https://wordpress.org/plugins/cryptocurrency-price-ticker-widget/"
   },
 
@@ -24,7 +24,7 @@
     "tag": "crypto",
     "type": "free",
     "download_url": "https://downloads.wordpress.org/plugin/cryptocurrency-widgets-for-elementor.zip",
-    "demo_url": "https://cryptocurrencyplugins.com/?utm_source=ccew_plugin&utm_medium=inside&utm_campaign=demo&utm_content=dashboard",
+    "demo_url": "https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-for-elementor/",
     "docs_url": "https://wordpress.org/plugins/cryptocurrency-widgets-for-elementor/"
   },
   {
@@ -37,7 +37,7 @@
     "tag": "crypto",
     "type": "free",
     "download_url": "https://downloads.wordpress.org/plugin/cryptocurrency-payments-using-metamask-for-woocommerce.zip",
-    "demo_url": "https://cryptocurrencyplugins.com/demo/cryptocurrency-payments-using-metamask-for-woocommerce/",
+    "demo_url": "https://paywithcryptocurrency.net/cart/",
     "docs_url": "https://wordpress.org/plugins/cryptocurrency-payments-using-metamask-for-woocommerce/"
   }
 ]

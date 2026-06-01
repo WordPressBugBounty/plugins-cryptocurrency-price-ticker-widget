@@ -48,12 +48,13 @@ class ccpw_database
             'total_volume' => '%f',
             'circulating_supply' => '%d',
             'logo' => '%s',
+            'last_updated' => '%s',
         );
     }
 
     public function ccpw_insert($coins_data)
     {
-        if (is_array($coins_data) && count($coins_data) > 1) {
+        if ( is_array( $coins_data ) && count( $coins_data ) >= 1 ) {
             return $this->wp_insert_rows($coins_data, $this->table_name, true, 'coin_id');
         }
     }
@@ -176,6 +177,8 @@ class ccpw_database
             $args['orderby'] .= '+0';
         }
 
+        $args['order'] = in_array(strtoupper($args['order']), array('ASC', 'DESC'), true) ? strtoupper($args['order']) : 'ASC';
+
         // Generate cache key
         $cache_key = (true === $count) ? sanitize_text_field(md5('ccpw_coins_count' . serialize($args))) : sanitize_text_field(md5('ccpw_coins_' . serialize($args)));
 
@@ -244,9 +247,7 @@ class ccpw_database
         $args = wp_parse_args($args, $defaults);
 
         // Set minimum number of results
-        if ($args['number'] < 1) {
-            $args['number'] = 999999999999;
-        }
+        $args['number'] = max(1, $args['number']);
 
         $where = '';
         $where_values = array(); // Initialize array for prepared statement values
@@ -297,6 +298,8 @@ class ccpw_database
         if ($args['orderby'] === 'total' || $args['orderby'] === 'subtotal') {
             $args['orderby'] .= '+0';
         }
+
+        $args['order'] = in_array(strtoupper($args['order']), array('ASC', 'DESC'), true) ? strtoupper($args['order']) : 'ASC';
 
         // Generate cache key
         $cache_key = (true === $count) ? sanitize_text_field(md5('ccpw_coins_list_count' . serialize($args))) : sanitize_text_field(md5('ccpw_coins_list_' . serialize($args)));
@@ -366,54 +369,82 @@ class ccpw_database
     {
         global $wpdb;
 
-        // Escape table name
-        $wp_table_name = esc_sql($wp_table_name);
+        if (!is_array($row_arrays) || empty($row_arrays)) {
+            return false;
+        }
 
-        // Initialize variables
-        $values = array();
-        $place_holders = array();
-        $query = '';
-        $query_columns = '';
+        // Only allow inserts into this plugin table.
+        if ($wp_table_name !== $this->table_name) {
+            return false;
+        }
 
-        // Build INSERT INTO query
-        $query .= "INSERT INTO `{$wp_table_name}` (";
+        $allowed_columns = $this->get_columns();
+        $first_row       = reset($row_arrays);
 
-        // Get column names from the first row
-        $first_row = reset($row_arrays);
-        $query_columns .= '`' . implode('`, `', array_map('esc_sql', array_keys($first_row))) . '`';
+        if (!is_array($first_row)) {
+            return false;
+        }
 
-        // Sanitize and prepare values and placeholders
+        // Whitelist columns: only keys that exist in get_columns().
+        $columns = array_intersect_key($first_row, $allowed_columns);
+
+        // Do not insert auto-increment id from input.
+        unset($columns['id']);
+
+        if (empty($columns)) {
+            return false;
+        }
+
+        $column_names = array_keys($columns);
+        $formats      = array_values(array_intersect_key($allowed_columns, $columns));
+
+        $values          = array();
+        $place_holders   = array();
+        $query_columns   = '`' . implode('`, `', $column_names) . '`';
+
         foreach ($row_arrays as $row_array) {
+            if (!is_array($row_array)) {
+                continue;
+            }
+
+            $row = array_intersect_key($row_array, $columns);
+            $row = array_merge($columns, $row); // same key order as $column_names
+
             $placeholders = array();
-            foreach ($row_array as $value) {
-                $values[] = $value;
-                $placeholders[] = '%s'; // Default placeholder for string values
+            foreach ($column_names as $col) {
+                $values[]       = $row[ $col ];
+                $placeholders[] = $formats[ array_search($col, $column_names, true) ];
             }
             $place_holders[] = '(' . implode(', ', $placeholders) . ')';
         }
 
-        // Complete the INSERT INTO query
-        $query .= "$query_columns) VALUES ";
+        if (empty($place_holders)) {
+            return false;
+        }
+
+        $query  = 'INSERT INTO `' . esc_sql($this->table_name) . '` (' . $query_columns . ') VALUES ';
         $query .= implode(', ', $place_holders);
 
-        // Add ON DUPLICATE KEY UPDATE clause if update is enabled
         if ($update) {
-            $update_columns = array_map(function ($column) {
-                return "`$column`=VALUES(`$column`)";
-            }, array_keys($first_row));
-            $updateClause = " ON DUPLICATE KEY UPDATE " . implode(', ', $update_columns);
-            $query .= $updateClause;
+            $update_parts = array();
+            foreach ($column_names as $col) {
+                if ('id' === $col) {
+                    continue;
+                }
+                $update_parts[] = '`' . $col . '`=VALUES(`' . $col . '`)';
+            }
+            if (!empty($update_parts)) {
+                $query .= ' ON DUPLICATE KEY UPDATE ' . implode(', ', $update_parts);
+            }
         }
 
-        // Prepare and execute the SQL query
         $sql = $wpdb->prepare($query, $values);
 
-        // Execute the query and return result
         if ($wpdb->query($sql)) {
-            return true; // Success
-        } else {
-            return false; // Failure
+            return true;
         }
+
+        return false;
     }
 
     public function get_coin_logo($coin_id)

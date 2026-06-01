@@ -584,7 +584,7 @@ if (!class_exists('CCPW_CMB2_Settings')) {
             $api_option = get_option('openexchange-api-settings');
 
             if (empty($api_option)) {
-                $message = '<br/>(<span style="color: red;">Remember to add <a href="admin.php?page=openexchange-api-settings" target="blank">
+                $message = '<br/>(<span style="color: red;">Remember to add <a href="admin.php?page=openexchange-api-settings" target="_blank">
 		Openexchangerates.org free API</a> key for crypto to fiat price conversions.</span>)';
                 return $message;
             }
@@ -625,12 +625,12 @@ if (!class_exists('CCPW_CMB2_Settings')) {
 
                 // Validate that it's a valid post ID and correct post type
                 if (!$id || get_post_type($id) !== 'ccpw') {
-                    return '<h4><strong class="micon-info-circled"></strong> ' . __('Invalid post ID. Please save the widget first.', 'cryptocurrency-price-ticker-widget') . '</h4>';
+                    return '<h4><strong class="micon-info-circled"></strong> ' . esc_html__('Invalid post ID. Please save the widget first.', 'cryptocurrency-price-ticker-widget') . '</h4>';
                 }
 
                 $type = get_post_meta($id, 'type', true);
                 $output  = do_shortcode('[ccpw id=' . esc_attr($id) . ']');
-                $output .= '<p><strong class="micon-info-circled"></strong>' . __('Backend preview may be a little bit different from frontend / actual view. Add this shortcode on any page for frontend view - ', 'cryptocurrency-price-ticker-widget') . '<code>[ccpw id=' . esc_attr($id) . ']</code></p>';
+                $output .= '<p><strong class="micon-info-circled"></strong>' . esc_html__('Backend preview may be a little bit different from frontend / actual view. Add this shortcode on any page for frontend view - ', 'cryptocurrency-price-ticker-widget') . '<code>[ccpw id=' . esc_attr($id) . ']</code></p>';
                 $output .= '<script type="text/javascript">
          jQuery(document).ready(function($){
            $(".ccpw-ticker-cont").fadeIn();
@@ -656,7 +656,7 @@ if (!class_exists('CCPW_CMB2_Settings')) {
                 return $output;
 
             } else {
-                return $output = '<h4><strong class="micon-info-circled"></strong> ' . __('Publish to preview the widget.', 'cryptocurrency-price-ticker-widget') . '</h4>';
+                return $output = '<h4><strong class="micon-info-circled"></strong> ' . esc_html__('Publish to preview the widget.', 'cryptocurrency-price-ticker-widget') . '</h4>';
 
             }
         }

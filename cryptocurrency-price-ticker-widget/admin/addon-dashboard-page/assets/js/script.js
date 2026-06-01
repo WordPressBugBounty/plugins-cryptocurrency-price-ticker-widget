@@ -196,7 +196,7 @@ jQuery(document).ready(function ($) {
 		var $this = $(this);
 		var message = $this.attr('data-empty-message');
 		if ($this.children('.plugin-block').length === 0 && $this.children('.ccew-card').length === 0 && message) {
-			$this.append('<div class="empty-message">' + message + '</div>');
+			$this.append( $('<div>').addClass('empty-message').text(message) );
 		}
 	});
 });

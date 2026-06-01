@@ -5,7 +5,7 @@
  * Plugin URI: https://cryptocurrencyplugins.com/wordpress-plugin/cryptocurrency-widgets-pro/?utm_source=cryptocurrency-widgets&utm_medium=plugin-uri
  * Author: Cool Plugins
  * Author URI: https://coolplugins.net/?utm_source=ccw_plugin&utm_medium=inside&utm_campaign=author_page&utm_content=plugins_list
- * Version: 2.10.1
+ * Version: 2.10.2
  * License: GPL3
  * Text Domain: cryptocurrency-price-ticker-widget
  *
@@ -21,7 +21,7 @@ if (defined('CCPWF_VERSION')) {
 }
 
 // Define constants for later use
-define('CCPWF_VERSION', '2.10.1');
+define('CCPWF_VERSION', '2.10.2');
 define('CCPWF_FILE', __FILE__);
 define('CCPWF_DIR', plugin_dir_path(CCPWF_FILE));
 define('CCPWF_URL', plugin_dir_url(CCPWF_FILE));
@@ -285,8 +285,6 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
                         'ccpw_spare_me'
 					);
                 }
-                // Loading required functions
-                require_once CCPWF_DIR . 'admin/review-notices/class-review-notice.php';
 
                 if(!class_exists('CPFM_Feedback_Notice')){
                     require_once CCPWF_DIR . 'admin/feedback/cpfm-feedback-notice.php';
@@ -316,18 +314,17 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
 
         public function ccpw_delete_transient()
         {
+            if (!current_user_can('manage_options')) {
+                wp_send_json_error('You don\'t have permission to delete the cache.');
+            }
 
-            // Check for nonce security
             if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'ccpw-nonce')) {
-                wp_send_json_error('You don\'t have permission to delete the cache.'); // Use wp_send_json_error for better response
-            }
-            // Delete cache if user has permission to delete it.
-            if (current_user_can('manage_options')) {
-                delete_transient('ccpw-saved-coindata');
-                delete_option('ccpw_data_save');
-                wp_send_json_success();
+                wp_send_json_error('Invalid nonce.');
             }
 
+            delete_transient('ccpw-saved-coindata');
+            delete_option('ccpw_data_save');
+            wp_send_json_success();
         }
 
         /**
@@ -420,7 +417,9 @@ if (!class_exists('Crypto_Currency_Price_Widget')) {
                 if ($type == 'ticker') {
                     if ($ticker_position == 'header' || $ticker_position == 'footer') {
                         $shortcode = get_option('ccpw-shortcode');
-                        echo do_shortcode($shortcode);
+                        $allowed = wp_kses_allowed_html('post');
+                        $allowed['style'] = [];
+                        echo wp_kses( do_shortcode( $shortcode ), $allowed );
                     }
                 }
             }

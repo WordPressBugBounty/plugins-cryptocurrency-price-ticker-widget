@@ -11,18 +11,28 @@ if (! class_exists('Cool_Review_Notice')) {
 	class Cool_Review_Notice
 	{
 
-	private string $prefix;
-	private string $plugin_name;
-	private string $review_link;
-	private string $spare_me_key;
-	private string $activation_time;
-	private string $ajax_action;
-	private array $allowed_pages;
-	private string $menu_slug;
-	
+	/** @var string */
+	private $prefix;
+	/** @var string */
+	private $plugin_name;
+	/** @var string */
+	private $review_link;
+	/** @var string */
+	private $spare_me_key;
+	/** @var string */
+	private $activation_time;
+	/** @var string */
+	private $ajax_action;
+	/** @var array */
+	private $allowed_pages;
+	/** @var string */
+	private $menu_slug;
+
 	// Static properties to store assets URL/version from the first plugin that loads the class
-	private static string $assets_url = '';
-	private static string $assets_version = '';
+	/** @var string */
+	private static $assets_url = '';
+	/** @var string */
+	private static $assets_version = '';
 
 	public function __construct(string $prefix, string $plugin_name, string $review_link, string $plugin_url = '', string $plugin_version = '', array $allowed_pages = [], string $menu_slug = '', string $activation_time = '', string $spare_me_key = '')
 	{
@@ -42,7 +52,7 @@ if (! class_exists('Cool_Review_Notice')) {
 		}
 
 		if (is_admin()) {
-			add_action('admin_notices', [$this, 'enqueue_notice']);
+			add_action('ccew_display_admin_notices', [$this, 'enqueue_notice']);
 			add_action('wp_ajax_' .  $this->ajax_action, array($this, 'dismiss_review_notice'));
 		}
 	}
@@ -147,6 +157,10 @@ if (! class_exists('Cool_Review_Notice')) {
 
 	public function dismiss_review_notice()
 		{
+			if (!current_user_can('manage_options')) {
+				wp_send_json_error('You don\'t have permission to dismiss admin notices.');
+				wp_die();
+			}
 			check_ajax_referer("{$this->prefix}_review_nonce", 'nonce');
 
 			update_option($this->spare_me_key, 'yes');

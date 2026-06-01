@@ -8,9 +8,9 @@
     "image_url": "icon-crypto-widgets.png",
     "free_version": "cryptocurrency-price-ticker-widget",
     "main_file": "cryptocurrency-price-ticker-widget-pro.php",
-    "buy_url": "https://cryptocurrencyplugins.com/plugin/cryptocurrency-price-ticker-widget-pro/",
+    "buy_url": "https://cryptocurrencyplugins.com/plugin/cryptocurrency-widgets-pro/",
     "docs_url": "https://cryptocurrencyplugins.com/docs/cryptocurrency-price-ticker-widget-pro/",
-    "demo_url": "https://cryptocurrencyplugins.com/demo/cryptocurrency-price-ticker-widget-pro/"
+    "demo_url": "https://cryptocurrencyplugins.com/demo/cryptocurrency-widgets-pro/"
   },
   {                    
     "slug": "cryptocurrency-exchanges-list-pro",
@@ -46,9 +46,9 @@
     "version": "3.0.0",
     "latest_version": "{{CMC}}",
     "image_url": "coin-market-cap.png",
-    "buy_url": "https://cryptocurrencyplugins.com/plugin/cryptocurrency-widgets-coin-market-cap/",
+    "buy_url": "https://cryptocurrencyplugins.com/plugin/coins-marketcap/",
     "docs_url": "https://cryptocurrencyplugins.com/docs/cryptocurrency-widgets-coin-market-cap/",
-    "demo_url": "https://cryptocurrencyplugins.com/demo/coin-market-cap/"
+    "demo_url": "https://cryptocurrencyplugins.com/demo/coins-marketcap/"
   },
   {
     "slug": "cryptocurrency-search-addon",

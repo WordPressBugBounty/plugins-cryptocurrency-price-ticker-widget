@@ -42,7 +42,7 @@ jQuery(document).ready(function ($) {
        var currentPagePath = window.location.href;
             var segments = currentPagePath.split('/');
             var pageName = segments.pop();
-          if(pageName="admin.php?page=ccpw_get_started"){
+          if(pageName == "admin.php?page=ccpw_get_started"){
             $("#submit-cmb").hide();
           }
 });
